@@ -1,4 +1,4 @@
-## STT Client Java WebApp
+## STT Client Java Web Application
 In this tutorial, I am going to explain Speech to Text serving can be accessed via REST endpoint. There are couple of ways you can access the REST endpoint.
 - Batch processing / Synchronous way
 - Asynchronous way
@@ -20,18 +20,7 @@ GitHub Repo: https://github.com/ibm-build-labs/Watson-NLP/tree/main/STTApplicati
 - Eclipse, if you want to customize the application
 - You already have a STT Runtime service running in a k8/OpenShift cluster
 
-### Build and deploy
-As I mentioned before this is a java springboot application. Fiegn library is used to make the API call to STT REST Serving.
-
-Clone the git repo 
-```
-git clone https://github.com/ibm-build-labs/Watson-NLP
-```
-```
-cd STTApplication
-```
-
-Below is the list of libraries that are used.
+As mentioned before this is a java springboot application. Fiegn library is used to make the API call to STT REST Serving. Below is the list of libraries that are used for this application.
 ```
 <dependencies>
 		<dependency>
@@ -52,27 +41,68 @@ Below is the list of libraries that are used.
 		</dependency>
 </dependencies>
 ```
+### Code
+Clone the git repository containing our example code. Go to the directory that contains the code used in this tutorial.
+```
+git clone https://github.com/ibm-build-labs/Watson-NLP
+```
+```
+cd Watson-NLP/STTApplication
+```
 
-#### docker file.
+## Steps to run in localhost
+
+### 1. Build
+To build the application go th
+maven wrapper is used here to build the application. First compile and package the application
+```
+./mvnw clean package
+```
+
+### 2. Test
+- before testing the application please login Kubernetes cluster and expose the stt service runtime
+```
+kubectl port-forward svc/install-1-stt-runtime 1080
+```
+- Set an environment variable for STT service as below
+```
+export STT_SERVICE_ENDPOINT=127.0.0.1:1080
+```
+- Run the application
+```
+java -jar target/STTApplication-0.0.1-SNAPSHOT.jar
+```
+- The application you will be exposed at port 8080. You can access the application at
+```
+http://localhost:8080
+```
+
+## Run in Kubernetes
+### 1. Build an Image.
+Here is a simple docker file we used to build a docker image.
 ```
 FROM openjdk:17-jdk-alpine
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 ```
+- Before building the image please execute the below command to package the application
+```
+./mvnw clean package
+```
 
-Build the image with the below command. I am using ibm container registry to push the image. You can choose a repository on your own.
+- Build the image with the below command. I am using ibm container registry to push the image. You can choose a repository on your own.
 ```
 docker build . -t us.icr.io/watson-core-demo/stt-web-application:v1
 ```
+- Push the image to upstream
 ```
 docker push us.icr.io/watson-core-demo/stt-web-application:v1
 ```
-
-### Deploy in Kubernetes
-We are creating two Kubernetes object here, deployment and a service. In deployment.yaml file you need to modify two things
-- Image location
-- Environmental variable STT_SERVICE_ENDPOINT
+### 2. Deploy
+We are creating two Kubernetes resources here, deployment and a service. In deployment.yaml file you need to modify two things
+ - Image location
+ - Environmental variable STT_SERVICE_ENDPOINT
 
 Here is a sample deployment.yaml file and highlighted the text you might want to replace.
 ```
@@ -107,10 +137,11 @@ spec:
         - containerPort: 8080
 ```
 
-The you can get the service name from the Kubernetes cluster you have deployed your STT Serving. Here is an example. In my case my STT service name is install-1-stt-runtime and port is 1080 for non tls and for tls 1443
+Get STT service name from the Kubernetes cluster you have deployed your STT Serving. Here is an example. In my case my STT service name is install-1-stt-runtime and port is 1080 for non tls and for tls 1443
 ```
 kubectl get svc 
 ```
+Output
 ```
 NAME                          TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                         AGE
 install-1-stt-runtime         NodePort    172.21.206.51    <none>        1080:30280/TCP,1443:32753/TCP   14d
@@ -133,12 +164,13 @@ spec:
     targetPort: 8080
 ```
 
-### Deploy:
+deploy kubernetes resource by executing the below command.
 ```
 kubectl apply -f /deployment/
 ```
+### 3. Test 
 
-#### Check that the pod and service are running.
+Check that the pod and service are running.
 ```
 kubectl get pods
 ```

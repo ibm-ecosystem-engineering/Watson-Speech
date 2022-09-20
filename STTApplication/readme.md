@@ -6,7 +6,7 @@ In this tutorial, I am going to explain Speech to Text serving can be accessed v
 
 I am going to show you the first option batch processing using a Java spring boot web application. Where you can upload an audio file and get an audio transcript in return.
 
-Architecture diagram:
+### Architecture diagram
 
 ![Diagram](architecture.png)
  
@@ -14,7 +14,7 @@ Architecture diagram:
 
 GitHub Repo: https://github.com/ibm-build-labs/Watson-NLP/tree/main/STTApplication
 
-Prerequisites
+### Prerequisites
 - Docker is installed on your workstation
 - Java 17
 - Eclipse, if you want to customize the application

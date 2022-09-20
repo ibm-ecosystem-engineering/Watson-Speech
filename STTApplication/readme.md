@@ -1,7 +1,7 @@
 ## STT Client Java Web Application
 In this tutorial, I am going to explain Speech to Text serving can be accessed via REST endpoint. There are couple of ways you can access the REST endpoint.
-- Batch processing / Synchronous way
-- Asynchronous way
+- Batch processing/Synchronous
+- Asynchronous
 - Real time
 
 I am going to show you the first option batch processing using a Java spring boot web application. Where you can upload an audio file and get an audio transcript in return.
@@ -53,18 +53,20 @@ cd Watson-NLP/STTApplication
 ## Steps to run in localhost
 
 ### 1. Build
-To build the application go th
-maven wrapper is used here to build the application. First compile and package the application
+To build this application please make sure you are in the **STTApplication** directory.
+
+maven wrapper is used here to build and package the application
 ```
 ./mvnw clean package
 ```
+A target directory will be created and application will be packaged in jar. e.g **STTApplication-0.0.1-SNAPSHOT.jar**
 
 ### 2. Test
-- before testing the application please login Kubernetes cluster and expose the stt service runtime
+- before testing the application please login Kubernetes cluster and expose the stt service endpoint
 ```
 kubectl port-forward svc/install-1-stt-runtime 1080
 ```
-- Set an environment variable for STT service as below
+- Set an environment variable for STT service as below. Java application will read the environment variable and make REST calls to that exposed service.
 ```
 export STT_SERVICE_ENDPOINT=127.0.0.1:1080
 ```

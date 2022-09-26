@@ -64,6 +64,10 @@ def print_plot_play(fileName, text=''):
     ipd.display(ipd.Audio(data=x, rate=Fs))
 ```
 
+
+![Load Data](images/load_data.png)
+
+
 4. Setup the parameters for using Speech to Text service
 
 ```
@@ -92,6 +96,8 @@ def getTextFromSpeech(headers,params,file_name):
 back_audio ='./Sample_dataset/samples_audio-files_11-ibm-culture-2min.wav'
 print_plot_play(back_audio, text='WAV file: ')
 ```
+
+![Raw Data](images/raw_data.png)
 
 2. Create a custom function to get the transcribed result without processing.
 
@@ -177,4 +183,128 @@ def get_speaker_data(result_speaker):
                         break   
 ```
 
-### Step 2. Microphone Recognition
+#### 2.D Response formatting and filtering
+
+Speech to Text service provides features that you can use to parse transcription results. You can format a final transcript to include more conventional representations of certain strings and to include punctuation. You can redact sensitive numeric information from a final transcript.
+
+1. Use smart_formatting parameter to get conventional results:
+
+```
+params ={'model':'en-US_Telephony',"smart_formatting":"true","background_audio_suppression":"0.5"}
+result = getTextFromSpeech(headers,params,back_audio)
+```
+
+![Smart Formatting](images/smart_formatting.png)
+
+
+### Step 3. Microphone Recognition
+
+To record real time voice open source python lib SpeechRecognition & PyAudio v0.2.12 will be used
+
+1. Install the open source libraries :
+
+    a. pip install SpeechRecognition
+    b. brew install portaudio
+    c. pip install pyaudio
+
+2. Record audio using mircrophon
+
+```
+r = sr.Recognizer()
+with sr.Microphone() as source:
+    print("Say something!")
+    audio1 = r.listen(source)
+```
+
+3. Use the Watson Speech to Text service to transcribe the recorded audio
+
+```
+ wav_data = audio1.get_wav_data(
+            convert_rate=None if audio1.sample_rate >= 8000 else 8000,  # audio samples must be at least 8 kHz
+            convert_width=2  # audio samples should be 16-bit
+        )
+ipd.display(ipd.Audio(wav_data))    
+
+r = requests.post(speech_to_text_url,headers=headers,params =params,data=wav_data)
+```
+
+### Step 4. Transcribe customer call and extract meaningful insights using Watson NLP library
+
+Speech To text service can be used to transcribe calls from the customer care centers. These transcripts can then be leveraged to extract insights using the `watson_nlp` library.
+
+1. Load customer care call data. The data is available in the same [GitHub Repo](https://github.com/ibm-build-labs/Watson-Speech).
+
+```
+path = "./conusmer_speech_data"
+call_center_list = os.listdir(path)
+print(call_center_list)
+```
+
+2. Create a function to combine the transcripts into one document
+```
+def get_result(result):
+    output =""
+    json_obj = json.loads(result)
+    results_data = json_obj['results']
+    for result1 in results_data:
+        for transcript in result1['alternatives']:
+            output = output+" "+transcript['transcript']
+    return output
+```
+
+3. Process all call-center voice data and create a list of documents
+```
+call_center_text_list=[]
+for file_name in call_center_list:
+    result = getTextFromSpeech(headers,params,path+"/"+file_name)
+    call_center_text_list.append(get_result(result))
+```
+
+4. Load relevant models from the Watson NLP library
+```
+import watson_nlp
+noun_phrases_model = watson_nlp.load(watson_nlp.download('noun-phrases_rbr_en_stock'))
+keywords_model = watson_nlp.load(watson_nlp.download('keywords_text-rank_en_stock'))
+syntax_model = watson_nlp.load(watson_nlp.download('syntax_izumo_en_stock'))
+```
+
+5. Extend the stop words list to filter out the common stop words from analysis
+```
+stop_words = list(wnlp_stop_words)
+stop_words.extend(["gimme", "lemme", "cause", "'cuz", "imma", "gonna", "wanna", 
+                   "gotta", "hafta", "woulda", "coulda", "shoulda", "howdy","day"])
+```
+
+6. Remove stop words and lowercase the text in the transcripts
+```
+# Pre-processing steps for document level only remove stop words  & Patterns which is find they are comman
+def clean(doc):
+    stop_free = " ".join([word.replace('X','').replace('/','') for word in doc.split() if word.lower() not in stop_words])
+    return stop_free
+```
+
+7. Extract keywords and phrases from the transcribed document.
+```
+def extract_keywords(text):
+    # Run the Syntax and Noun Phrases models
+    syntax_prediction = syntax_model.run(text, parsers=('token', 'lemma', 'part_of_speech'))
+    noun_phrases = noun_phrases_model.run(text)
+    # Run the keywords model
+    keywords = keywords_model.run(syntax_prediction, noun_phrases, limit=5)  
+    keywords_list =keywords.to_dict()['keywords']
+    key_list=[]
+    for i in range(len(keywords_list)):
+        key_list.append(keywords_list[i]['text'])
+    return {'Complaint data':text,'Phrases':key_list}
+```
+
+![Transcript dataframe](images/transcript_dataframe.png)
+
+8. Removing uni-gram and bi-grams from the dataset and plot the most frequent phrases.
+
+
+![Frequent phrases](images/frequent-phrases.png)
+
+#### Conclusion:
+
+This tutorial walks you through the steps of starting a Speech to Text service on the kube cluster, pre-processing the speech dataset and using the Speech to Text service to transcribe speech data. This tutorial also shows you how to extract meaningful insights from the data by combining the functionalities of Watson Speech to Text and Watson NLP library.

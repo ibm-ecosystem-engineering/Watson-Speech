@@ -122,4 +122,4 @@ file_name ="text_to_speeh_pitch.wav"
 
 #### Conclusion:
 
-This tutorial walks you through the steps of starting a Text to Speech service on the kube cluster, pre-processing the speech dataset and using the Text to Speech service to transcribe speech data. This tutorial also shows you how to extract meaningful insights from the data by combining the functionalities of Watson Text to Speech and Watson NLP library.
+This tutorial walks you through the steps of starting a Text to Speech service on the kube cluster, processing the dataset and using the Text to Speech service. This tutorial also shows you how to modify speech synthesis characteristics using different parameters.

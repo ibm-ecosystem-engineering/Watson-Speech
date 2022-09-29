@@ -1,10 +1,9 @@
 ## STT Client Java Web Application
-In this tutorial, I am going to explain Speech to Text serving can be accessed via REST endpoint. There are couple of ways you can access the REST endpoint.
-- Batch processing/Synchronous
-- Asynchronous
-- Real time
+In this tutorial you will build and run a Java Spring Boot web application that relies on Watson Speech-to-Text (STT) as a back-end service. The application code can be used as a starting point when developing your own speech application.
 
-I am going to show you the first option batch processing using a Java spring boot web application. Where you can upload an audio file and get an audio transcript in return.
+The application demonstrates two interfaces that a client program can use to leverage Watson STT.
+- **REST interface.** This is used for batch processing, where the client sends audio files to the Watson STT and recieves transcriptions synchronously.
+- **WebSocket interface.** This can be used for streaming use cases, where the the communication happens asynchronously.
 
 ### Architecture diagram
 

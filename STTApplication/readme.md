@@ -50,12 +50,14 @@ Run the application.
 ```
 java -jar target/STTApplication-0.0.1-SNAPSHOT.jar
 ```
-The application will listen on port 8080. Access the application in your browser at the following URL.
+The application will listen on port 8080. Access the application in your browser using the following URL.
 ```
 http://localhost:8080
 ```
 
 ## Run in Kubernetes
+As an alternative to running the application on your local machine, in this 
+
 ### 1. Build an Image.
 Here is a simple docker file we used to build a docker image.
 ```

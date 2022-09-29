@@ -5,6 +5,8 @@ The application demonstrates two interfaces that a client program can use to lev
 - **REST interface.** This is used for batch processing, where the client sends audio files to the Watson STT and recieves transcriptions synchronously.
 - **WebSocket interface.** This can be used for streaming use cases, where the the communication happens asynchronously.
 
+In order to use this tutorial, ensure that you have an instance of Watson STT running on a Kubernetes or OpenShift cluster.
+
 ### Architecture diagram
 
 ![Diagram](architecture.png)

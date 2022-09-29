@@ -11,15 +11,12 @@ In order to use this tutorial, you need to have first deployed an instance of Wa
 
 ![Diagram](architecture.png)
  
-### Resources
-
-GitHub Repo: https://github.com/ibm-build-labs/Watson-NLP/tree/main/STTApplication
-
 ### Prerequisites
-- Docker is installed on your workstation
-- Java 17
+- You need to have installed on your local machine:
+-- Docker
+-- Java 17
 - Eclipse, if you want to customize the application
-- You already have a STT Runtime service running in a k8/OpenShift cluster
+- You have Watson STT deployed on a Kubernetes or OpenShift cluster.
 
 As mentioned before this is a java springboot application. Fiegn library is used to make the API call to STT REST Serving. Below is the list of libraries that are used for this application.
 ```

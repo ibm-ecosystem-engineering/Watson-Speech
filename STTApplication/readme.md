@@ -24,7 +24,7 @@ git clone https://github.com/ibm-build-labs/Watson-NLP
 ```
 This repository contains code that is used in this tutorial.
 
-## Steps to run on your local machine
+## Run on your local machine
 
 Follow the steps below to run the application on your local machine. In a subsequent section are instructions for running it on the same Kubernetes or OpenShift cluster where the Watson STT service is running.
 
@@ -57,8 +57,8 @@ The application will listen on port 8080. Access the application in your browser
 http://localhost:8080
 ```
 
-## Run in Kubernetes
-As an alternative to running the application on your local machine, in this 
+## Run on Kubernetes or OpenShift
+Follow the steps below to run the application on the same Kubernetes or OpenShift cluster in which your Watson STT service is running.
 
 ### 1. Build an Image.
 Here is a simple docker file we used to build a docker image.

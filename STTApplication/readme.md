@@ -1,4 +1,4 @@
-## STT Client Java Web Application
+## STT Client Application
 In this tutorial you will build and run a Java Spring Boot web application that relies on Watson Speech-to-Text (STT) as a back-end service. The application code can be used as a starting point when developing your own speech application.
 
 The application demonstrates two interfaces that a client program can use to leverage Watson STT.
@@ -12,13 +12,12 @@ In order to use this tutorial, you need to have first deployed an instance of Wa
 ![Diagram](architecture.png)
  
 ### Prerequisites
-- You need to have installed on your local machine:
--- Docker
--- Java 17
-- Eclipse, if you want to customize the application
+- You need Docker installed.
+- Java 17
+- Eclipse, if you want to customize the application (optional).
 - You have Watson STT deployed on a Kubernetes or OpenShift cluster.
 
-As mentioned before this is a java springboot application. Fiegn library is used to make the API call to STT REST Serving. Below is the list of libraries that are used for this application.
+The Feign library is used to make REST calls. Below is the list of libraries that are used for this application.
 ```
 <dependencies>
 		<dependency>
@@ -39,8 +38,9 @@ As mentioned before this is a java springboot application. Fiegn library is used
 		</dependency>
 </dependencies>
 ```
-### Code
-Clone the git repository containing our example code. Go to the directory that contains the code used in this tutorial.
+
+### Get the code
+Clone the following GitHub repository, and go to the directory that contains the sample code used in this tutorial.
 ```
 git clone https://github.com/ibm-build-labs/Watson-NLP
 ```
@@ -48,16 +48,16 @@ git clone https://github.com/ibm-build-labs/Watson-NLP
 cd Watson-NLP/STTApplication
 ```
 
-## Steps to run in localhost
+## Steps to run on your local machine
 
 ### 1. Build
-To build this application please make sure you are in the **STTApplication** directory.
+Ensure that you are in the directory 
 
-maven wrapper is used here to build and package the application
+A Maven wrapper is used here to build and package the application.
 ```
 ./mvnw clean package
 ```
-A target directory will be created and application will be packaged in jar. e.g **STTApplication-0.0.1-SNAPSHOT.jar**
+A target directory will be created and the application will be packaged in JAR file. e.g `STTApplication-0.0.1-SNAPSHOT.jar`.
 
 ### 2. Test
 - before testing the application please login Kubernetes cluster and expose the stt service endpoint

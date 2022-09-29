@@ -26,6 +26,8 @@ This repository contains code that is used in this tutorial.
 
 ## Steps to run on your local machine
 
+Follow the steps below to run the application on your local machine. In a subsequent section are instructions for running it on the same Kubernetes or OpenShift cluster where the Watson STT service is running.
+
 ### 1. Build
 Go to the directory that contains sample code for this tutorial.
 ```

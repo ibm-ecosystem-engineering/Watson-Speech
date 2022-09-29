@@ -12,10 +12,10 @@ In order to use this tutorial, you need to have first deployed an instance of Wa
 ![Diagram](architecture.png)
  
 ### Prerequisites
-- You need Docker installed.
-- Java 17
-- Eclipse, if you want to customize the application (optional).
-- You have Watson STT deployed on a Kubernetes or OpenShift cluster.
+- Docker is installed on your local machine.
+- Java 17 is installed.
+- Eclipse (optional) is installed, if you want to customize the application.
+- You have deployed Watson STT on a Kubernetes or OpenShift cluster.
 
 The Feign library is used to make REST calls. Below is the list of libraries that are used for this application.
 ```

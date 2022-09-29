@@ -17,6 +17,13 @@ In order to use this tutorial, you need to have first deployed an instance of Wa
 - Eclipse (optional) is installed, if you want to customize the application.
 - You have deployed Watson STT on a Kubernetes or OpenShift cluster.
 
+### Get the sample code
+Clone the following GitHub repository.
+```
+git clone https://github.com/ibm-build-labs/Watson-NLP
+```
+This repository contains code that is used in this tutorial.
+
 The Feign library is used to make REST calls. Below is the list of libraries that are used for this application.
 ```
 <dependencies>
@@ -39,16 +46,10 @@ The Feign library is used to make REST calls. Below is the list of libraries tha
 </dependencies>
 ```
 
-### Get the sample code
-Clone the following GitHub repository.
-```
-git clone https://github.com/ibm-build-labs/Watson-NLP
-```
-This repository contains code that is used in this tutorial.
-
 ## Steps to run on your local machine
 
 ### 1. Build
+Go to the directory that contains sample code for this tutorial.
 ```
 cd Watson-NLP/STTApplication
 ```
@@ -56,22 +57,22 @@ A Maven wrapper is used here to build and package the application.
 ```
 ./mvnw clean package
 ```
-A target directory will be created and the application will be packaged in JAR file. e.g `STTApplication-0.0.1-SNAPSHOT.jar`.
+The application will be packaged in JAR file: `target/STTApplication-0.0.1-SNAPSHOT.jar`.
 
 ### 2. Test
-- before testing the application please login Kubernetes cluster and expose the stt service endpoint
+Login Kubernetes cluster and expose the STT service endpoint.
 ```
 kubectl port-forward svc/install-1-stt-runtime 1080
 ```
-- Set an environment variable for STT service as below. Java application will read the environment variable and make REST calls to that exposed service.
+Set the following environment variable. The Java application will use this to find the STT service.
 ```
 export STT_SERVICE_ENDPOINT=127.0.0.1:1080
 ```
-- Run the application
+Run the application.
 ```
 java -jar target/STTApplication-0.0.1-SNAPSHOT.jar
 ```
-- The application you will be exposed at port 8080. You can access the application at
+The application will listen on port 8080. Access the application in your browser at the following URL.
 ```
 http://localhost:8080
 ```

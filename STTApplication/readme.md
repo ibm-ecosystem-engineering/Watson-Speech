@@ -24,28 +24,6 @@ git clone https://github.com/ibm-build-labs/Watson-NLP
 ```
 This repository contains code that is used in this tutorial.
 
-The Feign library is used to make REST calls. Below is the list of libraries that are used for this application.
-```
-<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-openfeign</artifactId>
-		</dependency>
-		<dependency>
-		  <groupId>io.github.openfeign</groupId>
-		  <artifactId>feign-httpclient</artifactId>
-		</dependency>
-</dependencies>
-```
-
 ## Steps to run on your local machine
 
 ### 1. Build
@@ -192,3 +170,28 @@ kubectl port-forward svc/stt-web-app 8080
 ```
 
 you can access the app at http://localhost:8080
+
+## Understanding the Application Code
+
+The Feign library is used to make REST calls. Below is the list of libraries that are used for this application.
+```
+<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
+		<dependency>
+		  <groupId>io.github.openfeign</groupId>
+		  <artifactId>feign-httpclient</artifactId>
+		</dependency>
+</dependencies>
+```
+

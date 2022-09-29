@@ -39,20 +39,19 @@ The Feign library is used to make REST calls. Below is the list of libraries tha
 </dependencies>
 ```
 
-### Get the code
-Clone the following GitHub repository, and go to the directory that contains the sample code used in this tutorial.
+### Get the sample code
+Clone the following GitHub repository.
 ```
 git clone https://github.com/ibm-build-labs/Watson-NLP
 ```
-```
-cd Watson-NLP/STTApplication
-```
+This repository contains code that is used in this tutorial.
 
 ## Steps to run on your local machine
 
 ### 1. Build
-Ensure that you are in the directory 
-
+```
+cd Watson-NLP/STTApplication
+```
 A Maven wrapper is used here to build and package the application.
 ```
 ./mvnw clean package

@@ -39,7 +39,7 @@ Run the command below to build and package the application.
 ```
 The application will be packaged in JAR file: `target/STTApplication-0.0.1-SNAPSHOT.jar`.
 
-### 2. Test
+### 2. Run
 Login Kubernetes cluster and expose the STT service endpoint.
 ```
 kubectl port-forward svc/install-1-stt-runtime 1080
@@ -52,7 +52,10 @@ Run the application.
 ```
 java -jar target/STTApplication-0.0.1-SNAPSHOT.jar
 ```
-The application will listen on port 8080. Access the application in your browser using the following URL.
+The application will listen on port 8080. 
+
+### 3. Test
+Access the application in your browser using the following URL.
 ```
 http://localhost:8080
 ```
@@ -69,10 +72,7 @@ Run the command below to build and package the application.
 ```
 ./mvnw clean package
 ```
-The application will be packaged in JAR file: `target/STTApplication-0.0.1-SNAPSHOT.jar`.
-
-### 2. Build a Docker image
-Here is a simple docker file we used to build a Docker image.
+The application will be packaged in JAR file: `target/STTApplication-0.0.1-SNAPSHOT.jar`.  We will package this into a Docker image.
 ```
 FROM openjdk:17-jdk-alpine
 ARG JAR_FILE=target/*.jar

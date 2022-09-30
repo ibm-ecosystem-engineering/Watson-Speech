@@ -117,8 +117,8 @@ spec:
 ```
 Before you can use this you will need to modify the following:
  - **Image.** This should point to image in the registry that you pushed to earlier.
- - **STT_SERVICE_ENDPOINT.** This should be set to include the name and port of the Watson STT service running your Kubernetes or OpenShift cluster.
-You can check the service endpoint with the following command.
+ - **STT_SERVICE_ENDPOINT.** Set this to the name and port of the Watson STT Kubernetes Service running your Kubernetes or OpenShift cluster.
+You can find the Service with the following command.
 ```
 kubectl get svc 
 ```
@@ -150,12 +150,14 @@ stt-web-app                   ClusterIP   172.21.238.164   <none>        8080/TC
 ```
 
 ### 3. Test 
-To access the app, you need to do a port-forward
+To access the Application from your local machine, set port forwarding.
 ```
 kubectl port-forward svc/stt-web-app 8080
 ```
-
-you can access the app at http://localhost:8080
+You can then access the Application from your browser at the URL:
+```
+http://localhost:8080
+```
 
 ## Understanding the Application Code
 

@@ -32,7 +32,7 @@ Go to the directory that contains sample code for this tutorial.
 ```
 cd Watson-NLP/STTApplication
 ```
-Run the command below to build and package the application.
+Run the build command.
 ```
 ./mvnw clean package
 ```
@@ -43,7 +43,7 @@ Login Kubernetes cluster and expose the STT service endpoint.
 ```
 kubectl port-forward svc/install-1-stt-runtime 1080
 ```
-Set the following environment variable. The Java application will use this to find the STT service.
+Set the following environment variable. The Java application will use this to access the STT service.
 ```
 export STT_SERVICE_ENDPOINT=127.0.0.1:1080
 ```
@@ -54,7 +54,7 @@ java -jar target/STTApplication-0.0.1-SNAPSHOT.jar
 The application will listen on port 8080. 
 
 ### 3. Test
-Access the application in your browser using the following URL.
+Access the application in your browser with the following URL.
 ```
 http://localhost:8080
 ```
@@ -67,17 +67,17 @@ Go to the directory that contains sample code for this tutorial.
 ```
 cd Watson-NLP/STTApplication
 ```
-Run the command below to build and package the application.
+Run the build command.
 ```
 ./mvnw clean package
 ```
 The application will be packaged in JAR file `target/STTApplication-0.0.1-SNAPSHOT.jar`.  
 
-Containerize this, using the Dockerfile in the current directory. Build the image with the below command, but in the `-t` option replace the registry name with the registry that you will use to store the image.
+Containerize the application, using the Dockerfile in the current directory. In the following command change the `-t` option, replacing the registry name with the one you plan to use.
 ```
 docker build . -t us.icr.io/watson-core-demo/stt-web-application:v1
 ```
-Push the image to the registry, replacing the registry name in the following command. 
+Push the image to your chosen registry, replacing the registry name in the following command. 
 ```
 docker push us.icr.io/watson-core-demo/stt-web-application:v1
 ```

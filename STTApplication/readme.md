@@ -73,7 +73,7 @@ Run the command below to build and package the application.
 ```
 The application will be packaged in JAR file `target/STTApplication-0.0.1-SNAPSHOT.jar`.  
 
-We will package this into a Docker image with the Dockerfile in this directory. Build the image with the below command, but in the `-t` option replace the registry name with the registry that you will use to store the image.
+Containerize this, using the Dockerfile in the current directory. Build the image with the below command, but in the `-t` option replace the registry name with the registry that you will use to store the image.
 ```
 docker build . -t us.icr.io/watson-core-demo/stt-web-application:v1
 ```
@@ -83,6 +83,8 @@ docker push us.icr.io/watson-core-demo/stt-web-application:v1
 ```
 
 ### 2. Run
+The Kubernetes manifest is 
+
 We are creating two Kubernetes resources here, deployment and a service. In deployment.yaml file you need to modify two things
  - Image location
  - Environmental variable STT_SERVICE_ENDPOINT

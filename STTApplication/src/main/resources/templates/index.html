@@ -3,8 +3,13 @@
 
 <head>
 	<title>Watson Speech to Text (STT) Library</title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-		integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+	  <link rel="stylesheet"
+        href="https://1.www.s81c.com/common/carbon-for-ibm-dotcom/tag/v1/canary/plex.css"/>
+  <link rel="stylesheet"
+        href="https://1.www.s81c.com/common/carbon-for-ibm-dotcom/tag/v1/canary/grid.css"/>
+  <style>
+  	
+  </style>
 </head>
 <style>
 	pre {
@@ -19,100 +24,130 @@
 		word-wrap: break-word;
 		/* IE 5.5+ */
 	}
+	
+	td {
+	  vertical-align: middle;
+	  height: 50px;
+	}
 </style>
 
 <body>
-	<nav class="navbar navbar-dark bg-primary">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="/index">
-				<img th:src="@{/logo/ibm_logo.png}" alt="" width="60" height="40"
-				class="d-inline-block align-text-top">
-			</a>
-			<a class="navbar-brand" href="/index">Watson Speech to Text (STT) Library</a>
-			<a class="navbar-brand" href="/index">Build Labs</a>
-		</div>
-	</nav>
-
-	<div class="container-lg card" style="margin-top: 20px;padding:20px">
-		<p class="h5">Sample audio files to generate and download transcript</p>
-		<table class="table">
-			<tr>
-				<td>
-					Online flower shop
-				</td>
-				<td>
-					<audio controls th:src="@{/audio/CallCenterSample1.mp3}" Your browser does not support the
-						<code>audio</code>
-						element.
-					</audio>
-				</td>
-				<td>
-					<a href="/transcript/CallCenterSample1.mp3" class="btn btn-primary" role="button">Convert</a>
-					<a href="/transcript/CallCenterSample1.mp3/download" class="btn btn-primary"
-						role="button">Download</a>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					Auto centre
-				</td>
-				<td>
-					<audio controls th:src="@{/audio/CallCenterSample2.mp3}" Your browser does not support the
-						<code>audio</code>
-						element.
-					</audio>
-				</td>
-				<td>
-					<a href="/transcript/CallCenterSample2.mp3" class="btn btn-primary" role="button">Convert</a>
-					<a href="/transcript/CallCenterSample2.mp3" class="btn btn-primary" role="button">Download</a>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					E-commerce
-				</td>
-				<td>
-					<audio controls th:src="@{/audio/CallCenterSample3.mp3}" Your browser does not support the
-						<code>audio</code>
-						element.
-					</audio>
-				</td>
-				<td>
-					<a href="/transcript/CallCenterSample3.mp3" class="btn btn-primary" role="button">Convert</a>
-					<a href="/transcript/CallCenterSample3.mp3/download" class="btn btn-primary"
-						role="button">Download</a>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="3" align="center">
-					<a href="/transcript/all" class="btn btn-primary" role="button">Download all</a>
-				</td>
-			</tr>
-		</table>
-	</div>
-	<div class="container-lg card" style="margin-top: 20px;padding:20px">
-		<form method="post" th:action="@{/uploadFile}" enctype="multipart/form-data">
-
-			<div class="mb-3">
-				<label for="formFile" class="form-label h5">Upload audio file to get a transcript</label>
-				<input class="form-control" name="file" type="file" id="formFile">
+	<bx-header aria-label="IBM Build Lab">
+		<bx-header-menu-button button-label-active="Close menu" button-label-inactive="Open menu"></bx-header-menu-button>
+		<bx-header-name href="javascript:void 0" prefix="IBM">Build Lab</bx-header-name>
+		<div style="color:ghostwhite;text-align:center;width:80%">
+            <h3>Watson Speech To Text</h3> 
+          </div>
+	</bx-header>
+	
+	<div class="bx--grid">
+		<div class="bx--row">
+			<div class="bx--col-sm-4 bx--col-lg-12" style="margin: 6rem 0;">
+			
+				<bx-tabs trigger-content="Select an item" value="panel-1">
+					<bx-tab id="sample-audio" target="panel-1" value="panel-1">Sample Audio</bx-tab>
+					<bx-tab id="upload-your-audio" target="panel-2" value="panel-2">Upload Your Audio</bx-tab>
+					</bx-tabs>
+				
+				<div class="bx-ce-demo-devenv--tab-panels">
+			  		<div id="panel-1" role="tabpanel" aria-labelledby="sample-audio">
+			  			<h4 style="text-align:center; margin-top:10px">Sample audio files to generate and download transcript</h4>
+						<table style="margin-top: 10px; width:100%;vertical-align: middle;" class="table">
+							<tr>
+								<td width="30%">
+									Online flower shop
+								</td>
+								<td width=50%>
+									
+									<audio controls th:src="@{/audio/CallCenterSample1.mp3}" Your browser does not support the
+										<code>audio</code>
+										element.
+									</audio>
+								</td>
+								<td width="20%">
+									<bx-link href="/transcript/CallCenterSample1.mp3"> Convert </bx-link> | 
+									<bx-link href="/transcript/CallCenterSample1.mp3/download"> Download </bx-link>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									Auto centre
+								</td>
+								<td>
+									<audio controls th:src="@{/audio/CallCenterSample2.mp3}" Your browser does not support the
+										<code>audio</code>
+										element.
+									</audio>
+								</td>
+								<td>
+									<bx-link href="/transcript/CallCenterSample1.mp3"> Convert </bx-link> |
+									<bx-link href="/transcript/CallCenterSample1.mp3/download"> Download </bx-link>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									E-commerce
+								</td>
+								<td>
+									<audio controls th:src="@{/audio/CallCenterSample3.mp3}" Your browser does not support the
+										<code>audio</code>
+										element.
+									</audio>
+								</td>
+								<td>
+									<bx-link href="/transcript/CallCenterSample1.mp3"> Convert </bx-link> | 
+									<bx-link href="/transcript/CallCenterSample1.mp3/download"> Download </bx-link>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="3" align="center">
+									<bx-link href="/transcript/all" class="btn btn-primary" role="button">Download all</bx-link>
+								</td>
+							</tr>
+						</table>
+			  		</div>
+			  		<div id="panel-2" role="tabpanel" aria-labelledby="upload-your-audio" hidden>
+						<h4 style="text-align:center; margin-top:10px">Upload an audio file to generate and download transcript</h4>
+						<form method="post" th:action="@{/uploadFile}" enctype="multipart/form-data">
+							<table style="margin-top: 10px; width:100%;vertical-align: middle;" class="table">
+								<tr>
+									<td>
+										<input class="form-control" name="file" type="file" id="formFile">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<button type="submit" class="bx--btn bx--btn--primary bx--btn--sm" > Convert</button>
+									</td>
+								</tr>
+							</table>
+			  			</form>
+			  		</div>
+			  		<table th:if="${result ne null}" class="table table-striped">
+						<th:block th:each="rs : ${result}">
+							<tr>
+								<td th:text="'Confidence: ' + ${rs.confidence}"></td>
+							</tr>
+							<tr>
+								<td th:text="'Transcript: ' + ${rs.transcript}"></td>
+							</tr>
+						</th:block>
+					</table>
+				</div>
 			</div>
-
-			<button type="submit" class="btn btn-primary">Convert</button>
-		</form>
+		</div>
 	</div>
-	<div th:if="${result ne null}" class="container-lg card" style="margin-top: 20px;padding:20px">
-		<table class="table table-striped">
-			<th:block th:each="rs : ${result}">
-				<tr>
-					<td th:text="'Confidence: ' + ${rs.confidence}"></td>
-				</tr>
-				<tr>
-					<td th:text="'Transcript: ' + ${rs.transcript}"></td>
-				</tr>
-			</th:block>
-		</table>
+	
+	<div  class="bx--grid">
+		
+	</div>
+		
 	</div>
 </body>
+<script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/ui-shell.min.js"></script>
+<script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/tabs.min.js"></script>
+<script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/link.min.js"></script>
+<script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/button.min.js"></script>
+
 
 </html>

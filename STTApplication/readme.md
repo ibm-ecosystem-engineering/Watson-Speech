@@ -25,8 +25,7 @@ git clone https://github.com/ibm-build-labs/Watson-NLP
 This repository contains code that is used in this tutorial.
 
 ## Run on your local machine
-
-Follow the steps below to run the application on your local machine. In a subsequent section are instructions for running it on the same Kubernetes or OpenShift cluster where the Watson STT service is running.
+Follow the steps below to run the application front-end on your local machine, 
 
 ### 1. Build
 Go to the directory that contains sample code for this tutorial.
@@ -37,7 +36,7 @@ Run the command below to build and package the application.
 ```
 ./mvnw clean package
 ```
-The application will be packaged in JAR file: `target/STTApplication-0.0.1-SNAPSHOT.jar`.
+The application will be packaged in JAR file `target/STTApplication-0.0.1-SNAPSHOT.jar`.
 
 ### 2. Run
 Login Kubernetes cluster and expose the STT service endpoint.
@@ -61,7 +60,7 @@ http://localhost:8080
 ```
 
 ## Run on Kubernetes or OpenShift
-Follow the steps below to run the application on the same Kubernetes or OpenShift cluster in which your Watson STT service is running.
+Follow the steps below to run the application front-end on the Kubernetes or OpenShift cluster in which the back-end Watson STT service is running.
 
 ### 1. Build 
 Go to the directory that contains sample code for this tutorial.
@@ -72,9 +71,9 @@ Run the command below to build and package the application.
 ```
 ./mvnw clean package
 ```
-The application will be packaged in JAR file: `target/STTApplication-0.0.1-SNAPSHOT.jar`.  We will package this into a Docker image with the Dockerfile in this directory. 
+The application will be packaged in JAR file `target/STTApplication-0.0.1-SNAPSHOT.jar`.  
 
-Build the image with the below command, but in the `-t` option replace the registry name with the registry that you will use to store the image.
+We will package this into a Docker image with the Dockerfile in this directory. Build the image with the below command, but in the `-t` option replace the registry name with the registry that you will use to store the image.
 ```
 docker build . -t us.icr.io/watson-core-demo/stt-web-application:v1
 ```
@@ -83,7 +82,7 @@ Push the image to the registry, replacing the registry name in the following com
 docker push us.icr.io/watson-core-demo/stt-web-application:v1
 ```
 
-### 2. Deploy
+### 2. Run
 We are creating two Kubernetes resources here, deployment and a service. In deployment.yaml file you need to modify two things
  - Image location
  - Environmental variable STT_SERVICE_ENDPOINT

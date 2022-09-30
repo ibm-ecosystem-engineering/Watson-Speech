@@ -161,7 +161,9 @@ http://localhost:8080
 
 ## Understanding the Application Code
 
-The Feign library is used to make REST calls. Below is the list of libraries that are used for this application.
+The application is written in Java. It uses [Feign]("https://github.com/OpenFeign/feign") to wrap the REST calls. 
+
+Below is the list of libraries that are used for this application.
 ```
 <dependencies>
 		<dependency>

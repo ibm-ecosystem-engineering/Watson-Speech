@@ -33,7 +33,7 @@ Go to the directory that contains sample code for this tutorial.
 ```
 cd Watson-NLP/STTApplication
 ```
-A Maven wrapper is used here to build and package the application.
+Run the command below to build and package the application.
 ```
 ./mvnw clean package
 ```
@@ -60,20 +60,26 @@ http://localhost:8080
 ## Run on Kubernetes or OpenShift
 Follow the steps below to run the application on the same Kubernetes or OpenShift cluster in which your Watson STT service is running.
 
-### 1. Build an Image.
-Here is a simple docker file we used to build a docker image.
+### 1. Build 
+Go to the directory that contains sample code for this tutorial.
+```
+cd Watson-NLP/STTApplication
+```
+Run the command below to build and package the application.
+```
+./mvnw clean package
+```
+The application will be packaged in JAR file: `target/STTApplication-0.0.1-SNAPSHOT.jar`.
+
+### 2. Build a Docker image
+Here is a simple docker file we used to build a Docker image.
 ```
 FROM openjdk:17-jdk-alpine
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 ```
-- Before building the image please execute the below command to package the application
-```
-./mvnw clean package
-```
-
-- Build the image with the below command. I am using ibm container registry to push the image. You can choose a repository on your own.
+Build the image with the below command. I am using ibm container registry to push the image. You can choose a repository on your own.
 ```
 docker build . -t us.icr.io/watson-core-demo/stt-web-application:v1
 ```

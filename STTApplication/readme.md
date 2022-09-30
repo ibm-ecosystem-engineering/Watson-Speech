@@ -72,21 +72,17 @@ Run the command below to build and package the application.
 ```
 ./mvnw clean package
 ```
-The application will be packaged in JAR file: `target/STTApplication-0.0.1-SNAPSHOT.jar`.  We will package this into a Docker image.
-```
-FROM openjdk:17-jdk-alpine
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
-```
-Build the image with the below command. I am using ibm container registry to push the image. You can choose a repository on your own.
+The application will be packaged in JAR file: `target/STTApplication-0.0.1-SNAPSHOT.jar`.  We will package this into a Docker image with the Dockerfile in this directory. 
+
+Build the image with the below command, but in the `-t` option replace the registry name with the registry that you will use to store the image.
 ```
 docker build . -t us.icr.io/watson-core-demo/stt-web-application:v1
 ```
-- Push the image to upstream
+Push the image to the registry, replacing the registry name in the following command. 
 ```
 docker push us.icr.io/watson-core-demo/stt-web-application:v1
 ```
+
 ### 2. Deploy
 We are creating two Kubernetes resources here, deployment and a service. In deployment.yaml file you need to modify two things
  - Image location

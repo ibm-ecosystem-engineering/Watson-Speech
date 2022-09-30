@@ -83,13 +83,7 @@ docker push us.icr.io/watson-core-demo/stt-web-application:v1
 ```
 
 ### 2. Run
-The Kubernetes manifest is 
-
-We are creating two Kubernetes resources here, deployment and a service. In deployment.yaml file you need to modify two things
- - Image location
- - Environmental variable STT_SERVICE_ENDPOINT
-
-Here is a sample deployment.yaml file and highlighted the text you might want to replace.
+The Kubernetes manifest is in the `deployment` subdirectory.  There are two Kubernetes resources: a Deployment and a Service. Below is Deployment manifest, from `deployment/deployment.yaml`.
 ```
 apiVersion: apps/v1
 kind: Deployment
@@ -121,8 +115,10 @@ spec:
         ports:
         - containerPort: 8080
 ```
-
-Get STT service name from the Kubernetes cluster you have deployed your STT Serving. Here is an example. In my case my STT service name is install-1-stt-runtime and port is 1080 for non tls and for tls 1443
+Before you can use this you will need to modify the following:
+ - **Image.** This should point to image in the registry that you pushed to earlier.
+ - **STT_SERVICE_ENDPOINT.** This should be set to include the name and port of the Watson STT service running your Kubernetes or OpenShift cluster.
+You can check the service endpoint with the following command.
 ```
 kubectl get svc 
 ```
@@ -133,29 +129,11 @@ install-1-stt-runtime         NodePort    172.21.206.51    <none>        1080:30
 install-1-tts-runtime         NodePort    172.21.199.140   <none>        1080:31439/TCP,1443:30824/TCP   14d
 ```
 
-Here I am creating a clusterIP service exposing in port 8080, Here is the yaml file
-```
-apiVersion: v1
-kind: Service
-metadata:
-  name: stt-web-app
-spec:
-  type: ClusterIP
-  selector:
-    app: stt-web-app
-  ports:
-  - port: 8080
-    protocol: TCP
-    targetPort: 8080
-```
-
-deploy kubernetes resource by executing the below command.
+Create the kubernetes resource.
 ```
 kubectl apply -f /deployment/
 ```
-### 3. Test 
-
-Check that the pod and service are running.
+Check that the Pod and Service are running.
 ```
 kubectl get pods
 ```
@@ -171,6 +149,7 @@ NAME                          TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)
 stt-web-app                   ClusterIP   172.21.238.164   <none>        8080/TCP                        25h
 ```
 
+### 3. Test 
 To access the app, you need to do a port-forward
 ```
 kubectl port-forward svc/stt-web-app 8080

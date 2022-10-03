@@ -161,27 +161,42 @@ http://localhost:8080
 
 ## Understanding the Application Code
 
-The application is written in Java. It uses [Feign](https://github.com/OpenFeign/feign) to wrap the REST calls. 
+The application is a Java [Spring Boot]([https://spring.io/projects/spring-boot](https://spring.io/projects/spring-boot) application. It uses [Feign](https://github.com/OpenFeign/feign) to wrap the REST calls made to the Watson STT back-end. The source files are in the sample code repository under the directory:
+```
+Watson-Speech/STTApplication/src/main
+```
+The following files are under this subdirectory.
+```
+.
+├── java
+│   └── com
+│       └── build
+│           └── labs
+│               ├── SttApplication.java
+│               ├── controller
+│               │   └── STTController.java
+│               ├── feignclient
+│               │   ├── FeignSTTClient.java
+│               │   └── SSTServingClient.java
+│               ├── model
+│               │   ├── Alternative.java
+│               │   ├── Output.java
+│               │   ├── Result.java
+│               │   └── Summary.java
+│               └── services
+│                   └── STTService.java
+└── resources
+    ├── application.properties
+    ├── static
+    │   ├── audio
+    │   │   ├── CallCenterSample1.mp3
+    │   │   ├── CallCenterSample2.mp3
+    │   │   └── CallCenterSample3.mp3
+    │   └── logo
+    │       └── ibm_logo.png
+    └── templates
+        └── index.html
+```
 
-Below is the list of libraries that are used for this application.
-```
-<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-openfeign</artifactId>
-		</dependency>
-		<dependency>
-		  <groupId>io.github.openfeign</groupId>
-		  <artifactId>feign-httpclient</artifactId>
-		</dependency>
-</dependencies>
-```
+
 

@@ -60,7 +60,6 @@ public class STTController {
 		try (InputStream inputStream = multipartFile.getInputStream()) {
 			String transcript = sttService.transcriptAudio(inputStream);
 			List<Output> outputList = formatOutput(transcript);
-			System.out.println(outputList);
 			return ResponseEntity.ok(outputList);
 			
 		} catch (IOException ioe) {

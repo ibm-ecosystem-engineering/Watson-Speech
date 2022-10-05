@@ -9,7 +9,6 @@
 		async function uploadFile() {
 			let formData = new FormData();
 			formData.append("file", fileupload.files[0]);
-			console.log(formData)
 			let response = await fetch('/uploadFile', {
 				method: "POST",
 				body: formData
@@ -149,7 +148,7 @@
 								</td>
 							</tr>
 						</table>
-						<div id="websocketResult">
+						<div style="padding:10px" id="websocketResult">
 							
 						</div>
 					</div>
@@ -203,7 +202,6 @@
 
 			webSocket.onmessage = function (event) {
 				var data = JSON.parse(event.data);
-				console.log(data);
 				if(data.results !== undefined){
 					data.results.forEach((element) => {
 						element.alternatives.forEach((data) => {

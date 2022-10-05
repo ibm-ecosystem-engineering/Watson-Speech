@@ -29,4 +29,9 @@ public class Output {
 		this.confidence = confidence;
 	}
 
+	@Override
+	public String toString() {
+		return "Output [transcript=" + transcript + ", confidence=" + confidence + "]";
+	}
+
 }

@@ -3,69 +3,65 @@
 
 <head>
 	<title>Watson Speech to Text (STT) Library</title>
-	  <link rel="stylesheet"
-        href="https://1.www.s81c.com/common/carbon-for-ibm-dotcom/tag/v1/canary/plex.css"/>
-  <link rel="stylesheet"
-        href="https://1.www.s81c.com/common/carbon-for-ibm-dotcom/tag/v1/canary/grid.css"/>
-  <style>
-  	
-  </style>
+	<link rel="stylesheet" href="https://1.www.s81c.com/common/carbon-for-ibm-dotcom/tag/v1/canary/plex.css" />
+	<link rel="stylesheet" href="https://1.www.s81c.com/common/carbon-for-ibm-dotcom/tag/v1/canary/grid.css" />
+	<script>
+		async function uploadFile() {
+			let formData = new FormData();
+			formData.append("file", fileupload.files[0]);
+			console.log(formData)
+			let response = await fetch('/uploadFile', {
+				method: "POST",
+				body: formData
+			}).then((response) => response.json())
+				.then((data) => {
+					var root = document.getElementById('trRoot');
+					data.forEach(element => root.insertAdjacentHTML('beforebegin', `<bx-table-row><bx-table-cell>${element.confidence}</bx-table-cell><bx-table-cell>${element.transcript}</bx-table-cell></bx-table-row>`));
+
+				});
+
+		}
+	</script>
 </head>
-<style>
-	pre {
-		white-space: -moz-pre-wrap;
-		/* Mozilla, supported since 1999 */
-		white-space: -pre-wrap;
-		/* Opera */
-		white-space: -o-pre-wrap;
-		/* Opera */
-		white-space: pre-wrap;
-		/* CSS3 - Text module (Candidate Recommendation) http://www.w3.org/TR/css3-text/#white-space */
-		word-wrap: break-word;
-		/* IE 5.5+ */
-	}
-	
-	td {
-	  vertical-align: middle;
-	  height: 50px;
-	}
-</style>
 
 <body>
 	<bx-header aria-label="IBM Build Lab">
-		<bx-header-menu-button button-label-active="Close menu" button-label-inactive="Open menu"></bx-header-menu-button>
+		<bx-header-menu-button button-label-active="Close menu" button-label-inactive="Open menu">
+		</bx-header-menu-button>
 		<bx-header-name href="javascript:void 0" prefix="IBM">Build Lab</bx-header-name>
 		<div style="color:ghostwhite;text-align:center;width:80%">
-            <h3>Watson Speech To Text</h3> 
-          </div>
+			<h3>Watson Speech To Text</h3>
+		</div>
 	</bx-header>
-	
+
 	<div class="bx--grid">
 		<div class="bx--row">
 			<div class="bx--col-sm-4 bx--col-lg-12" style="margin: 6rem 0;">
-			
+
 				<bx-tabs trigger-content="Select an item" value="panel-1">
 					<bx-tab id="sample-audio" target="panel-1" value="panel-1">Sample Audio</bx-tab>
 					<bx-tab id="upload-your-audio" target="panel-2" value="panel-2">Upload Your Audio</bx-tab>
-					</bx-tabs>
-				
+					<bx-tab id="upload-your-audio" target="panel-3" value="panel-3">Streaming Audio</bx-tab>
+				</bx-tabs>
+
 				<div class="bx-ce-demo-devenv--tab-panels">
-			  		<div id="panel-1" role="tabpanel" aria-labelledby="sample-audio">
-			  			<h4 style="text-align:center; margin-top:10px">Sample audio files to generate and download transcript</h4>
+					<div id="panel-1" role="tabpanel" aria-labelledby="sample-audio">
+						<h4 style="text-align:center; margin-top:10px">Sample audio files to generate and download
+							transcript</h4>
 						<table style="margin-top: 10px; width:100%;vertical-align: middle;" class="table">
 							<tr>
 								<td width="30%">
 									Online flower shop
 								</td>
 								<td width=50%>
-									
-									<audio controls th:src="@{/audio/CallCenterSample1.mp3}" Your browser does not support the
-										<code>audio</code>
+
+									<audio controls th:src="@{/audio/CallCenterSample1.mp3}" Your browser does not
+										support the <code>audio</code>
 										element.
 									</audio>
 								</td>
 								<td width="20%">
-									<bx-link href="/transcript/CallCenterSample1.mp3"> Convert </bx-link> | 
+									<bx-link href="/transcript/CallCenterSample1.mp3"> Convert </bx-link> |
 									<bx-link href="/transcript/CallCenterSample1.mp3/download"> Download </bx-link>
 								</td>
 							</tr>
@@ -74,8 +70,8 @@
 									Auto centre
 								</td>
 								<td>
-									<audio controls th:src="@{/audio/CallCenterSample2.mp3}" Your browser does not support the
-										<code>audio</code>
+									<audio controls th:src="@{/audio/CallCenterSample2.mp3}" Your browser does not
+										support the <code>audio</code>
 										element.
 									</audio>
 								</td>
@@ -89,65 +85,174 @@
 									E-commerce
 								</td>
 								<td>
-									<audio controls th:src="@{/audio/CallCenterSample3.mp3}" Your browser does not support the
-										<code>audio</code>
+									<audio controls th:src="@{/audio/CallCenterSample3.mp3}" Your browser does not
+										support the <code>audio</code>
 										element.
 									</audio>
 								</td>
 								<td>
-									<bx-link href="/transcript/CallCenterSample1.mp3"> Convert </bx-link> | 
+									<bx-link href="/transcript/CallCenterSample1.mp3"> Convert </bx-link> |
 									<bx-link href="/transcript/CallCenterSample1.mp3/download"> Download </bx-link>
 								</td>
 							</tr>
 							<tr>
-								<td colspan="3" align="center">
-									<bx-link href="/transcript/all" class="btn btn-primary" role="button">Download all</bx-link>
+								<td colspan="3" align="center" style="padding-top: 10px;padding-bottom: 10px">
+									<bx-link href="/transcript/all" class="btn btn-primary" role="button">Download all
+									</bx-link>
 								</td>
 							</tr>
 						</table>
-			  		</div>
-			  		<div id="panel-2" role="tabpanel" aria-labelledby="upload-your-audio" hidden>
-						<h4 style="text-align:center; margin-top:10px">Upload an audio file to generate and download transcript</h4>
-						<form method="post" th:action="@{/uploadFile}" enctype="multipart/form-data">
-							<table style="margin-top: 10px; width:100%;vertical-align: middle;" class="table">
-								<tr>
-									<td>
-										<input class="form-control" name="file" type="file" id="formFile">
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<button type="submit" class="bx--btn bx--btn--primary bx--btn--sm" > Convert</button>
-									</td>
-								</tr>
-							</table>
-			  			</form>
-			  		</div>
-			  		<table th:if="${result ne null}" class="table table-striped">
-						<th:block th:each="rs : ${result}">
+						<bx-table th:if="${result ne null}" class="table table-striped">
+							<bx-table-body>
+								<th:block th:each="rs : ${result}">
+									<bx-table-row>
+										<bx-table-cell th:text="'Confidence: ' + ${rs.confidence}"></bx-table-cell>
+									</bx-table-row>
+									<bx-table-row>
+										<bx-table-cell th:text="'Transcript: ' + ${rs.transcript}"></bx-table-cell>
+									</bx-table-row>
+								</th:block>
+							</bx-table-body>
+						</bx-table>
+					</div>
+					<div id="panel-2" role="tabpanel" aria-labelledby="upload-your-audio" hidden>
+						<h4 style="text-align:center; margin-top:10px">Upload an audio file to generate transcript</h4>
+						<table style="margin-top: 10px; margin-bottom:10px; width:100%;vertical-align: middle;"
+							class="table">
 							<tr>
-								<td th:text="'Confidence: ' + ${rs.confidence}"></td>
+								<td style="padding-bottom: 10px;">
+									<input class="bx--btn bx--btn--primary bx--btn--sm" name="fileupload" type="file"
+										id="fileupload">
+								</td>
 							</tr>
 							<tr>
-								<td th:text="'Transcript: ' + ${rs.transcript}"></td>
+								<td>
+									<bx-btn type="submit" class="bx--btn bx--btn--primary bx--btn--sm"
+										onclick="uploadFile()"> Convert</bx-btn>
+								</td>
 							</tr>
-						</th:block>
-					</table>
+						</table>
+						<bx-table>
+							<bx-table-body>
+								<bx-table-row id="trRoot"></bx-table-row>
+							</bx-table-body>
+						</bx-table>
+					</div>
+					<div id="panel-3" role="tabpanel" aria-labelledby="upload-your-audio" hidden>
+						<h4 style="text-align:center; margin-top:10px">Streaming using websocket</h4>
+						<table>
+							<tr>
+								<td style="padding:10px">
+									<bx-btn id="action" onclick="handleAction()"> Start Recording..
+										<Microphone />
+									</bx-btn>
+								</td>
+							</tr>
+						</table>
+						<div id="websocketResult">
+							
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	<div  class="bx--grid">
-		
 	</div>
-		
+
 	</div>
 </body>
 <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/ui-shell.min.js"></script>
 <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/tabs.min.js"></script>
 <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/link.min.js"></script>
 <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/button.min.js"></script>
+<script type="module"
+	src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/file-uploader.min.js"></script>
+<script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/data-table.min.js"></script>
+<script>
 
+	const sendData = (webSocket, data) => {
+		var message = {
+			'action': 'start'
+		};
+
+		try {
+			webSocket.send(JSON.stringify(message));
+			webSocket.send(data);
+			webSocket.send(JSON.stringify({action: 'stop'}));
+		} catch (exceptionVar) {
+
+		}
+	}
+
+	const recordAudio = () =>
+		new Promise(async resolve => {
+			const stream = await navigator.mediaDevices.getUserMedia({audio: true});
+			const mediaRecorder = new MediaRecorder(stream);
+			let webSocket = new WebSocket("wss://localhost:1443/speech-to-text/api/v1/recognize");
+			let audioChunks = [];
+			let stopButton = document.getElementById("stopAction");
+
+			mediaRecorder.addEventListener("dataavailable", event => {
+
+				if (event.data.size > 0) {
+					audioChunks.push(event.data);
+					const audioBlob = new Blob(audioChunks, {type: "audio/mpeg"});
+					sendData(webSocket, audioBlob);
+				}
+			});
+
+			webSocket.onmessage = function (event) {
+				var data = JSON.parse(event.data);
+				console.log(data);
+				if(data.results !== undefined){
+					data.results.forEach((element) => {
+						element.alternatives.forEach((data) => {
+							const divelement = document.getElementById("websocketResult");
+							divelement.innerHTML = data.transcript;
+							console.log(data.transcript);
+						} )
+					});
+				}
+			};
+
+
+			const start = () => mediaRecorder.start(2000);
+
+			const stop = () =>
+				new Promise(resolve => {
+					mediaRecorder.addEventListener("stop", () => {
+						const audioBlob = new Blob(audioChunks, {type: "audio/mpeg"});
+
+						//sendData(webSocket,audioBlob);
+						//const audioUrl = URL.createObjectURL(audioBlob);
+						//const audio = new Audio(audioUrl);
+						//const play = () => audio.play();
+						//resolve({audioBlob, audioUrl, play});
+						resolve({audioBlob});
+					});
+
+					mediaRecorder.stop();
+				});
+
+			resolve({start, stop});
+		});
+
+	const sleep = time => new Promise(resolve => setTimeout(resolve, time));
+
+	const handleAction = async () => {
+		const recorder = await recordAudio();
+		const actionButton = document.getElementById("action");
+		actionButton.disabled = true;
+
+		recorder.start();
+		await sleep(20000);
+		await recorder.stop();
+
+		//audio.play();
+		actionButton.disabled = false;
+	};
+
+
+</script>
 
 </html>

@@ -3,11 +3,13 @@ package com.build.labs.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -51,21 +53,19 @@ public class STTController {
 	 * to index page with model attribute result and if result holds any value
 	 * index page displays the result.
 	 */
-	@PostMapping("/uploadFile")
-	public String uploadFile(@RequestParam("file") MultipartFile multipartFile, Model model)
+	@PostMapping(value= "/uploadFile", produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<List<Output>> uploadFile(@RequestParam("file") MultipartFile multipartFile)
 			throws IOException, URISyntaxException {
 
 		try (InputStream inputStream = multipartFile.getInputStream()) {
 			String transcript = sttService.transcriptAudio(inputStream);
 			List<Output> outputList = formatOutput(transcript);
-			model.addAttribute("result", outputList);
+			System.out.println(outputList);
+			return ResponseEntity.ok(outputList);
 			
 		} catch (IOException ioe) {
 			throw new IOException("Could not upload file: ", ioe);
 		}
-		
-		
-		return "index";
 	}
 	
 	
@@ -152,4 +152,14 @@ public class STTController {
 		return outputList;
 
 	}
+	
+	@GetMapping({"/stream"})
+    public String stream() {
+        return "stream";
+    }
+	
+	@GetMapping({"/socket"})
+    public String socket() {
+        return "socket";
+    }
 }

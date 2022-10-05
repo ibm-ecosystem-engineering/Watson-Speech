@@ -27,7 +27,7 @@
 	<bx-header aria-label="IBM Build Lab">
 		<bx-header-menu-button button-label-active="Close menu" button-label-inactive="Open menu">
 		</bx-header-menu-button>
-		<bx-header-name href="javascript:void 0" prefix="IBM">Build Lab</bx-header-name>
+		<bx-header-name href="/index" prefix="IBM">Build Lab</bx-header-name>
 		<div style="color:ghostwhite;text-align:center;width:80%">
 			<h3>Watson Speech To Text</h3>
 		</div>
@@ -167,8 +167,12 @@
 <script type="module"
 	src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/file-uploader.min.js"></script>
 <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/data-table.min.js"></script>
-<script>
-
+<script th:inline="javascript">
+	
+	var websocketBaseUrl = /*[[${@environment.getProperty('websocket.baseurl')}]]*/
+	
+	console.log("base url",websocketBaseUrl);
+	
 	const sendData = (webSocket, data) => {
 		var message = {
 			'action': 'start'
@@ -187,7 +191,7 @@
 		new Promise(async resolve => {
 			const stream = await navigator.mediaDevices.getUserMedia({audio: true});
 			const mediaRecorder = new MediaRecorder(stream);
-			let webSocket = new WebSocket("wss://localhost:1443/speech-to-text/api/v1/recognize");
+			let webSocket = new WebSocket(websocketBaseUrl + "/speech-to-text/api/v1/recognize");
 			let audioChunks = [];
 			let stopButton = document.getElementById("stopAction");
 

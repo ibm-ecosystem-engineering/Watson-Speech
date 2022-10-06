@@ -43,10 +43,19 @@ Login Kubernetes cluster and expose the STT service endpoint.
 ```
 kubectl port-forward svc/install-1-stt-runtime 1080
 ```
+In a sepearate terminal runs the below command for websocket connection
+```
+kubectl port-forward svc/install-1-stt-runtime 1443
+```
 Set the following environment variable. The Java application will use this to access the STT service.
 ```
 export STT_SERVICE_ENDPOINT=127.0.0.1:1080
 ```
+To access the websocket streaming service
+```
+export STT_WSS_SERVICE_ENDPOINT=wss://localhost:1443
+```
+
 Run the application.
 ```
 java -jar target/STTApplication-0.0.1-SNAPSHOT.jar

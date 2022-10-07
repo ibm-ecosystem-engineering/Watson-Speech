@@ -40,6 +40,7 @@ app.title = 'Watson Text to Speech (TTS) Library'
 # Setting theme for plotly charts
 plotly_template = pio.templates["plotly_dark"]
 pio.templates["plotly_dark_custom"] = pio.templates["plotly_dark"]
+app = dash.Dash(__name__, assets_folder=os.path.join(os.path.dirname(__file__), 'assets'))
 
 navbar_main = dbc.Navbar(
         [
@@ -80,7 +81,7 @@ text_to_speech_url ='http://localhost:1080/text-to-speech/api/v1/synthesize'
 # Setting up the headers for post request to service 
 headers = {"Content-Type": "application/json","Accept":"audio/wav"}
 params ={'voice':'en-US_AllisonV3Voice'}
-file_name = "./TTS_Output/consumer_output.wav"
+file_name = "./assets/consumer_output.wav"
 tts_sample_text = "I don't share everyone's unbridled enthusiasm for this film. It is indeed a great popcorn flick, with outstanding aerial photography and maneuvers. But 10 stars? There are few, if any, movies that are perfect, and deserve that kind of rating. \
 The problem with the film is the plot. It is so filled with age-worn cliches that one could easily tell what was coming from beginning to end. I mean, you had to know who was going to save the day at the end, and you had to know what was going to happen when Maverick jumped out of Penny's window. Those are just two examples of the many obvious plot points that you could see coming a mile away. I could list them all, but it would take up too much space here. Basically the entire plot was entirely predictable. \
 The opening scene, especially, was straight out of Hollywood Screenplay Writing 101. I mean, seriously, how many times have we seen that subplot? Countless. \
@@ -88,14 +89,6 @@ There were no characters in the movie, either. They were all caricatures, stereo
 Did I enjoy the film? Sure, it was fun. Especially on a big theater screen with a loud sound system. Did I take anything away from the film? Did it make me think about anything after it was over? Nah. Will I see it again? Nah. \
 I will give Tom Cruise credit for including Val Kilmer in the cast. Considering his health problems, that was a nice touch. \
 So, yeah, enjoy the film. Sit back with your bag of popcorn and enjoy the g-forces. But don't pretend it is anything other than just another summer blockbuster."
-
-def seconds_to_MMSS(slider_seconds):
-    decimal, minutes = math.modf(slider_seconds / 60.0)
-    seconds = str(round(decimal * 60.0))
-    if len(seconds) == 1:
-        seconds = "0" + seconds
-    MMSS = "{0}:{1}".format(round(minutes), seconds)
-    return MMSS
 
 
 tts_analysis_input =  dbc.InputGroup(
@@ -117,8 +110,13 @@ tts_analysis_input =  dbc.InputGroup(
         )
 
 audio2 = html.Div(children=[
-    html.Audio(html.Source(src="CallCenterSample1.mp3",type="audio/mp3"), controls=True)
+    html.Audio(html.Source(src="assets/result.wav",type="audio/wav"), controls=True,style={ "width": "100%"})
 ])
+
+audio1 = html.Div(children=[
+    html.Audio(html.Source(src="assets/result.wav",type="audio/wav"), controls=True,style={ "width": "100%"})
+])
+
 app.layout = html.Div(children=[
                     navbar_main,
                 dbc.Row(
@@ -129,17 +127,16 @@ app.layout = html.Div(children=[
                         html.P(children="Use the sample text or enter your own text in English"),
                         html.Div(tts_analysis_input),
                         html.Br(),
-                        html.Audio(id="player", src=file_name, controls=True, style={ "width": "100%"}),
-                        html.Br(),
-                        html.Br(),
                         html.Div(audio2),
+                        html.Div(id="div-audio", children=[' ']),
+                        html.Br(),
+                        html.Br(),
+                       
                         #dcc.Graph(id="waveform", figure=plt.show()),
                         ],
                         # width=6
                     ),
                     ],
-                    # align="center",
-                    # className="w-0",
                 ),
                 html.Br(),
                 html.Br(),
@@ -167,27 +164,27 @@ def getSpeechFromText(headers,params,data,file_name):
     print(request.status_code)
     if request.status_code != 200:
         print("TTS Service status:", request.text)
+    if os.path.exists(file_name):
+        os.remove(file_name)
     with open(file_name, mode='bx') as f:
         f.write(request.content)
-    return file_name 
 
 
 
 @app.callback(
-    #Output("slider-output-container", "children"),
-    #Output("waveform", "figure"),
-    Output("player", "src"),
+    Output('div-audio', 'children'),
     Input('tts-button', 'n_clicks'),
     Input('tts-input', 'value')   
 )
 
 def update_output(n_clicks, value):
-    print("Helooooo calling method---",value)
-    text_data = '{"text":"I dont share everyones unbridled enthusiasm for this film. It is indeed a great popcorn flick, with outstanding aerial photography and maneuvers. But 10 stars?"}'
-    file_name = './TTS_Output/result.wav'
-    src =getSpeechFromText(headers,params,text_data,file_name)
-    figure  =print_plot_play(file_name, "Hello")
-    return src 
+    #print("Helooooo calling method---",value)
+    text_data = '{"text":"'+value+'"}'
+    print("Hello text data --"+text_data)
+    file_name = 'assets/result.wav'
+    getSpeechFromText(headers,params,text_data,file_name)
+    #print_plot_play(file_name, "Hello")
+    return audio2
    
 
 if __name__ == '__main__':

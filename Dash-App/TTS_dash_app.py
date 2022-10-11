@@ -81,7 +81,7 @@ text_to_speech_url ='http://localhost:1080/text-to-speech/api/v1/synthesize'
 # Setting up the headers for post request to service 
 headers = {"Content-Type": "application/json","Accept":"audio/wav"}
 params ={'voice':'en-US_AllisonV3Voice'}
-file_name = "./assets/consumer_output.wav"
+file_name = "assets/result.wav"
 tts_sample_text = "I don't share everyone's unbridled enthusiasm for this film. It is indeed a great popcorn flick, with outstanding aerial photography and maneuvers. But 10 stars? There are few, if any, movies that are perfect, and deserve that kind of rating. \
 The problem with the film is the plot. It is so filled with age-worn cliches that one could easily tell what was coming from beginning to end. I mean, you had to know who was going to save the day at the end, and you had to know what was going to happen when Maverick jumped out of Penny's window. Those are just two examples of the many obvious plot points that you could see coming a mile away. I could list them all, but it would take up too much space here. Basically the entire plot was entirely predictable. \
 The opening scene, especially, was straight out of Hollywood Screenplay Writing 101. I mean, seriously, how many times have we seen that subplot? Countless. \
@@ -93,7 +93,7 @@ So, yeah, enjoy the film. Sit back with your bag of popcorn and enjoy the g-forc
 
 tts_analysis_input =  dbc.InputGroup(
             [
-                dbc.Textarea(id="tts-input", value=tts_sample_text,cols=150, placeholder="Text to Speech analysis"),
+                dbc.Textarea(id="tts-input", value=tts_sample_text,cols=150,rows=15, placeholder="Text to Speech analysis"),
                 dcc.Clipboard(
                     target_id="textarea-tts",
                     title="copy1",
@@ -117,6 +117,18 @@ audio1 = html.Div(children=[
     html.Audio(html.Source(src="assets/result.wav",type="audio/wav"), controls=True,style={ "width": "100%"})
 ])
 
+def print_plot_play(fileName, text=''):
+    x, Fs = librosa.load(fileName, sr=None)
+    print('%s Fs = %d, x.shape = %s, x.dtype = %s' % (text, Fs, x.shape, x.dtype))
+    plt.figure(figsize=(10, 5))
+    plt.plot(x, color='blue')
+    plt.xlim([0, x.shape[0]])
+    plt.xlabel('Time (samples)')
+    plt.ylabel('Amplitude')
+    plt.tight_layout()
+   # plt.show()
+    return plt
+
 app.layout = html.Div(children=[
                     navbar_main,
                 dbc.Row(
@@ -131,8 +143,7 @@ app.layout = html.Div(children=[
                         html.Div(id="div-audio", children=[' ']),
                         html.Br(),
                         html.Br(),
-                       
-                        #dcc.Graph(id="waveform", figure=plt.show()),
+                       # dcc.Graph(id="waveform", figure=figure.show()),
                         ],
                         # width=6
                     ),
@@ -141,21 +152,18 @@ app.layout = html.Div(children=[
                 html.Br(),
                 html.Br(),
                 html.Br(),
+                html.Br(),
+                html.Br(),
+                html.Br(),
+                html.Br(),
+                html.Br(),
+                html.Br(),
                 html.Footer(children="Please note that this content is made available by IBM Build Lab to foster Embedded AI technology adoption. \
                                 The content may include systems & methods pending patent with USPTO and protected under US Patent Laws. \
                                 Copyright - 2022 IBM Corporation")
 ])
 
-def print_plot_play(fileName, text=''):
-    x, Fs = librosa.load(fileName, sr=None)
-    print('%s Fs = %d, x.shape = %s, x.dtype = %s' % (text, Fs, x.shape, x.dtype))
-    plt.figure(figsize=(10, 5))
-    plt.plot(x, color='blue')
-    plt.xlim([0, x.shape[0]])
-    plt.xlabel('Time (samples)')
-    plt.ylabel('Amplitude')
-    plt.tight_layout()
-    return plt
+
 
 
 # method to get the Voice data from the text service 
@@ -178,12 +186,11 @@ def getSpeechFromText(headers,params,data,file_name):
 )
 
 def update_output(n_clicks, value):
-    #print("Helooooo calling method---",value)
     text_data = '{"text":"'+value+'"}'
-    print("Hello text data --"+text_data)
     file_name = 'assets/result.wav'
     getSpeechFromText(headers,params,text_data,file_name)
-    #print_plot_play(file_name, "Hello")
+    plt =print_plot_play(file_name, "Hello")
+    #figure = plt.show()
     return audio2
    
 

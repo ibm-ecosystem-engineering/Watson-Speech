@@ -1,0 +1,211 @@
+<html>
+<head>
+  <title>@carbon/ibmdotcom-web-components example</title>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet"
+        href="https://1.www.s81c.com/common/carbon-for-ibm-dotcom/tag/v1/canary/plex.css"/>
+  <link rel="stylesheet"
+        href="https://1.www.s81c.com/common/carbon-for-ibm-dotcom/tag/v1/canary/grid.css"/>
+    <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/accordion.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/breadcrumb.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/button.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/checkbox.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/code-snippet.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/combo-box.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/content-switcher.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/copy-button.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/data-table.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/date-picker.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/dropdown.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/file-uploader.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/floating-menu.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/form.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/inline-loading.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/input.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/link.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/list.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/loading.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/modal.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/multi-select.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/notification.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/number-input.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/overflow-menu.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/pagination.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/progress-indicator.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/radio-button.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/search.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/select.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/skeleton-placeholder.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/skeleton-text.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/skip-to-content.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/slider.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/structured-list.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/tabs.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/tag.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/textarea.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/tile.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/toggle.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/tooltip.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/ui-shell.min.js"></script>
+  
+  
+  <script>
+  
+  	let preview = document.getElementById("preview");
+	let recording = document.getElementById("recording");
+	let recordedChunks = [];
+	
+	// websocket part
+	//let socket = new WebSocket("wss://150.238.4.164:31846/speech-to-text/api/v1/recognize");
+	let webSocket = new WebSocket("wss://localhost:1443/speech-to-text/api/v1/recognize");
+	
+	
+	let openWebSocket = () => {
+		webSocket = new WebSocket("wss://localhost:1443/speech-to-text/api/v1/recognize");
+		webSocket.onopen = function (e) {
+			console.log("connecting...")
+			var message = {
+				'action': 'start',
+				'keywords': ['colorado', 'tornado', 'tornadoes'],
+				'keywords_threshold': 0.5,
+				'max-alternatives': 3
+			};
+			webSocket.send(JSON.stringify(message));
+			console.log('websocket is ready for action');
+		};
+	}
+	
+	let sendData = (data) => {
+		var message = {
+				'action': 'start',
+				'keywords': ['colorado', 'tornado', 'tornadoes'],
+				'keywords_threshold': 0.5,
+				'max-alternatives': 3
+			};
+		const audioBlob = new Blob(data);
+		webSocket.send(JSON.stringify(message));
+		webSocket.send(audioBlob);
+	}
+	
+	
+	
+	if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+			console.log("getUserMedia supported.");
+			
+			navigator.mediaDevices
+				.getUserMedia(
+					// constraints - only audio needed for this app
+					{
+						audio: true,
+					}
+				)
+
+				// Success callback
+				.then((stream) => { 
+					const mediaRecorder = new MediaRecorder(stream);
+					let startButton = document.getElementById("startButton");
+					let stopButton = document.getElementById("stopButton");
+					let captureButton = document.getElementById("captureButton");
+					
+					mediaRecorder.ondataavailable = (event) => {
+						console.log("data-available");
+						if (event.data.size > 0) {
+							recordedChunks.push(event.data);
+							console.log("event.data", event.data);
+							
+						}
+			
+						if (recordedChunks.length > 0) {
+							console.log("data in chuncks", recordedChunks);
+							//const audioBlob = new Blob(recordedChunks);
+							//sendData(recordedChunks);
+						}
+					};
+					
+					// start record button
+					startButton.addEventListener('click', function (ev) {
+						if(mediaRecorder.state ==="recording"){
+							console.log("Already in recording state");
+						}else{
+			          		mediaRecorder.start();
+			          		openWebSocket();
+			          		console.log("record status", mediaRecorder.state);
+			          	}
+			        });
+			        
+			        // stop record button
+			        stopButton.addEventListener('click', function (ev) {
+						if(mediaRecorder.state ==="recording" || mediaRecorder.state === "paused"){
+							  
+							  mediaRecorder.stop();
+							  const audioBlob = new Blob(recordedChunks);
+						      const audioUrl = URL.createObjectURL(audioBlob);
+						      const audio = new Audio(audioUrl);
+						      const play = () => {
+					                audio.play();
+					          };
+						}
+			          
+			        });
+			        
+			        mediaRecorder.requestData = (event) => {
+						
+						console.log("is it continuous");
+					}
+			        
+			        captureButton.addEventListener('click', function(eve){
+						
+						if (recordedChunks.length > 0) {
+							console.log("data", recordedChunks[0]);
+							webSocket.send(recordedChunks[0]);
+							webSocket.send(recordedChunks);
+						}
+						
+					});
+							
+					webSocket.onmessage = function(event) {
+						console.log("Result " + event.data);
+					};
+					
+				})
+				// Error callback
+				.catch((err) => {
+					console.error(`The following getUserMedia error occurred: ${err}`);
+				});
+		} else {
+			console.log("getUserMedia not supported on your browser!");
+		}	
+	
+	
+</script>
+  
+</head>
+<body>
+<bx-header aria-label="IBM Platform Name">
+  <bx-header-menu-button
+    button-label-active="Close menu"
+    button-label-inactive="Open menu"
+  ></bx-header-menu-button>
+  <bx-header-name href="javascript:void 0" prefix="IBM">[Platform]</bx-header-name>
+  <bx-header-nav menu-bar-label="IBM [Platform]">
+    <bx-header-nav-item href="javascript:void 0">Link 1</bx-header-nav-item>
+    <bx-header-nav-item href="javascript:void 0">Link 2</bx-header-nav-item>
+    <bx-header-nav-item href="javascript:void 0">Link 3</bx-header-nav-item>
+    <bx-header-menu menu-label="Link 4" trigger-content="Link 4">
+      <bx-header-menu-item href="javascript:void 0">Sub-link 1</bx-header-menu-item>
+      <bx-header-menu-item href="javascript:void 0">Sub-link 2</bx-header-menu-item>
+      <bx-header-menu-item href="javascript:void 0">Sub-link 3</bx-header-menu-item>
+    </bx-header-menu>
+  </bx-header-nav>
+</bx-header>
+<div class="bx--grid">
+	<div class="bx--row">
+		<div class="bx--col-sm-4 bx--col-lg-12" style="margin: 6rem 0;">
+ 			<bx-btn href="#" id="startButton"> Start </bx-btn> 
+ 			<bx-btn href="#" id="captureButton"> Capture </bx-btn> 
+ 			<bx-btn href="#" id="stopButton"> Stop </bx-btn> 
+		</div> 
+	</div>  
+</div>        
+</body>
+</html>

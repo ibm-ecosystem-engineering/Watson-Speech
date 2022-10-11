@@ -25,8 +25,11 @@ Ensure that you have Speech to Text service installed on your cluster.
 6. Create a local proxy to the cluster with kubectl proxy in a separate terminal
 
 `kubectl proxy`
+
 7. Expose the STT service endpoint using kubectl port forword 
  `kubectl port-forward svc/install-1-stt-runtime 1080`
+
+ Now you can use the STT service into pyhton notebook using http://localhost:1080/
 
 8. Set the NAMESPACE and INSTALL_NAME environment variables.
 

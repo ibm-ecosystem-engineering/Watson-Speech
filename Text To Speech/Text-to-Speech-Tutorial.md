@@ -25,8 +25,12 @@ Ensure that you have Text to Speech (TTS) service installed on your cluster.
 6. Create a local proxy to the cluster with kubectl proxy in a separate terminal
 
 `kubectl proxy`
+
 7. Expose the TTS service endpoint using kubectl port forword 
+
  `kubectl port-forward svc/install-1-tts-runtime 1080`
+
+Now you can use the TTS service into pyhton notebook using http://localhost:1080/
 
 8. Set the NAMESPACE and INSTALL_NAME environment variables.
 
@@ -102,7 +106,6 @@ Text to Speech service includes query parameters that you can use to globally mo
 
 - rate_percentage
 - pitch_percentage
-- spell_out_mode
 
 1. Use the `rate_percentage` parameter to adjust the rate percentage and get the output from the TTS service.
 

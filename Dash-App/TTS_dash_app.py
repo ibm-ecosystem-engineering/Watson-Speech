@@ -59,7 +59,7 @@ navbar_main = dbc.Navbar(
 )
 
 # Creating call method for TTS 
-text_to_speech_url ='http://localhost:1080/text-to-speech/api/v1/synthesize'
+text_to_speech_url = os.getenv("TTS_SERVICE_URL", default='http://localhost:1080/text-to-speech/api/v1/synthesize')
 # Setting up the headers for post request to service 
 headers = {"Content-Type": "application/json","Accept":"audio/wav"}
 params ={'voice':'en-US_AllisonV3Voice'}

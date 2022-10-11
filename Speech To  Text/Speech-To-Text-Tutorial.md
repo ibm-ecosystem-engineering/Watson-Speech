@@ -25,8 +25,10 @@ Ensure that you have Speech to Text service installed on your cluster.
 6. Create a local proxy to the cluster with kubectl proxy in a separate terminal
 
 `kubectl proxy`
+7. Expose the STT service endpoint using kubectl port forword 
+ `kubectl port-forward svc/install-1-stt-runtime 1080`
 
-7. Set the NAMESPACE and INSTALL_NAME environment variables.
+8. Set the NAMESPACE and INSTALL_NAME environment variables.
 
 ### 2. Watson Speech To Text Analysis
 
@@ -46,7 +48,7 @@ import soundfile as sf
 
 2. Load the voice data 
 
-`file_name = 'harvard.wav'`
+`file_name = './Sample_dataset/harvard.wav'`
 
 3. Create a custom function to plot amplitude frequency.
 

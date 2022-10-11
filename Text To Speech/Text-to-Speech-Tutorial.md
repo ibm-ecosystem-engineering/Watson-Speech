@@ -25,8 +25,10 @@ Ensure that you have Text to Speech (TTS) service installed on your cluster.
 6. Create a local proxy to the cluster with kubectl proxy in a separate terminal
 
 `kubectl proxy`
+7. Expose the TTS service endpoint using kubectl port forword 
+ `kubectl port-forward svc/install-1-tts-runtime 1080`
 
-7. Set the NAMESPACE and INSTALL_NAME environment variables.
+8. Set the NAMESPACE and INSTALL_NAME environment variables.
 
 ### 2. Watson Text to Speech Analysis
 

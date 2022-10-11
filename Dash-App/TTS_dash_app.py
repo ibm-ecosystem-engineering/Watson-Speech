@@ -189,7 +189,7 @@ def update_output(n_clicks, value):
     text_data = '{"text":"'+value+'"}'
     file_name = 'assets/result.wav'
     getSpeechFromText(headers,params,text_data,file_name)
-    plt =print_plot_play(file_name, "Hello")
+    #plt =print_plot_play(file_name, "Hello")
     #figure = plt.show()
     return audio2
    

@@ -30,14 +30,14 @@ Ensure that you have Text to Speech (TTS) service installed on your cluster.
 
  `kubectl port-forward svc/install-1-tts-runtime 1080`
 
-Now you can use the TTS service into pyhton notebook using http://localhost:1080/
+Now you can use the TTS service with a Python notebook using http://localhost:1080/
 
 8. Set the NAMESPACE and INSTALL_NAME environment variables.
 
 ### 2. Watson Text to Speech Analysis
 
 #### Step 1. Data Loading and Setting up the service
-Watson Text to Speech offers so-called parameters for various Text to Speech recognization, audio pre-processing, noise removal, number of speakers in the convesation etc.
+Watson Text to Speech offers so-called parameters for various text to speech recognization, audio pre-processing, noise removal, number of speakers in the convesation etc.
 
 1. Import and initialize some helper libs that are used throughout the tutorial.
 
@@ -66,7 +66,7 @@ Watson Text to Speech offers so-called parameters for various Text to Speech rec
         ipd.display(ipd.Audio(data=x, rate=Fs))
     ```
 
-3. Setup the parameters for using Text to Speech service
+3. Setup the parameters for using Text to Speech service.
 
     ```
     headers = {"Content-Type": "application/json","Accept":"audio/wav"}
@@ -127,4 +127,4 @@ file_name ="text_to_speeh_pitch.wav"
 
 #### Conclusion:
 
-This tutorial walks you through the steps of starting a Text to Speech service on the kube cluster, processing the dataset and using the Text to Speech service. This tutorial also shows you how to modify speech synthesis characteristics using different parameters.
+This tutorial walks you through the steps of starting a Text to Speech service on the kube cluster, processing the dataset and using the Watson NLP Text to Speech service. This tutorial also shows you how to modify speech synthesis characteristics using different parameters.

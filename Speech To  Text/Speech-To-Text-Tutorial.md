@@ -29,14 +29,14 @@ Ensure that you have Speech to Text service installed on your cluster.
 7. Expose the STT service endpoint using kubectl port forword 
  `kubectl port-forward svc/install-1-stt-runtime 1080`
 
- Now you can use the STT service into pyhton notebook using http://localhost:1080/
+ Now you can use the STT service with a Python notebook using http://localhost:1080/
 
 8. Set the NAMESPACE and INSTALL_NAME environment variables.
 
 ### 2. Watson Speech To Text Analysis
 
 #### Step 1. Data Loading and Setting up the service
-Watson Speech to Text offers so-called parameters for various Speech To text recognization, audio pre-processing, noise removal, number of speakers in the convesation etc.
+Watson Speech to Text offers so-called parameters for various speech to text recognization, audio pre-processing, noise removal, number of speakers in the convesation etc.
 
 1. Import and initialize some helper libs that are used throughout the tutorial.
 
@@ -115,7 +115,7 @@ def show_result(result):
             print("Transcript ---  ", transcript['transcript'])
 ```
 
-3. Remove Background noise form data using background_audio_suppression parameter with url
+3. Remove background noise form data using background_audio_suppression parameter with url
 
 ```
 params ={'model':'en-US_Telephony',"background_audio_suppression":"0.5"}
@@ -204,7 +204,7 @@ result = getTextFromSpeech(headers,params,back_audio)
 
 ### Step 3. Microphone Recognition
 
-To record real time voice open source python lib SpeechRecognition & PyAudio v0.2.12 will be used
+To record real-time voice, open source Python libraries SpeechRecognition & PyAudio v0.2.12 will be used
 
 1. Install the open source libraries :
 
@@ -212,7 +212,7 @@ To record real time voice open source python lib SpeechRecognition & PyAudio v0.
     b. brew install portaudio
     c. pip install pyaudio
 
-2. Record audio using mircrophon
+2. Record audio using mircrophone
 
 ```
 r = sr.Recognizer()
@@ -312,4 +312,4 @@ def extract_keywords(text):
 
 #### Conclusion:
 
-This tutorial walks you through the steps of starting a Speech to Text service on the kube cluster, pre-processing the speech dataset and using the Speech to Text service to transcribe speech data. This tutorial also shows you how to extract meaningful insights from the data by combining the functionalities of Watson Speech to Text and Watson NLP library.
+This tutorial walks you through the steps of starting a Speech to Text service on a kube cluster, pre-processing the speech dataset, and using the Watson NLP Speech to Text service to transcribe speech data. This tutorial also shows you how to extract meaningful insights from data by combining the functionalities of Watson Speech to Text and Watson NLP library.

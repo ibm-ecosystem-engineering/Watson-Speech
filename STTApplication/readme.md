@@ -12,7 +12,7 @@ In order to use this tutorial, you need to have first deployed an instance of Wa
 ![Diagram](architecture.png)
  
 ### Prerequisites
-- Docker is installed.
+- [Docker](https://docs.docker.com/get-docker/) is installed.
 - Java 17 is installed
 - You have deployed Watson STT on a Kubernetes or OpenShift cluster.
 - You have a private container registry that the Kubernetes or OpenShift cluster can access.

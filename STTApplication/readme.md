@@ -170,7 +170,49 @@ http://localhost:8080
 
 ## Understanding the Application Code
 
-The application is a Java [Spring Boot]([https://spring.io/projects/spring-boot](https://spring.io/projects/spring-boot) application. It uses [Feign](https://github.com/OpenFeign/feign) to wrap the REST calls made to the Watson STT back-end. The source files are in the sample code repository under the directory:
+The application is a Java [Spring Boot]([https://spring.io/projects/spring-boot](https://spring.io/projects/spring-boot) application. It uses [Feign](https://github.com/OpenFeign/feign) to wrap the REST calls made to the Watson STT back-end. 
+
+The code that makes the REST call is as below
+```
+@FeignClient(name = "fclient", url = "${client.post.baseurl}") 
+public interface SSTServingClient {
+	
+public final String STT_REST_MAPPING = "/speech-to-text/api/v1/recognize?model=en-US_Multimedia";
+	
+	@PostMapping(STT_REST_MAPPING)
+    String transcript(@RequestBody byte[] body);
+}
+```
+- STT_REST_MAPPING: This indicates api path that the rest fiegn client is mapping. 
+- The transcript method accepts one argument as request boy in a byte format
+
+For websocket communication we are using javascript to connect to the server and get transcript. Here is a sample code snippet where we first create a websocket channel.
+
+```
+let webSocket = new WebSocket(websocketBaseUrl + "/speech-to-text/api/v1/recognize");
+
+```
+
+Here is the code that sends request to the server.
+
+```
+const sendData = (webSocket, data) => {
+		var message = {
+			'action': 'start'
+		};
+
+		try {
+			webSocket.send(JSON.stringify(message));
+			webSocket.send(data);
+			webSocket.send(JSON.stringify({action: 'stop'}));
+		} catch (exceptionVar) {
+
+		}
+	}
+```
+
+
+The source files are in the sample code repository under the directory:
 ```
 Watson-Speech/STTApplication/src/main
 ```

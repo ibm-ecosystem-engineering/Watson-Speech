@@ -36,8 +36,8 @@ Now you can use the TTS service into pyhton notebook using http://localhost:1080
 
 ### 2. Watson Text to Speech Analysis
 
-#### Step 1. Data Loading and Setting up the service
-Watson Text to Speech offers so-called parameters for various Text to Speech recognization, audio pre-processing, noise removal, number of speakers in the convesation etc.
+#### Step 1. Data Loading and Pre-processing on Text
+Watson Text to Speech offers so-called parameters for various text-to-speech synthesis for an entire request rate_percentage, pitch_percentage, and spell_out_mode.
 
 1. Import and initialize some helper libs that are used throughout the tutorial.
 
@@ -64,9 +64,20 @@ Watson Text to Speech offers so-called parameters for various Text to Speech rec
         plt.tight_layout()
         plt.show()
         ipd.display(ipd.Audio(data=x, rate=Fs))
+    
+    ```
+3. Text Pre Processing :
+Speech Synthesis services accepts the data in format of JSON. There are so many escape characters that have came into text which is not valid for JSON string .So replacing those char from the text.
+
+  ```
+   def clean(doc):
+    stop_free = " ".join([word.replace('X','').replace('/','') for word in doc.split()])
+    return stop_free
+    
     ```
 
-3. Setup the parameters for using Text to Speech service
+#### Step 2. Setting up the service
+1. Setup the parameters for using Text to Speech service
 
     ```
     headers = {"Content-Type": "application/json","Accept":"audio/wav"}
@@ -74,13 +85,13 @@ Watson Text to Speech offers so-called parameters for various Text to Speech rec
     text_to_speech_url ='http://localhost:1080/text-to-speech/api/v1/synthesize'
     ```
 
-4. Use this example text in the subsequent steps to try out the TTS service.
+2. Use this example text in the subsequent steps to try out the TTS service.
 
     ```
     data ='{"text":"Text to Speech service provides APIs that use IBM\'s speech-synthesis capabilities to synthesize text into natural-sounding speech in a variety of languages, dialects, and voices"}'
     ```
 
-5. Create a custom function to get speech from text using the TTS service.
+3. Create a custom function to get speech from text using the TTS service.
 
     ```
     def getSpeechFromText(headers,params,data,file_name):
@@ -90,7 +101,7 @@ Watson Text to Speech offers so-called parameters for various Text to Speech rec
             f.write(request.content)
     ```
 
-6. Send the example text to the TTS service and use the custom function to get the speech output.
+4. Send the example text to the TTS service and use the custom function to get the speech output.
 
     ```
     file_name = 'text_to_speech_sample1.wav'
@@ -100,7 +111,7 @@ Watson Text to Speech offers so-called parameters for various Text to Speech rec
 
 ![Raw Output](images/raw_output.png)
 
-#### Step 2. Modifying speech synthesis characteristics :
+#### Step 3. Modifying speech synthesis characteristics :
 
 Text to Speech service includes query parameters that you can use to globally modify the characteristics of speech synthesis for an entire request:
 

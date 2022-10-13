@@ -113,7 +113,7 @@ public class STTController {
         header.add("Pragma", "no-cache");
         header.add("Expires", "0");
 
-        List<String> filenames = List.of("CallCenterSample3.mp3", "CallCenterSample2.mp3", "CallCenterSample1.mp3");
+        List<String> filenames = List.of("CallCenterSample3.wav", "CallCenterSample2.wav", "CallCenterSample1.wav");
         
         String transcript = "";
         

@@ -184,7 +184,7 @@ public final String STT_REST_MAPPING = "/speech-to-text/api/v1/recognize?model=e
 }
 ```
 - STT_REST_MAPPING: This indicates api path that the rest fiegn client is mapping. 
-- The transcript method accepts one argument as request boy in a byte format
+- The transcript method accepts one argument, audio input as byte format
 
 For websocket communication we are using javascript to connect to the server and get transcript. Here is a sample code snippet where we first create a websocket channel.
 

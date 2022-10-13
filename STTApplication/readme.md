@@ -241,7 +241,6 @@ The following files are under this subdirectory.
 │               ├── controller
 │               │   └── STTController.java
 │               ├── feignclient
-│               │   ├── FeignSTTClient.java
 │               │   └── SSTServingClient.java
 │               ├── model
 │               │   ├── Alternative.java

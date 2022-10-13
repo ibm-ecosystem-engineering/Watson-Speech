@@ -1,0 +1,7 @@
+defaultPolicy: DefaultPolicy
+sessionPoolPolicies:
+  NoPreWarmingPolicy:
+    - name: NullModel
+  PreWarmingPolicy:
+    - name: en-US_Multimedia
+    - name: fr-FR_Multimedia

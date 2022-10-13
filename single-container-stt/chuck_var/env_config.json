@@ -1,0 +1,31 @@
+{
+  "allowDashboard": false,
+  "anonymizeLogs": false,
+  "baseModelsSURL": {
+    "service": "localPath",
+    "urlSuffix": "var/catalog.json"
+  },
+  "clusterGroups": {
+    "default": {
+      "service_type": "speech-to-text",
+      "component": "runtime",
+      "group": "default",
+      "models": [
+        "en-US_Multimedia",
+        "fr-FR_Multimedia"
+      ]
+    }
+  },
+  "defaultSTTModel": "en-US_Multimedia",
+  "defaultVerbosity": "DEBUG",
+  "meteringEnabled": false,
+  "requireCookies": false,
+  "setCookies": false,
+  "serviceDependencies": {
+    "baseModelsStore": {
+      "type": "UrlService",
+      "healthCheckSuffix": "/",
+      "baseUrl": "http://127.0.0.1:3333/"
+    }
+  }
+}

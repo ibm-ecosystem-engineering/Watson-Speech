@@ -210,7 +210,21 @@ const sendData = (webSocket, data) => {
 		}
 	}
 ```
+Here is the code that receives the transcript from server and display in the page.
 
+```
+webSocket.onmessage = function (event) {
+				var data = JSON.parse(event.data);
+				if(data.results !== undefined){
+					data.results.forEach((element) => {
+						element.alternatives.forEach((data) => {
+							const divelement = document.getElementById("websocketResult");
+							divelement.innerHTML = data.transcript;
+						} )
+					});
+				}
+			};
+```
 
 The source files are in the sample code repository under the directory:
 ```

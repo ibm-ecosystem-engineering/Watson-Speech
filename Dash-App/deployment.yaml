@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tts-dash-app
+spec:
+  selector:
+    matchLabels:
+      app: tts-dash-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: tts-dash-app
+    spec:
+      containers:
+      - name: tts-dash-app
+        image: us.icr.io/watson-core-demo/tts_dash_app:v1
+        env:
+          - name: TTS_SERVICE_URL
+            value: "install-1-tts-runtime:1080/text-to-speech/api/v1/synthesize"
+        ports:
+        - containerPort: 8052
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tts-dash-app
+spec:
+  type: ClusterIP
+  selector:
+    app: tts-dash-app
+  ports:
+  - port: 8052
+    protocol: TCP
+    targetPort: 8052

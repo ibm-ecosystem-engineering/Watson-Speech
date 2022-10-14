@@ -1,4 +1,10 @@
 # Watson Text to Speech tutorial
+### Use Case:
+**Watson Text to Speech can be used to play back customer messages to:**
+   1. Build a mobile to-do app that allows for users to capture voice memos to save as written Todo items.
+   1. Use as a simple out of the box model to capture English voices without any customization.
+   1. Use as a light weight feature that can be invoked from the constrained mobile device.
+
 
 #### Pre-requisites
 Ensure that you have Text to Speech (TTS) service installed on your cluster.
@@ -37,7 +43,7 @@ Now you can use the TTS service into pyhton notebook using http://localhost:1080
 ### 2. Watson Text to Speech Analysis
 
 #### Step 1. Data Loading and Pre-processing on Text
-Watson Text to Speech offers so-called parameters for various text-to-speech synthesis for an entire request rate_percentage, pitch_percentage, and spell_out_mode.
+Watson Text to Speech offers so-called parameters for various text-to-speech synthesis for an entire request rate_percentage, pitch_percentage, and spell_out_mode.By using these parameters we can modify the output of audio. 
 
 1. Import and initialize some helper libs that are used throughout the tutorial.
 
@@ -66,12 +72,19 @@ Watson Text to Speech offers so-called parameters for various text-to-speech syn
         ipd.display(ipd.Audio(data=x, rate=Fs))
     
     ```
-3. Text Pre Processing :
+3. Data loading (Text Data)
+This sample data set contains 50 consumer complaints transcripts with the date. We will use this dataset for the case-study.
+ ```
+consumer_df = pd.read_csv('consumer_data.csv')
+    
+    ```
+
+4. Text Pre Processing :
 Speech Synthesis services accepts the data in format of JSON. There are so many escape characters that have came into text which is not valid for JSON string .So replacing those char from the text.
 
   ```
    def clean(doc):
-    stop_free = " ".join([word.replace('X','').replace('/','') for word in doc.split()])
+    stop_free = " ".join([word.replace('X','').replace('/','').replace("''",'').replace(',','').replace(':','').replace('{','').replace('}','').replace('"','') for word in doc.split()])
     return stop_free
     
     ```
@@ -135,6 +148,21 @@ file_name ="text_to_speeh_pitch.wav"
 ```
 
 ![Pitch Percentage](images/pitch_percentage.png)
+
+#### Step 4 . Case Study : Play Back Customer Calls 
+By using Text to speech services companies can create this box model to capture English voices without any customization. So here we are passing multiple texts into a speech synthesis service to save multiple files.
+```
+customer_call_dir = 'customer_call/'
+params ={'voice':'en-US_AllisonV3Voice'}
+i=0
+for data in consumer_clean_list:
+    if i < 5:
+        file_name = customer_call_dir+"consumer_call"+str(i)+".wav"
+        data1 = '{"text":"'+data+'"}'
+        getSpeechFromText(headers,params,data1,file_name)
+        i=i+1
+        print("Saving consumer calls ---"+file_name)
+```
 
 #### Conclusion:
 

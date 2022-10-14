@@ -32,7 +32,7 @@ docker build . -t speech-standalone
 
 
 ## Step 4: Run the container to start the STT service
-You can run the container on Docker as follows, using the container image created in the previous step.
+You can run the container on Docker as follows, using the container image created in the previous step. 
 ```
 docker run --rm --publish 1080:1080 speech-standalone
 ```
@@ -47,6 +47,11 @@ curl "http://localhost:1080/speech-to-text/api/v1/recognize" \
   --header "Content-Type: audio/wav" \
   --data-binary @output.wav
 ```
+Note that there are `.wav` files with English speech in the GitHub repo for this tutorial in the subdirectory:
+```
+Watson-Speech/Speech To  Text/Sample_dataset
+```
+
 For French specify the model `fr-FR_Multimedia`:
 ```
 curl "http://localhost:1080/speech-to-text/api/v1/recognize?model=fr-FR_Multimedia" \

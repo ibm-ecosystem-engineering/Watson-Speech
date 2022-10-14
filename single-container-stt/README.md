@@ -36,9 +36,11 @@ You can run the container on Docker as follows, using the container image create
 ```
 docker run --rm --publish 1080:1080 speech-standalone
 ```
+This service runs the foreground.
 
+## Step 5: Query the service
+Open up another terminal, and query the service to transcribe audio files. Download a `.wav` file with English or French speech to your local machine, with the name `output.wav`.  Then, you can use `curl` to request transcriptions.
 
-## Step 5: Send an example `/recognize` request with an audio file you have
 Use the default STT model, which is configured as `en-US_Multimedia` in `env_config.json`:
 ```
 curl "http://localhost:1080/speech-to-text/api/v1/recognize" \

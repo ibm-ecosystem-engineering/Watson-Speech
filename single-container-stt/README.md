@@ -38,8 +38,8 @@ docker run --rm --publish 1080:1080 speech-standalone
 ```
 This service runs the foreground.
 
-## Step 5: Query the service
-Open up another terminal, and query the service to transcribe audio files. Download a `.wav` file with English or French speech to your local machine, with the name `output.wav`.  Then, you can use `curl` to request transcriptions.
+## Step 5: Query the STT service
+Open up another terminal, and query the service to transcribe audio files. Download an audio `.wav` file with English or French speech to your local machine, and give it the name `output.wav`.  Then, you can request transcriptions of the speech with the commands below.
 
 Use the default STT model, which is configured as `en-US_Multimedia` in `env_config.json`:
 ```
@@ -47,7 +47,7 @@ curl "http://localhost:1080/speech-to-text/api/v1/recognize" \
   --header "Content-Type: audio/wav" \
   --data-binary @output.wav
 ```
-Specify a model to use, e.g. `fr-FR_Multimedia`:
+For French specify the model `fr-FR_Multimedia`:
 ```
 curl "http://localhost:1080/speech-to-text/api/v1/recognize?model=fr-FR_Multimedia" \
   --header "Content-Type: audio/wav" \

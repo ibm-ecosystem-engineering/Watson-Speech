@@ -15,8 +15,7 @@ IBM Entitled Registry contains various container images for Watson Speech. Once 
 echo $IBM_ENTITLEMENT_KEY | docker login -u cp --password-stdin cp.icr.io
 ```
 
-## Step 2: Clone this repository
-
+## Step 2: Clone the sample code repository
 ```
 git clone https://github.com/ibm-build-lab/Watson-Speech.git
 ```
@@ -25,21 +24,21 @@ Go to the directory containing the sample code for this tutorial.
 cd Watson-Speech/single-container-stt
 ```
 
-## Step 2: Build the container image
+## Step 3: Build the container image
 Build a container image with the provided `Dockerfile` with two pretrained models ( `en-us-multimedia` and `fr-fr-multimedia` ) included to support two different languages: English (en_US) and French (fr_FR). More models can be added to support other languages by updating the provided `Dockerfile`, as well as `env_config.json` and `sessionPools.yaml` in the `chuck_var` directory.
 ```
 docker build . -t speech-standalone
 ```
 
 
-## Step 3: Run the container to start the STT service
+## Step 4: Run the container to start the STT service
 You can run the container on Docker as follows, using the container image created in the previous step.
 ```
 docker run --rm --publish 1080:1080 speech-standalone
 ```
 
 
-## Step 4: Send an example `/recognize` request with an audio file you have
+## Step 5: Send an example `/recognize` request with an audio file you have
 Use the default STT model, which is configured as `en-US_Multimedia` in `env_config.json`:
 ```
 curl "http://localhost:1080/speech-to-text/api/v1/recognize" \

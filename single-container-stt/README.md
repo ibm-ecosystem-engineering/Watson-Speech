@@ -15,6 +15,15 @@ IBM Entitled Registry contains various container images for Watson Speech. Once 
 echo $IBM_ENTITLEMENT_KEY | docker login -u cp --password-stdin cp.icr.io
 ```
 
+## Step 2: Clone this repository
+
+```
+git clone https://github.com/ibm-build-lab/Watson-Speech.git
+```
+Go to the directory containing the sample code for this tutorial.
+```
+cd Watson-Speech/single-container-stt
+```
 
 ## Step 2: Build the container image
 Build a container image with the provided `Dockerfile` with two pretrained models ( `en-us-multimedia` and `fr-fr-multimedia` ) included to support two different languages: English (en_US) and French (fr_FR). More models can be added to support other languages by updating the provided `Dockerfile`, as well as `env_config.json` and `sessionPools.yaml` in the `chuck_var` directory.

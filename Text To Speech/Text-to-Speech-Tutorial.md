@@ -72,21 +72,21 @@ Watson Text to Speech offers so-called parameters for various text-to-speech syn
         ipd.display(ipd.Audio(data=x, rate=Fs))
     
     ```
+
 3. Data loading (Text Data)
-This sample data set contains 50 consumer complaints transcripts with the date. We will use this dataset for the case-study.
- ```
-consumer_df = pd.read_csv('consumer_data.csv')
-    
+
+    ```
+        consumer_df = pd.read_csv('consumer_data.csv')
     ```
 
 4. Text Pre Processing :
+
 Speech Synthesis services accepts the data in format of JSON. There are so many escape characters that have came into text which is not valid for JSON string .So replacing those char from the text.
 
-  ```
-   def clean(doc):
-    stop_free = " ".join([word.replace('X','').replace('/','').replace("''",'').replace(',','').replace(':','').replace('{','').replace('}','').replace('"','') for word in doc.split()])
-    return stop_free
-    
+    ```
+      def clean(doc):
+         stop_free = " ".join([word.replace('X','').replace('/','').replace("''",'').replace(',','').replace(':','').replace('{','').replace('}','').replace('"','') for word in doc.split()])
+      return stop_free 
     ```
 
 #### Step 2. Setting up the service

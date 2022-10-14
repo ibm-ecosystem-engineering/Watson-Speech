@@ -2,7 +2,7 @@
 This recipe shows how you can build a container image with a set of pretrained models included and run the Speech-to-Text (STT) service on Docker, by following a few simple steps.
 
 ## Prerequisites
-- Ensure you have your entitlement key to access the IBM Entitled Registry
+- Ensure you have your [entitlement key](https://myibm.ibm.com/products-services/containerlibrary) to access the IBM Entitled Registry
 - Install [Docker](https://docs.docker.com/get-docker/)
 
 **Tip**:

@@ -75,7 +75,7 @@ So, yeah, enjoy the film. Sit back with your bag of popcorn and enjoy the g-forc
 
 tts_analysis_input =  dbc.InputGroup(
             [
-                dbc.Textarea(id="tts-input", value=tts_sample_text,cols=150,rows=15, placeholder="Text to Speech analysis"),
+                dbc.Textarea(id="tts-input", value=tts_sample_text,cols=150,rows=8,persistence=True,persistence_type='session', placeholder="Text to Speech analysis"),
                 dcc.Clipboard(
                     target_id="textarea-tts",
                     title="copy1",
@@ -86,18 +86,16 @@ tts_analysis_input =  dbc.InputGroup(
                         "color": "black"
                     },
                 ),
-                dbc.Button("Play", id="tts-button", className="me-2", n_clicks=0),
+                dbc.Button("Play", id="tts-button", className="me-2",n_clicks=0),
             ],
             className="mb-3",
         )
 
 audio2 = html.Div(children=[
-    html.Audio(html.Source(src="assets/result.wav",type="audio/wav"), controls=True,style={ "width": "100%"})
+    html.Audio(html.Source(src=file_name,type="audio/wav"), controls=True,style={ "width": "100%"})
 ])
 
-audio1 = html.Div(children=[
-    html.Audio(html.Source(src="assets/result.wav",type="audio/wav"), controls=True,style={ "width": "100%"})
-])
+image_path='assets/output.png'
 
 def print_plot_play(fileName, text=''):
     x, Fs = librosa.load(fileName, sr=None)
@@ -108,7 +106,6 @@ def print_plot_play(fileName, text=''):
     plt.xlabel('Time (samples)')
     plt.ylabel('Amplitude')
     plt.tight_layout()
-   # plt.show()
     return plt
 
 app.layout = html.Div(children=[
@@ -124,22 +121,12 @@ app.layout = html.Div(children=[
                         html.Div(audio2),
                         html.Div(id="div-audio", children=[' ']),
                         html.Br(),
-                        html.Br(),
-                       # dcc.Graph(id="waveform", figure=figure.show()),
+                        html.P(children="Text To Speech Output wave form"),
+                        html.Img(src=image_path,style={ "width": "99%","height":"30%",'textAlign': 'center','margin-right':'100px'}),
                         ],
-                        # width=6
                     ),
                     ],
                 ),
-                html.Br(),
-                html.Br(),
-                html.Br(),
-                html.Br(),
-                html.Br(),
-                html.Br(),
-                html.Br(),
-                html.Br(),
-                html.Br(),
                 html.Footer(children="Please note that this content is made available by IBM Build Lab to foster Embedded AI technology adoption. \
                                 The content may include systems & methods pending patent with USPTO and protected under US Patent Laws. \
                                 Copyright - 2022 IBM Corporation")
@@ -168,12 +155,14 @@ def getSpeechFromText(headers,params,data,file_name):
 )
 
 def update_output(n_clicks, value):
-    text_data = '{"text":"'+value+'"}'
-    file_name = 'assets/result.wav'
-    getSpeechFromText(headers,params,text_data,file_name)
-    #plt =print_plot_play(file_name, "Hello")
-    #figure = plt.show()
-    return audio2
+    if  n_clicks > 0:
+        text_data = '{"text":"'+value+'"}'
+        file_name = 'assets/result.wav'
+        image_path ='assets/output.png'
+        getSpeechFromText(headers,params,text_data,file_name)
+        plt =print_plot_play(file_name, "Text To Speech Wav form")
+        plt.savefig(image_path)
+        return audio2,image_path
    
 
 if __name__ == '__main__':

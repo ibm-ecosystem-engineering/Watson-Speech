@@ -47,7 +47,7 @@ curl "http://localhost:1080/speech-to-text/api/v1/recognize" \
   --header "Content-Type: audio/wav" \
   --data-binary @output.wav
 ```
-Note that there are `.wav` files with English speech in the GitHub repo for this tutorial in the subdirectory:
+Note that there are `.wav` files with English speech in the GitHub repo for this tutorial. You will find them in the subdirectory:
 ```
 Watson-Speech/Speech To  Text/Sample_dataset
 ```

@@ -79,14 +79,16 @@ public final String STT_REST_MAPPING = "/speech-to-text/api/v1/recognize?model=e
 ```
 Here, `STT_REST_MAPPING` gives the API path. The `transcript` method accepts a single argument, that is audio input as byte format.
 
-For streaming communication, the application uses Javascript to connect the client (browser) to the server. Here is a sample code snippet where we first create a websocket channel.
+For streaming communication, the application uses Javascript to connect the client (browser) to the server. The code for this appears in:
+```
+Watson-Speech/STTApplication/src/main/resources/templates/index.html
+```
+Here is the fragment where the WebSocket channel is created.
 ```
 let webSocket = new WebSocket(websocketBaseUrl + "/speech-to-text/api/v1/recognize");
 
 ```
-
-Here is the code that sends request to the server.
-
+Here is the code to send audio data to the server.
 ```
 const sendData = (webSocket, data) => {
 		var message = {
@@ -102,8 +104,7 @@ const sendData = (webSocket, data) => {
 		}
 	}
 ```
-Here is the code that receives the transcript from server and display in the page.
-
+Finally, here is the code that receives the transcript from server and displays it.
 ```
 webSocket.onmessage = function (event) {
 				var data = JSON.parse(event.data);

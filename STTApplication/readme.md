@@ -23,7 +23,7 @@ git clone https://github.com/ibm-build-labs/Watson-Speech
 ```
 This repository contains code that is used in this tutorial.
 
-## Run on your local machine
+## Steps
 Follow the steps below to run the application front-end on your local machine, 
 
 ### 1. Build
@@ -37,6 +37,8 @@ Run the build command.
 ```
 The application will be packaged in JAR file `target/STTApplication-0.0.1-SNAPSHOT.jar`.
 
+### 2. Run 
+
 Set the following environment variables. The Java application will use these to access the STT service from the Java application. Assume that your STT service is running on port 1080.
 ```
 export STT_SERVICE_ENDPOINT=localhost:1080
@@ -45,14 +47,13 @@ To access the websocket streaming service
 ```
 export STT_WSS_SERVICE_ENDPOINT=ws://localhost:1080
 ```
-
 Run the application.
 ```
 java -jar target/STTApplication-0.0.1-SNAPSHOT.jar
 ```
 The application will listen on port 8080. 
 
-### 2. Test
+### 3. Test
 Access the application in your browser with the following URL.
 ```
 http://localhost:8080

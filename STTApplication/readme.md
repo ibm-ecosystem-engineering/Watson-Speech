@@ -62,7 +62,7 @@ http://localhost:8080
 
 The application is a Java [Spring Boot]([https://spring.io/projects/spring-boot](https://spring.io/projects/spring-boot) application. It uses [Feign](https://github.com/OpenFeign/feign) to wrap the REST calls made to the Watson STT back-end. 
 
-The code that makes the REST call is as below
+The following code makes the REST call.
 ```
 @FeignClient(name = "fclient", url = "${client.post.baseurl}") 
 public interface SSTServingClient {
@@ -76,7 +76,7 @@ public final String STT_REST_MAPPING = "/speech-to-text/api/v1/recognize?model=e
 - STT_REST_MAPPING: This indicates api path that the rest fiegn client is mapping. 
 - The transcript method accepts one argument, audio input as byte format
 
-For websocket communication we are using javascript to connect to the server and get transcript. Here is a sample code snippet where we first create a websocket channel.
+For WebSocket communication we use Javascript to connect to the server and get transcript. Here is a sample code snippet where we first create a websocket channel.
 
 ```
 let webSocket = new WebSocket(websocketBaseUrl + "/speech-to-text/api/v1/recognize");
@@ -115,42 +115,3 @@ webSocket.onmessage = function (event) {
 				}
 			};
 ```
-
-The source files are in the sample code repository under the directory:
-```
-Watson-Speech/STTApplication/src/main
-```
-The following files are under this subdirectory.
-```
-.
-├── java
-│   └── com
-│       └── build
-│           └── labs
-│               ├── SttApplication.java
-│               ├── controller
-│               │   └── STTController.java
-│               ├── feignclient
-│               │   └── SSTServingClient.java
-│               ├── model
-│               │   ├── Alternative.java
-│               │   ├── Output.java
-│               │   ├── Result.java
-│               │   └── Summary.java
-│               └── services
-│                   └── STTService.java
-└── resources
-    ├── application.properties
-    ├── static
-    │   ├── audio
-    │   │   ├── CallCenterSample1.mp3
-    │   │   ├── CallCenterSample2.mp3
-    │   │   └── CallCenterSample3.mp3
-    │   └── logo
-    │       └── ibm_logo.png
-    └── templates
-        └── index.html
-```
-
-
-

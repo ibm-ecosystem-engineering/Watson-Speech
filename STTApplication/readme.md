@@ -60,10 +60,13 @@ http://localhost:8080
 ```
 
 ## Understanding the Application Code
+The Java [Spring Boot](https://spring.io/projects/spring-boot](https://spring.io/projects/spring-boot) application demonstrates use of both the STT batch (REST) API, as well as the streaming (WebSocket) API. It uses the REST API to send audio files to the SST service, and recieves in return transcripts of the audio. It uses the streaming API to perform live transcription of a user's voice.
 
-The application is a Java [Spring Boot]([https://spring.io/projects/spring-boot](https://spring.io/projects/spring-boot) application. It uses [Feign](https://github.com/OpenFeign/feign) to wrap the REST calls made to the Watson STT back-end. 
-
-The following code makes the REST call.
+[Feign](https://github.com/OpenFeign/feign) is used to wrap the REST calls. The relevant code appears in:
+```
+Watson-Speech/src/main/java/com/build/labs/feignclient/SSTServingClient.java
+```
+Here is the code fragment where the REST call is specified.
 ```
 @FeignClient(name = "fclient", url = "${client.post.baseurl}") 
 public interface SSTServingClient {
@@ -74,11 +77,9 @@ public final String STT_REST_MAPPING = "/speech-to-text/api/v1/recognize?model=e
     String transcript(@RequestBody byte[] body);
 }
 ```
-- STT_REST_MAPPING: This indicates api path that the rest fiegn client is mapping. 
-- The transcript method accepts one argument, audio input as byte format
+Here, `STT_REST_MAPPING` gives the API path. The `transcript` method accepts a single argument, that is audio input as byte format.
 
-For WebSocket communication we use Javascript to connect to the server and get transcript. Here is a sample code snippet where we first create a websocket channel.
-
+For streaming communication, the application uses Javascript to connect the client (browser) to the server. Here is a sample code snippet where we first create a websocket channel.
 ```
 let webSocket = new WebSocket(websocketBaseUrl + "/speech-to-text/api/v1/recognize");
 

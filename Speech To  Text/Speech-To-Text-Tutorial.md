@@ -146,11 +146,7 @@ speaker_audio = './Sample_dataset/samples_audio-files_07-ibm-earnings-2min.wav'
 result_speaker = getTextFromSpeech(headers,params,speaker_audio)
 ```
 
-2. Visualize the output
-
-IMAGE
-
-3. Create a custom function to find the number of speakers in the speech data
+2. Create a custom function to find the number of speakers in the speech data
 
 ```
 def get_speaker_data(result_speaker):
@@ -187,10 +183,13 @@ def get_speaker_data(result_speaker):
                     end_time = t[2]
                 i=i+1 
             for speaker in speaker_dict:
-                 if speaker['end_time'] > end_time:
+                 if speaker['end_time'] >= end_time:
                         print("Speaker ",speaker['Speaker'],"  ",time['transcript'])
-                        break   
+                        break 
 ```
+3. Visualize the output
+
+![Raw Data](images/STT_speaker_label.png)
 
 #### 2.D Response formatting and filtering
 

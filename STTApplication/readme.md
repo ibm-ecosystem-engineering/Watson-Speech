@@ -9,7 +9,7 @@ In order to use this tutorial, you need to Run a Single-Container Speech-to-Text
 
 ### Architecture diagram
 
-![Diagram](architecture.png)
+![Diagram](STTArchitectureLocal.png)
  
 ### Prerequisites
 - [Docker](https://docs.docker.com/get-docker/) is installed.

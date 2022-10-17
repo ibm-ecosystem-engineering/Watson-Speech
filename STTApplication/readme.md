@@ -19,7 +19,7 @@ In order to use this tutorial, you need to Run a Single-Container Speech-to-Text
 ### Get the sample code
 Clone the following GitHub repository.
 ```
-git clone https://github.com/ibm-build-labs/Watson-NLP
+git clone https://github.com/ibm-build-labs/Watson-Speech
 ```
 This repository contains code that is used in this tutorial.
 
@@ -29,7 +29,7 @@ Follow the steps below to run the application front-end on your local machine,
 ### 1. Build
 Go to the directory that contains sample code for this tutorial.
 ```
-cd Watson-NLP/STTApplication
+cd Watson-Speech/STTApplication
 ```
 Run the build command.
 ```

@@ -1,42 +1,46 @@
 # Watson Speech to Text tutorial
+Watson Speech-to-text is a speech recognition service that offers many functionalities like text recognition, audio pre-processing, noise removal, background noise separation, semantic sentence conversation, How many speakers are in conversion, etc.
 
 #### Pre-requisites
-Ensure that you have Speech to Text service installed on your cluster.
+ Ensure you have your [entitlement key](https://myibm.ibm.com/products-services/containerlibrary) to access the IBM Entitled Registry
+- [Docker](https://docs.docker.com/get-docker/) is installed
 
-### 1. Connect to the Cluster via CLI
-1. Log in to your IBM Cloud account.
+**Tip**:
+- [Podman](https://podman.io/getting-started/installation) provides a Docker-compatible command line front end. Unless otherwise noted, all the the Docker commands in this tutorial should work for Podman, if you simply alias the Docker CLI with `alias docker=podman` shell command.
 
-`ibmcloud login`
 
-2. Select the right account when prompted.
+## Step 1.1: Login to the IBM Entitled Registry
+IBM Entitled Registry contains various container images for Watson Speech. Once you've obtained the entitlement key from the [container software library](https://myibm.ibm.com/products-services/containerlibrary), you can login to the registry with the key, and pull the container images to your local machine.
+```
+echo $IBM_ENTITLEMENT_KEY | docker login -u cp --password-stdin cp.icr.io
+```
 
-3. Set the correct resource group using the command
+## Step 1.2: Clone the sample code repository
+```
+git clone https://github.com/ibm-build-lab/Watson-Speech.git
+```
+Go to the directory containing the sample code for this tutorial.
+```
+cd Watson-Speech/single-container-stt
+```
 
-`ibmcloud login -g RESOUCE_GROUP`
+## Step 1.3: Build the container image
+Build a container image with the provided `Dockerfile` with two pretrained models ( `en-us-multimedia` and `fr-fr-multimedia` ) included to support two different languages: English (en_US) and French (fr_FR). More models can be added to support other languages by updating the provided `Dockerfile`, as well as `env_config.json` and `sessionPools.yaml` in the `chuck_var` directory.
+```
+docker build . -t speech-standalone
+```
 
-4. Set the Kubernetes context to your cluster for this terminal session. For more information about this command, [see the docs](https://cloud.ibm.com/docs/containers?topic=containers-cli-plugin-kubernetes-service-cli#cs_cluster_config).
 
-`ibmcloud ks cluster config --cluster CLUSTER_ID`
-
-5. Verify that you can connect to your cluster.
-
-`kubectl config current-context`
-
-6. Create a local proxy to the cluster with kubectl proxy in a separate terminal
-
-`kubectl proxy`
-
-7. Expose the STT service endpoint using kubectl port forword 
- `kubectl port-forward svc/install-1-stt-runtime 1080`
-
- Now you can use the STT service with a Python notebook using http://localhost:1080/
-
-8. Set the NAMESPACE and INSTALL_NAME environment variables.
+## Step 1.4: Run the container to start the STT service
+You can run the container on Docker as follows, using the container image created in the previous step. 
+```
+docker run --rm --publish 1080:1080 speech-standalone
+```
+This service runs the foreground. Now you can access this service in your notebook or local.
 
 ### 2. Watson Speech To Text Analysis
 
 #### Step 1. Data Loading and Setting up the service
-Watson Speech to Text offers so-called parameters for various speech to text recognization, audio pre-processing, noise removal, number of speakers in the convesation etc.
 
 1. Import and initialize some helper libs that are used throughout the tutorial.
 

@@ -12,9 +12,9 @@ In order to use this tutorial, you need to Run a Single-Container Speech-to-Text
 ![Diagram](STTArchitectureLocal.png)
  
 ### Prerequisites
-- [Docker](https://docs.docker.com/get-docker/) is installed.
+- [Docker](https://docs.docker.com/get-docker/) is installed
 - Java 17 is installed
-- You have a running STT Service in a docker container as mentioned above.
+- You an STT Service running in a Docker container, as described [here](https://github.com/ibm-build-lab/Watson-Speech/tree/main/single-container-stt)
 
 ### Get the sample code
 Clone the following GitHub repository.

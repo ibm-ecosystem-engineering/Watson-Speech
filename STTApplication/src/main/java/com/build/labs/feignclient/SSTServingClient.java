@@ -20,5 +20,5 @@ public final String STT_REST_MAPPING1 = "/speech-to-text/api/v1/recognize?model=
     String transcriptTelephony(@RequestBody byte[] body);
 	
 	@PostMapping(STT_REST_MAPPING1)
-    String transcriptParameter(@RequestParam Map params,@RequestBody byte[] body);
+    String transcriptParameter(@RequestParam Map<String,String> params,@RequestBody byte[] body);
 }

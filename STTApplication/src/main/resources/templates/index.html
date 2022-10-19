@@ -22,18 +22,25 @@
 		}
 	</script>
 	<style>
-	.row {display: flex; /* equal height of the children */}
-	.col {
- 			flex: 1; /* additionally, equal width */
- 			padding: 1em;
-  			border: solid;
-  			height:490px;
-    		overflow:scroll;
+		.row {
+			display: flex;
+			/* equal height of the children */
 		}
-	.cols {
- 			flex: 1; /* additionally, equal width */
- 			padding: 1em;
-  			border: solid;
+
+		.col {
+			flex: 1;
+			/* additionally, equal width */
+			padding: 1em;
+			border: solid;
+			height: 490px;
+			overflow: scroll;
+		}
+
+		.cols {
+			flex: 1;
+			/* additionally, equal width */
+			padding: 1em;
+			border: solid;
 		}
 	</style>
 </head>
@@ -130,27 +137,52 @@
 							</bx-table-body>
 						</bx-table>
 					</div>
-					
-						<div id="panel-4" role="tabpanel" aria-labelledby="sample-audio-param">
-						<h4 style="text-align:center; margin-top:10px">Sample audio files with parameters to generate and download
+
+					<div id="panel-4" role="tabpanel" aria-labelledby="sample-audio-param">
+						<h4 style="text-align:center; margin-top:10px">Sample audio files with parameters to generate
+							and download
 							transcript</h4>
 						<div class="row">
-							<table >
-							<tr><th class ="cols">Parameter</th> <th class ="cols">Description</th></tr>
-							<tr><td class ="cols">1. Background Audio Suppression</td> <td class ="cols">Use the background_audio_suppression parameter to suppress background audio based on its volume to prevent it from being transcribed as speech. You can specify a float value in the range of 0.0 to 1.0.</td></tr>
-							<tr><td class ="cols">2. End of Phrase Silence Time </td> <td class ="cols">The end_of_phrase_silence_time parameter specifies the duration of the pause interval at which the service splits a transcript into multiple final results. You can specify a double value between 0.0 and 120.0 seconds.</td></tr>
-							<tr><td class ="cols">3. Speaker Labels </td> <td class ="cols">The speaker label parameter can be used to identify which individuals spoke which words in a multi-participant exchange. You can use the feature to create a person-by-person transcript of an audio stream.</td></tr>
-							<tr><td class ="cols">4. Response formatting </td> <td class ="cols">You can format a final transcript to include more conventional representations of certain strings and to include punctuation. You can redact sensitive numeric information from a final transcript, and you can filter profanity from most transcription results</td></tr>
+							<table>
+								<tr>
+									<th class="cols">Parameter</th>
+									<th class="cols">Description</th>
+								</tr>
+								<tr>
+									<td class="cols">1. Background Audio Suppression</td>
+									<td class="cols">Use the background_audio_suppression parameter to suppress
+										background audio based on its volume to prevent it from being transcribed as
+										speech. You can specify a float value in the range of 0.0 to 1.0.</td>
+								</tr>
+								<tr>
+									<td class="cols">2. End of Phrase Silence Time </td>
+									<td class="cols">The end_of_phrase_silence_time parameter specifies the duration of
+										the pause interval at which the service splits a transcript into multiple final
+										results. You can specify a double value between 0.0 and 120.0 seconds.</td>
+								</tr>
+								<tr>
+									<td class="cols">3. Speaker Labels </td>
+									<td class="cols">The speaker label parameter can be used to identify which
+										individuals spoke which words in a multi-participant exchange. You can use the
+										feature to create a person-by-person transcript of an audio stream.</td>
+								</tr>
+								<tr>
+									<td class="cols">4. Response formatting </td>
+									<td class="cols">You can format a final transcript to include more conventional
+										representations of certain strings and to include punctuation. You can redact
+										sensitive numeric information from a final transcript, and you can filter
+										profanity from most transcription results</td>
+								</tr>
 							</table>
-							</div>
+						</div>
 						<table style="margin-top: 10px;width:100%;vertical-align: middle;" class="table">
 							<tr>
 								<td>
 									Sample1 - Background Audio Suppression & Response formatting
 								</td>
 								<td style="margin-top:10px;">
-									<audio controls th:src="@{/audio/samples_back.wav}" Your browser does not
-										support the <code>audio</code>
+									<audio controls th:src="@{/audio/samples_back.wav}" Your browser does not support
+										the <code>audio</code>
 										element.
 									</audio>
 								</td>
@@ -164,8 +196,8 @@
 									Sample2 - End of Phrase Silence Time
 								</td>
 								<td>
-									<audio controls th:src="@{/audio/samples_end.wav}" Your browser does not
-										support the <code>audio</code>
+									<audio controls th:src="@{/audio/samples_end.wav}" Your browser does not support the
+										<code>audio</code>
 										element.
 									</audio>
 								</td>
@@ -179,8 +211,8 @@
 									Sample3 -Speaker Labels
 								</td>
 								<td>
-									<audio controls th:src="@{/audio/samples_speaker.wav}" Your browser does not
-										support the <code>audio</code>
+									<audio controls th:src="@{/audio/samples_speaker.wav}" Your browser does not support
+										the <code>audio</code>
 										element.
 									</audio>
 								</td>
@@ -189,53 +221,63 @@
 									<bx-link href="/transcript/param/samples_speaker.wav/download"> Download </bx-link>
 								</td>
 							</tr>
-							<br/>
+							<br />
 						</table>
-						<br/>
+						<br />
 						<div class="row" th:if="${result ne null}">
-  							<div class="col"><bx-table  class="table table-striped">
-  							 <caption style="text-align: center;">Sample Audio Transcript (Before applying speech recognition parameters)</caption>
-							<bx-table-body>
-								<th:block th:each="rs : ${result}">
-									<bx-table-row>
-										<bx-table-cell th:text="'Confidence: ' + ${rs.confidence}"></bx-table-cell>
-									</bx-table-row>
-									<bx-table-row>
-										<bx-table-cell th:text="'Transcript: ' + ${rs.transcript}"></bx-table-cell>
-									</bx-table-row>
-								</th:block>
-							</bx-table-body>
-						</bx-table></div>
-  							<div class="col">
-  							<bx-table th:if="${resultParam ne null}" class="table table-striped">
-  							<caption style="text-align: center;">Sample Audio Transcript with Parameter (After applying speech recognition parameters)</caption>
-							<bx-table-body>
-								<th:block th:each="rs : ${resultParam}">
-									<bx-table-row>
-										<bx-table-cell th:text="'Confidence: ' + ${rs.confidence}"></bx-table-cell>
-									</bx-table-row>
-									<bx-table-row>
-										<bx-table-cell th:text="'Transcript: ' + ${rs.transcript}"></bx-table-cell>
-									</bx-table-row>
-								</th:block>
-							</bx-table-body>
-						</bx-table>
-						
-						<bx-table th:if="${resultParamSpeaker ne null}" class="table table-striped">
-  							<caption style="text-align: center;">Sample Audio Transcript with Parameter (After applying speech recognition parameters)</caption>
-							<bx-table-body>
-								<th:block th:each="rs : ${resultParamSpeaker}">
-									<bx-table-row>
-										<bx-table-cell th:text="'Speaker: ' + ${rs.confidence}"></bx-table-cell>
-									</bx-table-row>
-									<bx-table-row>
-										<bx-table-cell th:text="'Transcript: ' + ${rs.transcript}"></bx-table-cell>
-									</bx-table-row>
-								</th:block>
-							</bx-table-body>
-						</bx-table>
-  							
-  							</div>
+							<div class="col">
+								<bx-table class="table table-striped">
+									<caption style="text-align: center;">Sample Audio Transcript (Before applying speech
+										recognition parameters)</caption>
+									<bx-table-body>
+										<th:block th:each="rs : ${result}">
+											<bx-table-row>
+												<bx-table-cell th:text="'Confidence: ' + ${rs.confidence}">
+												</bx-table-cell>
+											</bx-table-row>
+											<bx-table-row>
+												<bx-table-cell th:text="'Transcript: ' + ${rs.transcript}">
+												</bx-table-cell>
+											</bx-table-row>
+										</th:block>
+									</bx-table-body>
+								</bx-table>
+							</div>
+							<div class="col">
+								<bx-table th:if="${resultParam ne null}" class="table table-striped">
+									<caption style="text-align: center;">Sample Audio Transcript with Parameter (After
+										applying speech recognition parameters)</caption>
+									<bx-table-body>
+										<th:block th:each="rs : ${resultParam}">
+											<bx-table-row>
+												<bx-table-cell th:text="'Confidence: ' + ${rs.confidence}">
+												</bx-table-cell>
+											</bx-table-row>
+											<bx-table-row>
+												<bx-table-cell th:text="'Transcript: ' + ${rs.transcript}">
+												</bx-table-cell>
+											</bx-table-row>
+										</th:block>
+									</bx-table-body>
+								</bx-table>
+
+								<bx-table th:if="${resultParamSpeaker ne null}" class="table table-striped">
+									<caption style="text-align: center;">Sample Audio Transcript with Parameter (After
+										applying speech recognition parameters)</caption>
+									<bx-table-body>
+										<th:block th:each="rs : ${resultParamSpeaker}">
+											<bx-table-row>
+												<bx-table-cell th:text="'Speaker: ' + ${rs.confidence}"></bx-table-cell>
+											</bx-table-row>
+											<bx-table-row>
+												<bx-table-cell th:text="'Transcript: ' + ${rs.transcript}">
+												</bx-table-cell>
+											</bx-table-row>
+										</th:block>
+									</bx-table-body>
+								</bx-table>
+
+							</div>
 						</div>
 					</div>
 					<div id="panel-2" role="tabpanel" aria-labelledby="upload-your-audio" hidden>
@@ -273,7 +315,7 @@
 							</tr>
 						</table>
 						<div style="padding:10px" id="websocketResult">
-							
+
 						</div>
 					</div>
 				</div>
@@ -292,11 +334,11 @@
 	src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/file-uploader.min.js"></script>
 <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/tag/latest/data-table.min.js"></script>
 <script th:inline="javascript">
-	
+
 	var websocketBaseUrl = /*[[${@environment.getProperty('websocket.baseurl')}]]*/
-	
-	console.log("base url",websocketBaseUrl);
-	
+
+		console.log("base url", websocketBaseUrl);
+
 	const sendData = (webSocket, data) => {
 		var message = {
 			'action': 'start'
@@ -330,13 +372,13 @@
 
 			webSocket.onmessage = function (event) {
 				var data = JSON.parse(event.data);
-				if(data.results !== undefined){
+				if (data.results !== undefined) {
 					data.results.forEach((element) => {
 						element.alternatives.forEach((data) => {
 							const divelement = document.getElementById("websocketResult");
 							divelement.innerHTML = data.transcript;
 							console.log(data.transcript);
-						} )
+						})
 					});
 				}
 			};

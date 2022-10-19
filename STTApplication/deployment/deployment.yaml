@@ -14,9 +14,11 @@ spec:
     spec:
       containers:
       - name: stt-web-app
-        image: us.icr.io/watson-core-demo/stt-web-application:v1
+        image: us.icr.io/watson-core-demo/stt-web-application:v5
         env:
           - name: STT_SERVICE_ENDPOINT
             value: "install-1-stt-runtime:1080"
+          - name: STT_WSS_SERVICE_ENDPOINT
+            value: "ws://b5693962-us-south.lb.appdomain.cloud:1080"
         ports:
         - containerPort: 8080

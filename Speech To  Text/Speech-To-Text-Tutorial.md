@@ -126,6 +126,9 @@ params ={'model':'en-US_Telephony',"background_audio_suppression":"0.5"}
 result = getTextFromSpeech(headers,params,back_audio)
 show_result(result)
 ```
+4. Visualize the output
+
+![Raw Data](images/stt_back.png)
 
 #### 2.B. Speech Audio Parsing
 
@@ -135,6 +138,9 @@ show_result(result)
 params ={'model':'en-US_Multimedia',"end_of_phrase_silence_time":"0.2"}
 result = getTextFromSpeech(headers,params,file_name)
 ```
+2. Visualize the output
+
+![Raw Data](images/stt_end.png)
 
 #### 2.C Speaker Labels
 

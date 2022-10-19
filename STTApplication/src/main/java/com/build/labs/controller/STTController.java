@@ -72,46 +72,49 @@ public class STTController {
 
 	@GetMapping("/transcript/{filename}")
 	public String transcriptAudio(@PathVariable("filename") String filename, Model model)
+			throws IOException, URISyntaxException 
+	{
+
+		InputStream input = new ClassPathResource("static/audio/" + filename).getInputStream();
+		String transcript = sttService.transcriptAudio(input);
+		List<Output> outputList = formatOutput(transcript);
+		outputList.forEach(o -> {
+			System.out.println("confidence: " + o.getConfidence());
+			System.out.println("transcript: " + o.getTranscript());
+		});
+
+		model.addAttribute("resultNP", outputList);
+		return "index";
+
+	}
+	
+	@GetMapping("/transcript/param/{filename}")
+	public String transcriptAudioParam(@PathVariable("filename") String filename, Model model)
 			throws IOException, URISyntaxException {
 
 		InputStream input = new ClassPathResource("static/audio/" + filename).getInputStream();
 		InputStream input1 = new ClassPathResource("static/audio/" + filename).getInputStream();
 		String transcript = "";
 		String transcriptParam = "";
-		if (filename.startsWith("samples")) {
-			transcriptParam = sttService.transcriptAudioParameter(filename, input);
-			transcript = sttService.transcriptAudioParameterData(input1);
-			if (filename.contains("speaker")) {
-				List<OutputSpeaker> outputListParam1 = formatOutputSpeaker(transcriptParam);
-				model.addAttribute("resultParamSpeaker", outputListParam1);
-			} else {
-				List<Output> outputListParam = formatOutput(transcriptParam);
-				model.addAttribute("resultParam", outputListParam);
-			}
-
-			List<Output> outputList = formatOutput(transcript);
-			model.addAttribute("result", outputList);
-			return "index";
-
+		transcriptParam = sttService.transcriptAudioParameter(filename, input);
+		transcript = sttService.transcriptAudioParameterData(input1);
+		
+		if (filename.contains("speaker")) {
+			List<OutputSpeaker> outputListParam1 = formatOutputSpeaker(transcriptParam);
+			model.addAttribute("resultParamSpeaker", outputListParam1);
 		} else {
-			transcript = sttService.transcriptAudio(input1);
-			List<Output> outputList = formatOutput(transcript);
-			outputList.forEach(o -> {
-				System.out.println("confidence: " + o.getConfidence());
-				System.out.println("transcript: " + o.getTranscript());
-			});
-
-			model.addAttribute("resultNP", outputList);
-			return "index";
-
+			List<Output> outputListParam = formatOutput(transcriptParam);
+			model.addAttribute("resultParam", outputListParam);
 		}
 
-	}
+		List<Output> outputList = formatOutput(transcript);
+		model.addAttribute("result", outputList);
+		return "index";
 
-	@GetMapping("/transcript/{filename}/download")
-	public ResponseEntity<String> download(@PathVariable("filename") String filename)
+	}
+	@GetMapping("/transcript/param/{filename}/download")
+	public ResponseEntity<String> downloadParam(@PathVariable("filename") String filename)
 			throws IOException, URISyntaxException {
-		String transcript = "";
 		HttpHeaders header = new HttpHeaders();
 		header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=output.json");
 		header.add("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -119,10 +122,24 @@ public class STTController {
 		header.add("Expires", "0");
 
 		InputStream input = readFile(filename);
-		if (filename.startsWith("samples"))
-			transcript = sttService.transcriptAudioParameterData(input);
-		else
-			transcript = sttService.transcriptAudio(input);
+		String transcript = sttService.transcriptAudioParameter(filename, input);
+		
+
+		return ResponseEntity.ok().headers(header).contentLength(transcript.length())
+				.contentType(MediaType.parseMediaType("application/json")).body(transcript);
+	}
+
+	@GetMapping("/transcript/{filename}/download")
+	public ResponseEntity<String> download(@PathVariable("filename") String filename)
+			throws IOException, URISyntaxException {
+		HttpHeaders header = new HttpHeaders();
+		header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=output.json");
+		header.add("Cache-Control", "no-cache, no-store, must-revalidate");
+		header.add("Pragma", "no-cache");
+		header.add("Expires", "0");
+
+		InputStream input = readFile(filename);
+		String transcript = sttService.transcriptAudio(input);
 
 		return ResponseEntity.ok().headers(header).contentLength(transcript.length())
 				.contentType(MediaType.parseMediaType("application/json")).body(transcript);

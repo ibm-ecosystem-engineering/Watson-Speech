@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: stt-web-app
-        image: us.icr.io/watson-core-demo/stt-web-application:v5
+        image: us.icr.io/watson-core-demo/stt-web-application:v6
         env:
           - name: STT_SERVICE_ENDPOINT
             value: "install-1-stt-runtime:1080"

@@ -158,10 +158,7 @@ public class STTController {
 		String transcript = "";
 		String output = "";
 		for (String filename : filenames) {
-			if (filename.startsWith("samples"))
-				output = sttService.transcriptAudioParameter(filename, readFile(filename));
-			else
-				output = sttService.transcriptAudio(readFile(filename));
+			output = sttService.transcriptAudio(readFile(filename));
 			transcript = transcript + "File name: " + filename + "\n" + output + "\n";
 		}
 

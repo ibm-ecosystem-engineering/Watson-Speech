@@ -216,7 +216,7 @@ public class STTController {
 			List<OutputSpeaker> output = result.getAlternatives().stream().map(alternative -> {
 				OutputSpeaker out = new OutputSpeaker();
 				out.setTranscript(alternative.getTranscript());
-				List time_stamp = alternative.getTimestamps();
+				List<?> time_stamp = alternative.getTimestamps();
 				double start_time = 0;
 				double end_time = 0;
 				for (int i = 0; i < time_stamp.size(); i++) {
@@ -230,7 +230,7 @@ public class STTController {
 				for (int j = 0; j < speakerList.size(); j++) {
 					Speaker speakerVal1 = speakerList.get(j);
 					if (speakerVal1.getTo() >= end_time) {
-						out.setConfidence("" + speakerVal1.getSpeakerValue());
+						out.setConfidence("" + speakerVal1.getSpeakerValue()+"     Confidence:"+alternative.getConfidence());
 						break;
 					}
 

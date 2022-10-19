@@ -12,12 +12,11 @@ public interface SSTServingClient {
 	
 public final String STT_REST_MAPPING = "/speech-to-text/api/v1/recognize?model=en-US_Multimedia";
 public final String STT_REST_MAPPING1 = "/speech-to-text/api/v1/recognize?model=en-US_Telephony";
-public final String STT_REST_MAPPING2 = "/speech-to-text/api/v1/recognize?model=en-US_Telephony";
 	
 	@PostMapping(STT_REST_MAPPING)
     String transcript(@RequestBody byte[] body);
 	
-	@PostMapping(STT_REST_MAPPING2)
+	@PostMapping(STT_REST_MAPPING1)
     String transcriptTelephony(@RequestBody byte[] body);
 	
 	@PostMapping(STT_REST_MAPPING1)

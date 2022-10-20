@@ -29,8 +29,8 @@ navbar_main = dbc.Navbar(
             html.A(
                 dbc.Row(
                     [
-                    dbc.Col(html.Img(src=app.get_asset_url('ibm_logo.png'), height="30px")),
-                    dbc.Col(dbc.NavbarBrand("Build Lab", className="ml-auto")),
+                    dbc.Col(html.Img(src=app.get_asset_url('ibm_logo.png'), height="60px")),
+                    dbc.Col(dbc.NavbarBrand("Build Lab", className="ml-auto"), align='center'),
                     #dbc.Col(html.H2("Watson NLP"), className="me-auto", justify='center')
                     ],
                     className="w-0",
@@ -41,13 +41,13 @@ navbar_main = dbc.Navbar(
                 [
                     dbc.Row(
                         [
-                            html.H3("Watson Text to Speech (TTS) Library", style={'textAlign': 'center'}),
+                            html.H2("Watson Text to Speech", style={'textAlign': 'center'}),
                             
                         ],
                         className="me-auto",
                         align='center',
                         justify='center',
-                    ),
+                    )
                 ],
                 align = 'center'
             ),
@@ -71,7 +71,6 @@ There were no characters in the movie, either. They were all caricatures, stereo
 Did I enjoy the film? Sure, it was fun. Especially on a big theater screen with a loud sound system. Did I take anything away from the film? Did it make me think about anything after it was over? Nah. Will I see it again? Nah. \
 I will give Tom Cruise credit for including Val Kilmer in the cast. Considering his health problems, that was a nice touch. \
 So, yeah, enjoy the film. Sit back with your bag of popcorn and enjoy the g-forces. But don't pretend it is anything other than just another summer blockbuster."
-
 
 tts_analysis_input =  dbc.InputGroup(
             [
@@ -115,15 +114,24 @@ app.layout = html.Div(children=[
                     dbc.Col(
                         children=[
                         html.Br(),
-                        html.P(children="Use the sample text or enter your own text in English"),
+                         dbc.Row(
+                        [
+                        dbc.Col(html.P(children="Use the sample text or enter your own text in English"),width=8, lg=3),
+                        dbc.Col(width=3),
+                        dbc.Col(html.P(children="Select option for Enhanced neural voice")),
+                        dbc.Col(
+                            dcc.Dropdown(["Allison","Michael"], "Allison", id='voice_dropdown',persistence=True,persistence_type='session',style={'color':'#00361c'})
+                        ),
+                        dbc.Col(width=2),
+                        ]
+                        ),
                         html.Div(tts_analysis_input),
                         html.Br(),
                         html.Div(audio2),
                         html.Div(id="div-audio", children=[' ']),
-                        html.Br(),
                         html.P(children="Text To Speech Output wave form"),
                         html.Img(src=image_path,style={ "width": "99%","height":"30%",'textAlign': 'center','margin-right':'100px'}),
-                        ],
+                        ]
                     ),
                     ],
                 ),
@@ -136,7 +144,9 @@ app.layout = html.Div(children=[
 
 
 # method to get the Voice data from the text service 
-def getSpeechFromText(headers,params,data,file_name):
+def getSpeechFromText(headers,params,data,file_name,voice_dropdown):
+    if voice_dropdown =='Michael':
+        params ={'voice':'en-US_MichaelV3Voice'}
     request =requests.post(text_to_speech_url,headers=headers,params =params,data=data)
     print(request.status_code)
     if request.status_code != 200:
@@ -151,15 +161,17 @@ def getSpeechFromText(headers,params,data,file_name):
 @app.callback(
     Output('div-audio', 'children'),
     Input('tts-button', 'n_clicks'),
-    Input('tts-input', 'value')   
+    Input('tts-input', 'value'),
+    Input('voice_dropdown', 'value') 
 )
 
-def update_output(n_clicks, value):
+def update_output(n_clicks, value,voice_dropdown):
     if  n_clicks > 0:
+        print(voice_dropdown)
         text_data = '{"text":"'+value+'"}'
         file_name = 'assets/result.wav'
         image_path ='assets/output.png'
-        getSpeechFromText(headers,params,text_data,file_name)
+        getSpeechFromText(headers,params,text_data,file_name,voice_dropdown)
         plt =print_plot_play(file_name, "Text To Speech Wav form")
         plt.savefig(image_path)
         return audio2,image_path

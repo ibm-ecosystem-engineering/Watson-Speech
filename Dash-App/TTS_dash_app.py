@@ -1,4 +1,5 @@
 import os
+from turtle import position
 import dash
 from dash import dcc
 from dash import html
@@ -10,7 +11,6 @@ from dash.dependencies import Input, Output
 import matplotlib.pyplot as plt
 import requests
 import librosa
-import pandas as pd
 
 
 plt.switch_backend('Agg') 
@@ -29,8 +29,8 @@ navbar_main = dbc.Navbar(
             html.A(
                 dbc.Row(
                     [
-                    dbc.Col(html.Img(src=app.get_asset_url('ibm_logo.png'), height="60px")),
-                    dbc.Col(dbc.NavbarBrand("Build Lab", className="ml-auto"), align='center'),
+                    #dbc.Col(html.Img(src=app.get_asset_url('ibm_logo.png'), height="60px")),
+                    dbc.Col(dbc.NavbarBrand("IBM Build Lab", className="ml-auto"), align='center'),
                     #dbc.Col(html.H2("Watson NLP"), className="me-auto", justify='center')
                     ],
                     className="w-0",
@@ -130,14 +130,14 @@ app.layout = html.Div(children=[
                         html.Div(audio2),
                         html.Div(id="div-audio", children=[' ']),
                         html.P(children="Text To Speech Output wave form"),
-                        html.Img(src=image_path,style={ "width": "99%","height":"30%",'textAlign': 'center','margin-right':'100px'}),
+                        html.Img(src=image_path,style={ "width": "99%","height":"28%",'textAlign': 'center','margin-right':'100px'}),
                         ]
                     ),
                     ],
                 ),
                 html.Footer(children="Please note that this content is made available by IBM Build Lab to foster Embedded AI technology adoption. \
                                 The content may include systems & methods pending patent with USPTO and protected under US Patent Laws. \
-                                Copyright - 2022 IBM Corporation")
+                                Copyright - 2022 IBM Corporation",style={"position":"fixed","bottom":"0px"})
 ])
 
 

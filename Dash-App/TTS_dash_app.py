@@ -178,4 +178,4 @@ def update_output(n_clicks, value,voice_dropdown):
 
 if __name__ == '__main__':
     SERVICE_PORT = os.getenv("SERVICE_PORT", default="8052")
-    app.run(host="0.0.0.0", port=SERVICE_PORT, debug=True)
+    app.run(host="0.0.0.0", port=SERVICE_PORT, debug=True, dev_tools_hot_reload=False)

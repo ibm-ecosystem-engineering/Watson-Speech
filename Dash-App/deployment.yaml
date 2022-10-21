@@ -14,10 +14,10 @@ spec:
     spec:
       containers:
       - name: tts-dash-app
-        image: us.icr.io/watson-core-demo/tts_dash_app:v1
+        image: us.icr.io/watson-core-demo/tts_dash_app:1.0.4
         env:
           - name: TTS_SERVICE_URL
-            value: "install-1-tts-runtime:1080/text-to-speech/api/v1/synthesize"
+            value: http://0271714b-us-south.lb.appdomain.cloud:1080/text-to-speech/api/v1/synthesize
         ports:
         - containerPort: 8052
 ---

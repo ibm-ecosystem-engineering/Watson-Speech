@@ -1,5 +1,4 @@
 import os
-from turtle import position
 import dash
 from dash import dcc
 from dash import html

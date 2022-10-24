@@ -117,6 +117,7 @@ def print_plot_play(fileName, text=''):
     x, Fs = librosa.load(fileName, sr=None)
     print('%s Fs = %d, x.shape = %s, x.dtype = %s' % (text, Fs, x.shape, x.dtype))
     fig = px.line(y=x)
+    fig.update_layout(xaxis_title="Time (samples)", yaxis_title="Amplitude", title="Text To Speech Output wave form")
     '''
     plt.figure(figsize=(10, 5))
     plt.plot(x, color='blue')
@@ -124,14 +125,6 @@ def print_plot_play(fileName, text=''):
     plt.xlabel('Time (samples)')
     plt.ylabel('Amplitude')
     plt.tight_layout()
-    
-    from plotly.offline import init_notebook_mode
-    import plotly.graph_objs as go
-    import plotly
-    dur = np.arange(0, len(y_mono)) / 44100
-    plotly.offline.iplot({ "data": [go.Scatter(x=dur, 
-                                            y=y_mono, 
-                                            name='mono')]})
     '''
 
     return fig
@@ -159,7 +152,8 @@ app.layout = html.Div(children=[
                         html.Br(),
                         # html.Div(audio2),
                         html.Div(id="div-audio", children=[' ']),
-                        html.P(children="Text To Speech Output wave form"),
+                        html.Br(),
+                        #html.P(children="Text To Speech Output wave form"),
                         html.Div(wave_figure),
                         #html.Img(src=image_path,style={ "width": "99%","height":"28%",'textAlign': 'center','margin-right':'100px'}),
                         ]

@@ -90,8 +90,8 @@ So, yeah, enjoy the film. Sit back with your bag of popcorn and enjoy the g-forc
 
 tts_analysis_input =  dbc.InputGroup(
             [
-                # dbc.Textarea(id="tts-input", value=tts_sample_text,cols=150,rows=8,persistence=True,persistence_type='session', placeholder="Text to Speech analysis"),
-                dbc.Textarea(id="tts-input", value=tts_sample_text,cols=150,rows=8, placeholder="Text to Speech analysis"),
+                dbc.Textarea(id="tts-input", value=tts_sample_text,cols=150,rows=8,persistence=True,persistence_type='session', placeholder="Text to Speech analysis"),
+                # dbc.Textarea(id="tts-input", value=tts_sample_text,cols=150,rows=8, placeholder="Text to Speech analysis"),
                 dcc.Clipboard(
                     target_id="textarea-tts",
                     title="copy1",

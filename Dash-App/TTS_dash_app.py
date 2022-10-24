@@ -6,6 +6,7 @@ from dash import Input, Output, html, State
 import plotly.io as pio
 from dash.dependencies import Input, Output
 import matplotlib.pyplot as plt
+import plotly.express as px
 import requests
 import librosa
 
@@ -71,6 +72,8 @@ navbar_main = dbc.Navbar(
     className = "ml-auto"
 )
 
+wave_figure = dcc.Graph(id='wave-figure')
+
 # Creating call method for TTS 
 text_to_speech_url = os.getenv("TTS_SERVICE_URL", default='http://0271714b-us-south.lb.appdomain.cloud:1080/text-to-speech/api/v1/synthesize')
 # Setting up the headers for post request to service 
@@ -113,13 +116,25 @@ image_path='assets/output.png'
 def print_plot_play(fileName, text=''):
     x, Fs = librosa.load(fileName, sr=None)
     print('%s Fs = %d, x.shape = %s, x.dtype = %s' % (text, Fs, x.shape, x.dtype))
+    fig = px.line(y=x)
+    '''
     plt.figure(figsize=(10, 5))
     plt.plot(x, color='blue')
     plt.xlim([0, x.shape[0]])
     plt.xlabel('Time (samples)')
     plt.ylabel('Amplitude')
     plt.tight_layout()
-    return plt
+    
+    from plotly.offline import init_notebook_mode
+    import plotly.graph_objs as go
+    import plotly
+    dur = np.arange(0, len(y_mono)) / 44100
+    plotly.offline.iplot({ "data": [go.Scatter(x=dur, 
+                                            y=y_mono, 
+                                            name='mono')]})
+    '''
+
+    return fig
 
 app.layout = html.Div(children=[
                     navbar_main,
@@ -128,16 +143,16 @@ app.layout = html.Div(children=[
                     dbc.Col(
                         children=[
                         html.Br(),
-                         dbc.Row(
+                        dbc.Row(
                         [
-                        dbc.Col(html.P(children="Use the sample text or enter your own text in English"),width=8, lg=3),
-                        dbc.Col(width=3),
-                        dbc.Col(html.P(children="Select option for Enhanced neural voice")),
-                        dbc.Col(
-                            # dcc.Dropdown(["Allison","Michael"], "Allison", id='voice_dropdown',persistence=True,persistence_type='session',style={'color':'#00361c'})
-                            dcc.Dropdown(["Allison","Michael"], "Allison", id='voice_dropdown',style={'color':'#00361c'})
-                        ),
-                        dbc.Col(width=2),
+                            dbc.Col(html.P(children="Use the sample text or enter your own text in English"),width=8, lg=3),
+                            dbc.Col(width=3),
+                            dbc.Col(html.P(children="Select option for Enhanced neural voice")),
+                            dbc.Col(
+                                dcc.Dropdown(["Allison","Michael"], "Allison", id='voice_dropdown',persistence=True,persistence_type='session',style={'color':'#00361c'})
+                                #dcc.Dropdown(["Allison","Michael"], "Allison", id='voice_dropdown',style={'color':'#00361c'})
+                            ),
+                            dbc.Col(width=2),
                         ]
                         ),
                         html.Div(tts_analysis_input),
@@ -145,7 +160,8 @@ app.layout = html.Div(children=[
                         # html.Div(audio2),
                         html.Div(id="div-audio", children=[' ']),
                         html.P(children="Text To Speech Output wave form"),
-                        html.Img(src=image_path,style={ "width": "99%","height":"28%",'textAlign': 'center','margin-right':'100px'}),
+                        html.Div(wave_figure),
+                        #html.Img(src=image_path,style={ "width": "99%","height":"28%",'textAlign': 'center','margin-right':'100px'}),
                         ]
                     ),
                     ],
@@ -158,15 +174,13 @@ app.layout = html.Div(children=[
                                 Copyright - 2022 IBM Corporation")
 ])
 
-
-
-
 # method to get the Voice data from the text service 
 def getSpeechFromText(headers,params,data,file_name,voice_dropdown):
     if voice_dropdown =='Michael':
         params ={'voice':'en-US_MichaelV3Voice'}
     request =requests.post(text_to_speech_url,headers=headers,params =params,data=data)
     print(request.status_code)
+    print(request.content)
     if request.status_code != 200:
         print("TTS Service status:", request.text)
     if os.path.exists(file_name):
@@ -174,25 +188,23 @@ def getSpeechFromText(headers,params,data,file_name,voice_dropdown):
     with open(file_name, mode='bx') as f:
         f.write(request.content)
 
-
-
 @app.callback(
     Output('div-audio', 'children'),
+    Output('wave-figure', 'figure'),
     Input('tts-button', 'n_clicks'),
-    State('tts-input', 'value'),
-    Input('voice_dropdown', 'value') 
+    Input('voice_dropdown', 'value'),
+    State('tts-input', 'value')
 )
-def update_output(n_clicks, value,voice_dropdown):
-    # if  n_clicks > 0:
-    print("INPUT TEXT:", value)
+def update_output(n_clicks, voice_dropdown, text_input):
+    print("INPUT TEXT:", text_input)
     print(voice_dropdown)
-    text_data = '{"text":"'+value+'"}'
+    text_data = '{"text":"' + text_input + '"}'
     file_name = 'assets/result.wav'
     image_path ='assets/output.png'
     getSpeechFromText(headers,params,text_data,file_name,voice_dropdown)
-    plt =print_plot_play(file_name, "Text To Speech Wav form")
-    plt.savefig(image_path)
-    return audio2,image_path
+    plt = print_plot_play(file_name, "Text To Speech Wav form")
+    #plt.savefig(image_path)
+    return audio2, plt
 
 
 if __name__ == '__main__':

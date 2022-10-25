@@ -14,7 +14,7 @@ In order to use this tutorial, you need to Run a Single-Container Speech-to-Text
 ### Prerequisites
 - [Docker](https://docs.docker.com/get-docker/) is installed
 - [Java 17 JDK](https://www.oracle.com/java/technologies/downloads/#java17) is installed
-- You an STT Service running in a Docker container, as described [here](https://github.com/ibm-build-lab/Watson-Speech/tree/main/single-container-stt)
+- An STT Service running in a Docker container, as described [here](https://github.com/ibm-build-lab/Watson-Speech/tree/main/single-container-stt)
 
 ### Get the sample code
 Clone the following GitHub repository.

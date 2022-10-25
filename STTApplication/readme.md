@@ -2,8 +2,8 @@
 In this tutorial you will build and run a Java Spring Boot web application that relies on Watson Speech-to-Text (STT) as a back-end service. The application code can be used as a starting point when developing your own speech application.
 
 The application demonstrates two interfaces that a client program can use to leverage Watson STT.
-- **REST interface.** This is used for batch processing, where the client sends audio files to the Watson STT and recieves transcriptions synchronously.
-- **WebSocket interface.** This can be used for streaming use cases, where the the communication happens asynchronously.
+- **REST interface.** This is used for batch processing, where the client sends audio files to the Watson STT and receives transcriptions synchronously.
+- **WebSocket interface.** This can be used for streaming use cases, where the communication happens asynchronously.
 
 In order to use this tutorial, you need to Run a Single-Container Speech-to-Text Service on Docker in your workstation. Please follow this [tutorial](https://github.com/ibm-build-lab/Watson-Speech/tree/main/single-container-stt) to run the STT service.
 

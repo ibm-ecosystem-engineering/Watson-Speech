@@ -30,7 +30,6 @@ navbar_main = dbc.Navbar(
                     dbc.Col([]),
                     dbc.Col([]),
                     dbc.Col([]),
-                    #dbc.Col(html.Img(src=app.get_asset_url('ibm_logo.png'), height="40px")),
                     dbc.Col(dbc.NavbarBrand("IBM Build Lab", className="ml-auto"), align='center'),
                     #dbc.Col(html.H2("Watson NLP"), className="me-auto", justify='center')
                     ],

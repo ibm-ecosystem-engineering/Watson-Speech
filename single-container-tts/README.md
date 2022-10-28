@@ -1,4 +1,4 @@
-# Deploy a Single-Container Text-to-Speech Service with Docker
+# Deploy a Text-to-Speech Service with Docker
 
 ## Prerequisites
 

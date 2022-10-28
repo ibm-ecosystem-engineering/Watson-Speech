@@ -5,16 +5,17 @@
 ## Steps
 
 ### 1. Checkout the sample code
-
+Clone the sample code used in the speech tutorials.
 ```
 git clone git@github.com:ibm-build-lab/Watson-Speech.git
 ```
+Go to the directory for this tutoraial.
 ```
 cd Watson-Speech/single-container-tts
 ```
 
 ### 2. Build and run
-
+There is a Dockerfile in the directory used to build a container image for the text-to-speech service. Run the following command to build the image.
 ```
 docker build . -t tts-standalone
 ```

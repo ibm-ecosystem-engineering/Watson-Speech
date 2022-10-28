@@ -40,5 +40,5 @@ curl "http://localhost:1080/text-to-speech/api/v1/synthesize?voice=fr-CA_LouiseV
   --header "Content-Type: application/json" \
   --data '{"text":"Bonjour le monde."}' \
   --header "Accept: audio/wav" \
-  --output spanish-test.wav
+  --output french-test.wav
 ```

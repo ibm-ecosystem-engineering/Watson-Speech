@@ -9,7 +9,7 @@ Clone the sample code used in the speech tutorials.
 ```
 git clone git@github.com:ibm-build-lab/Watson-Speech.git
 ```
-Go to the directory for this tutoraial.
+Go to the directory for this tutorial.
 ```
 cd Watson-Speech/single-container-tts
 ```

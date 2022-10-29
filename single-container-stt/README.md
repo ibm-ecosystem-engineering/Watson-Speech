@@ -1,5 +1,5 @@
 # Run a Single-Container Speech-to-Text Service on Docker
-This recipe shows how you can deploy a single-container Speech-to-Text (STT) service on your local machine using Docker. 
+This recipe shows how you can run a single-container Speech-to-Text (STT) service on your local machine using Docker. 
 
 ## Prerequisites
 - Ensure you have your [entitlement key](https://myibm.ibm.com/products-services/containerlibrary) to access the IBM Entitled Registry
@@ -15,6 +15,7 @@ IBM Entitled Registry contains various container images for Watson Speech. Once 
 echo $IBM_ENTITLEMENT_KEY | docker login -u cp --password-stdin cp.icr.io
 ```
 
+
 ## Step 2: Clone the sample code repository
 ```
 git clone https://github.com/ibm-build-lab/Watson-Speech.git
@@ -24,32 +25,41 @@ Go to the directory containing the sample code for this tutorial.
 cd Watson-Speech/single-container-stt
 ```
 
+
 ## Step 3: Build the container image
-Build a container image with the provided `Dockerfile` with two pretrained models ( `en-us-multimedia` and `fr-fr-multimedia` ) included to support two different languages: English (en_US) and French (fr_FR). More models can be added to support other languages by updating the provided `Dockerfile`, as well as `env_config.json` and `sessionPools.yaml` in the `chuck_var` directory.
+Build a container image with the provided `Dockerfile` with two pretrained models ( `en-us-multimedia` and `fr-fr-multimedia` ) included to support two different languages: English (en_US) and French (fr_FR). More [models](https://www.ibm.com/docs/en/watson-libraries?topic=home-models-catalog) can be added to support other languages by updating the provided `Dockerfile`, as well as `env_config.json` and `sessionPools.yaml` in the `chuck_var` directory.
 ```
-docker build . -t speech-standalone
+docker build . -t stt-standalone
 ```
 
 
 ## Step 4: Run the container to start the STT service
-You can run the container on Docker as follows, using the container image created in the previous step. 
+You can run the container on Docker, using the container image created in the previous step. The environment variable ACCEPT_LICENSE must be set to true in order for the container to run. To view the set of licenses, run the container without the enviroment variable set.
+
+Run in the foreground:
 ```
-docker run --rm --publish 1080:1080 speech-standalone
+docker run --rm -it --env ACCEPT_LICENSE=true --publish 1080:1080 stt-standalone
 ```
-This service runs the foreground.
+
+You can also save the licenses to a file:
+```
+docker run --rm -it --publish 1080:1080 stt-standalone > stt-licenses.txt
+```
+
+List the language models available:
+```
+curl "http://localhost:1080/speech-to-text/api/v1/models"
+```
+
 
 ## Step 5: Query the STT service
-Open up another terminal, and query the service to transcribe audio files. Download an audio `.wav` file with English or French speech to your local machine, and give it the name `output.wav`.  Then, you can request transcriptions of the speech with the commands below.
+Open up another terminal, and query the service to transcribe audio files. Download an audio `.wav` file with English or French speech to your local machine, and name it as `output.wav`. Then, you can request transcriptions of the speech with the commands below. Some audio samples can be found in the `sample_dataset` directory.
 
 For English audio samples, use the default STT model which is configured as `en-US_Multimedia` in `env_config.json`:
 ```
 curl "http://localhost:1080/speech-to-text/api/v1/recognize" \
   --header "Content-Type: audio/wav" \
   --data-binary @output.wav
-```
-Note that you can find English audio samples in the GitHub repo for this tutorial in the subdirectory:
-```
-Watson-Speech/Speech To  Text/Sample_dataset
 ```
 
 For French audio samples specify the model `fr-FR_Multimedia`:

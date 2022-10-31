@@ -44,6 +44,37 @@ Open up another terminal. First, query the models that are available from the se
 ```
 curl "http://localhost:1080/text-to-speech/api/v1/voices"
 ```
+You will see output similar to the following.
+```
+
+   "voices": [
+      {
+         "name": "en-US_MichaelV3Voice",
+         "language": "en-US",
+         "gender": "male",
+         "description": "Michael: American English male voice. Dnn technology.",
+         "customizable": true,
+         "supported_features": {
+            "custom_pronunciation": true,
+            "voice_transformation": false
+         },
+         "url": "http://localhost:1080/text-to-speech/api/v1/voices/en-US_MichaelV3Voice"
+      },
+      {
+         "name": "fr-CA_LouiseV3Voice",
+         "language": "fr-CA",
+         "gender": "female",
+         "description": "Louise: French Canadian female voice. Dnn technology.",
+         "customizable": true,
+         "supported_features": {
+            "custom_pronunciation": true,
+            "voice_transformation": false
+         },
+         "url": "http://localhost:1080/text-to-speech/api/v1/voices/fr-CA_LouiseV3Voice"
+      }
+   ]
+```
+Generate an audio file in English. 
 ```
 curl "http://localhost:1080/text-to-speech/api/v1/synthesize" \
   --header "Content-Type: application/json" \
@@ -51,6 +82,7 @@ curl "http://localhost:1080/text-to-speech/api/v1/synthesize" \
   --header "Accept: audio/wav" \
   --output output.wav
 ```
+The audio will be in `output.wav`. Next, try French.
 ```
 curl "http://localhost:1080/text-to-speech/api/v1/synthesize?voice=fr-CA_LouiseV3Voice" \
   --header "Content-Type: application/json" \
@@ -58,3 +90,4 @@ curl "http://localhost:1080/text-to-speech/api/v1/synthesize?voice=fr-CA_LouiseV
   --header "Accept: audio/wav" \
   --output french-test.wav
 ```
+The output audio will be in `french-test.wav`.

@@ -11,7 +11,8 @@
       "component": "runtime",
       "group": "default",
       "models": [
-        "en-US_MichaelV3Voice"
+        "en-US_MichaelV3Voice",
+	"fr-CA_LouiseV3Voice"
       ]
     }
   },

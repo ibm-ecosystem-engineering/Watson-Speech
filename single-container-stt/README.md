@@ -53,19 +53,19 @@ curl "http://localhost:1080/speech-to-text/api/v1/models"
 
 
 ## Step 5: Query the STT service
-Open up another terminal, and query the service to transcribe audio files. Download an audio `.wav` file with English or French speech to your local machine, and name it as `output.wav`. Then, you can request transcriptions of the speech with the commands below. Some audio samples can be found in the `sample_dataset` directory.
+Open up another terminal, and query the service with the commands below, which transcribe the audio samples in the `sample_dataset` directory.
 
 For English audio samples, use the default STT model which is configured as `en-US_Multimedia` in `env_config.json`:
 ```
 curl "http://localhost:1080/speech-to-text/api/v1/recognize" \
   --header "Content-Type: audio/wav" \
-  --data-binary @output.wav
+  --data-binary @sample_dataset/en-quote-1.wav
 ```
 
-For French audio samples specify the model `fr-FR_Multimedia`:
+For French audio samples, specify the model `fr-FR_Multimedia`:
 ```
 curl "http://localhost:1080/speech-to-text/api/v1/recognize?model=fr-FR_Multimedia" \
   --header "Content-Type: audio/wav" \
-  --data-binary @output.wav
+  --data-binary @sample_dataset/fr-quote-1.wav
 ```
 

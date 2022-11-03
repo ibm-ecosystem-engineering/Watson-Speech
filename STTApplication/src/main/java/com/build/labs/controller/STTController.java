@@ -71,8 +71,7 @@ public class STTController {
 
 	@GetMapping("/transcript/{filename}")
 	public String transcriptAudio(@PathVariable("filename") String filename, Model model)
-			throws IOException, URISyntaxException 
-	{
+			throws IOException, URISyntaxException {
 
 		InputStream input = new ClassPathResource("static/audio/" + filename).getInputStream();
 		String transcript = sttService.transcriptAudio(input);
@@ -86,7 +85,7 @@ public class STTController {
 		return "index";
 
 	}
-	
+
 	@GetMapping("/transcript/param/{filename}")
 	public String transcriptAudioParam(@PathVariable("filename") String filename, Model model)
 			throws IOException, URISyntaxException {
@@ -97,7 +96,7 @@ public class STTController {
 		String transcriptParam = "";
 		transcriptParam = sttService.transcriptAudioParameter(filename, input);
 		transcript = sttService.transcriptAudioParameterData(input1);
-		
+
 		if (filename.contains("speaker")) {
 			List<OutputSpeaker> outputListParam1 = formatOutputSpeaker(transcriptParam);
 			model.addAttribute("resultParamSpeaker", outputListParam1);
@@ -111,6 +110,7 @@ public class STTController {
 		return "index";
 
 	}
+
 	@GetMapping("/transcript/param/{filename}/download")
 	public ResponseEntity<String> downloadParam(@PathVariable("filename") String filename)
 			throws IOException, URISyntaxException {
@@ -122,7 +122,6 @@ public class STTController {
 
 		InputStream input = readFile(filename);
 		String transcript = sttService.transcriptAudioParameter(filename, input);
-		
 
 		return ResponseEntity.ok().headers(header).contentLength(transcript.length())
 				.contentType(MediaType.parseMediaType("application/json")).body(transcript);
@@ -243,7 +242,7 @@ public class STTController {
 				for (int j = 0; j < speakerList.size(); j++) {
 					Speaker speakerVal1 = speakerList.get(j);
 					if (speakerVal1.getTo() >= end_time) {
-						out.setConfidence("" + speakerVal1.getSpeakerValue()+"     Confidence:"+alternative.getConfidence());
+						out.setConfidence("" + speakerVal1.getSpeakerValue() + "     Confidence:" + alternative.getConfidence());
 						break;
 					}
 

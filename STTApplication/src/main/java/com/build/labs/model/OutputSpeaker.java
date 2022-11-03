@@ -1,7 +1,7 @@
 package com.build.labs.model;
 
 public class OutputSpeaker {
-	
+
 	private String transcript;
 	private String confidence;
 

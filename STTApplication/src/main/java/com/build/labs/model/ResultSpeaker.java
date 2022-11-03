@@ -7,7 +7,7 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ResultSpeaker {
-	@JsonProperty("final")
+    @JsonProperty("final")
     private Boolean _final;
     private List<AlternativeSpeaker> alternatives = null;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
@@ -41,21 +41,24 @@ public class ResultSpeaker {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(Result.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(Result.class.getName())
+                .append('@')
+                .append(Integer.toHexString(System.identityHashCode(this)))
+                .append('[');
         sb.append("_final");
         sb.append('=');
-        sb.append(((this._final == null)?"<null>":this._final));
+        sb.append(((this._final == null) ? "<null>" : this._final));
         sb.append(',');
         sb.append("alternatives");
         sb.append('=');
-        sb.append(((this.alternatives == null)?"<null>":this.alternatives));
+        sb.append(((this.alternatives == null) ? "<null>" : this.alternatives));
         sb.append(',');
         sb.append("additionalProperties");
         sb.append('=');
-        sb.append(((this.additionalProperties == null)?"<null>":this.additionalProperties));
+        sb.append(((this.additionalProperties == null) ? "<null>" : this.additionalProperties));
         sb.append(',');
-        if (sb.charAt((sb.length()- 1)) == ',') {
-            sb.setCharAt((sb.length()- 1), ']');
+        if (sb.charAt((sb.length() - 1)) == ',') {
+            sb.setCharAt((sb.length() - 1), ']');
         } else {
             sb.append(']');
         }
@@ -65,9 +68,9 @@ public class ResultSpeaker {
     @Override
     public int hashCode() {
         int result = 1;
-        result = ((result* 31)+((this.alternatives == null)? 0 :this.alternatives.hashCode()));
-        result = ((result* 31)+((this.additionalProperties == null)? 0 :this.additionalProperties.hashCode()));
-        result = ((result* 31)+((this._final == null)? 0 :this._final.hashCode()));
+        result = ((result * 31) + ((this.alternatives == null) ? 0 : this.alternatives.hashCode()));
+        result = ((result * 31) + ((this.additionalProperties == null) ? 0 : this.additionalProperties.hashCode()));
+        result = ((result * 31) + ((this._final == null) ? 0 : this._final.hashCode()));
         return result;
     }
 
@@ -80,7 +83,11 @@ public class ResultSpeaker {
             return false;
         }
         ResultSpeaker rhs = ((ResultSpeaker) other);
-        return ((((this.alternatives == rhs.alternatives)||((this.alternatives!= null)&&this.alternatives.equals(rhs.alternatives)))&&((this.additionalProperties == rhs.additionalProperties)||((this.additionalProperties!= null)&&this.additionalProperties.equals(rhs.additionalProperties))))&&((this._final == rhs._final)||((this._final!= null)&&this._final.equals(rhs._final))));
+        return ((((this.alternatives == rhs.alternatives)
+                || ((this.alternatives != null) && this.alternatives.equals(rhs.alternatives)))
+                && ((this.additionalProperties == rhs.additionalProperties) || ((this.additionalProperties != null)
+                        && this.additionalProperties.equals(rhs.additionalProperties))))
+                && ((this._final == rhs._final) || ((this._final != null) && this._final.equals(rhs._final))));
     }
 
 }

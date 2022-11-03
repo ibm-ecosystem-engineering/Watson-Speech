@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Summary {
 
-	@JsonProperty("result_index")
+    @JsonProperty("result_index")
     private Integer resultIndex;
     private List<Result> results = null;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
@@ -43,21 +43,24 @@ public class Summary {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(Summary.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(Summary.class.getName())
+                .append('@')
+                .append(Integer.toHexString(System.identityHashCode(this)))
+                .append('[');
         sb.append("resultIndex");
         sb.append('=');
-        sb.append(((this.resultIndex == null)?"<null>":this.resultIndex));
+        sb.append(((this.resultIndex == null) ? "<null>" : this.resultIndex));
         sb.append(',');
         sb.append("results");
         sb.append('=');
-        sb.append(((this.results == null)?"<null>":this.results));
+        sb.append(((this.results == null) ? "<null>" : this.results));
         sb.append(',');
         sb.append("additionalProperties");
         sb.append('=');
-        sb.append(((this.additionalProperties == null)?"<null>":this.additionalProperties));
+        sb.append(((this.additionalProperties == null) ? "<null>" : this.additionalProperties));
         sb.append(',');
-        if (sb.charAt((sb.length()- 1)) == ',') {
-            sb.setCharAt((sb.length()- 1), ']');
+        if (sb.charAt((sb.length() - 1)) == ',') {
+            sb.setCharAt((sb.length() - 1), ']');
         } else {
             sb.append(']');
         }
@@ -67,9 +70,9 @@ public class Summary {
     @Override
     public int hashCode() {
         int result = 1;
-        result = ((result* 31)+((this.additionalProperties == null)? 0 :this.additionalProperties.hashCode()));
-        result = ((result* 31)+((this.results == null)? 0 :this.results.hashCode()));
-        result = ((result* 31)+((this.resultIndex == null)? 0 :this.resultIndex.hashCode()));
+        result = ((result * 31) + ((this.additionalProperties == null) ? 0 : this.additionalProperties.hashCode()));
+        result = ((result * 31) + ((this.results == null) ? 0 : this.results.hashCode()));
+        result = ((result * 31) + ((this.resultIndex == null) ? 0 : this.resultIndex.hashCode()));
         return result;
     }
 
@@ -82,7 +85,11 @@ public class Summary {
             return false;
         }
         Summary rhs = ((Summary) other);
-        return ((((this.additionalProperties == rhs.additionalProperties)||((this.additionalProperties!= null)&&this.additionalProperties.equals(rhs.additionalProperties)))&&((this.results == rhs.results)||((this.results!= null)&&this.results.equals(rhs.results))))&&((this.resultIndex == rhs.resultIndex)||((this.resultIndex!= null)&&this.resultIndex.equals(rhs.resultIndex))));
+        return ((((this.additionalProperties == rhs.additionalProperties)
+                || ((this.additionalProperties != null) && this.additionalProperties.equals(rhs.additionalProperties)))
+                && ((this.results == rhs.results) || ((this.results != null) && this.results.equals(rhs.results))))
+                && ((this.resultIndex == rhs.resultIndex)
+                        || ((this.resultIndex != null) && this.resultIndex.equals(rhs.resultIndex))));
     }
 
 }

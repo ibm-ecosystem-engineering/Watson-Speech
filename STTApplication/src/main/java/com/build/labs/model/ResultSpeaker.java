@@ -41,7 +41,10 @@ public class ResultSpeaker {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(Result.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(Result.class.getName())
+                .append('@')
+                .append(Integer.toHexString(System.identityHashCode(this)))
+                .append('[');
         sb.append("_final");
         sb.append('=');
         sb.append(((this._final == null) ? "<null>" : this._final));

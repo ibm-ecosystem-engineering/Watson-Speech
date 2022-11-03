@@ -54,9 +54,9 @@ public class SummarySpeaker {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(Summary.class.getName())
-        .append('@')
-        .append(Integer.toHexString(System.identityHashCode(this)))
-        .append('[');
+                .append('@')
+                .append(Integer.toHexString(System.identityHashCode(this)))
+                .append('[');
         sb.append("resultIndex");
         sb.append('=');
         sb.append(((this.resultIndex == null) ? "<null>" : this.resultIndex));

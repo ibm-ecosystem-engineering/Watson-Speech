@@ -6,43 +6,46 @@
    1. Use as a light weight feature that can be invoked from the constrained mobile device.
 
 
-#### Pre-requisites
-Ensure that you have Text to Speech (TTS) service installed on your cluster.
+## Prerequisites
+- Ensure you have your [entitlement key](https://myibm.ibm.com/products-services/containerlibrary) to access the IBM Entitled Registry
+- [Docker](https://docs.docker.com/get-docker/) is installed
 
-### 1. Connect to the Cluster via CLI
-1. Log in to your IBM Cloud account.
+**Tip**:
+- [Podman](https://podman.io/getting-started/installation) provides a Docker-compatible command line front end. Unless otherwise noted, all the the Docker commands in this tutorial should work for Podman, if you simply alias the Docker CLI with `alias docker=podman` shell command.
 
-`ibmcloud login`
 
-2. Select the right account when prompted.
+### Step 1. Setup the environment
 
-3. Set the correct resource group using the command
+#### Step 1.1: Login to the IBM Entitled Registry
+IBM Entitled Registry contains various container images for Watson Speech. Once you've obtained the entitlement key from the [container software library](https://myibm.ibm.com/products-services/containerlibrary), you can login to the registry with the key, and pull the container images to your local machine.
+```
+echo $IBM_ENTITLEMENT_KEY | docker login -u cp --password-stdin cp.icr.io
+```
 
-`ibmcloud login -g RESOUCE_GROUP`
+#### Step 2.1. Checkout the sample code
+```
+git clone git@github.com:ibm-build-lab/Watson-Speech.git
+```
+Go to the directory for this tutorial.
+```
+cd Watson-Speech/single-container-tts
+```
 
-4. Set the Kubernetes context to your cluster for this terminal session. For more information about this command, [see the docs](https://cloud.ibm.com/docs/containers?topic=containers-cli-plugin-kubernetes-service-cli#cs_cluster_config).
+#### Step 3.1. Build the container image
+Build a container image with the provided `Dockerfile`. The containers serve two pretrained models: `en-us-michaelv3voice` (US English) and `fr-ca-louisev3voice` (Candian French). Additional models can be added to support other languages by updating the provided `Dockerfile`, as well as `env_config.json` and `sessionPools.yaml` in the `config` directory.
+```
+docker build . -t tts-standalone
+```
 
-`ibmcloud ks cluster config --cluster CLUSTER_ID`
-
-5. Verify that you can connect to your cluster.
-
-`kubectl config current-context`
-
-6. Create a local proxy to the cluster with kubectl proxy in a separate terminal
-
-`kubectl proxy`
-
-7. Expose the TTS service endpoint using kubectl port forword 
-
- `kubectl port-forward svc/install-1-tts-runtime 1080`
-
-Now you can use the TTS service into pyhton notebook using http://localhost:1080/
-
-8. Set the NAMESPACE and INSTALL_NAME environment variables.
-
+#### Step 4.1. Run the service
+You can run the container on Docker as follows, using the container image created in the previous step. 
+```
+docker run --rm -it --env ACCEPT_LICENSE=true --publish 1080:1080 tts-standalone
+```
+The service runs in the foreground. Now, you can access this service in your notebook or local machine.
 ### 2. Watson Text to Speech Analysis
 
-#### Step 1. Data Loading and Pre-processing on Text
+#### Step 2.1. Data Loading and Pre-processing on Text
 Watson Text to Speech offers so-called parameters for various text-to-speech synthesis for an entire request rate_percentage, pitch_percentage, and spell_out_mode.By using these parameters we can modify the output of audio. 
 
 1. Import and initialize some helper libs that are used throughout the tutorial.
@@ -90,7 +93,7 @@ Speech Synthesis services accepts the data in format of JSON. There are so many 
 
     ```
 
-#### Step 2. Setting up the service
+#### Step 2.2. Setting up the service
 1. Setup the parameters for using Text to Speech service
 
     ```

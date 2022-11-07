@@ -1,4 +1,4 @@
-## STT Client Application
+# STT Client Application
 
 In this tutorial you will build and run a Java Spring Boot web application that relies on Watson Speech-to-Text (STT) as a back-end service. The application code can be used as a starting point when developing your own speech application.
 
@@ -9,17 +9,17 @@ The application demonstrates two interfaces that a client program can use to lev
 
 In order to use this tutorial, you need to Run a Single-Container Speech-to-Text Service on Docker in your workstation. Please follow this [tutorial](https://github.com/ibm-build-lab/Watson-Speech/tree/main/single-container-stt) to run the STT service.
 
-### Architecture diagram
+## Architecture diagram
 
 ![Diagram](STTArchitectureLocal.png)
 
-### Prerequisites
+## Prerequisites
 
 - [Docker](https://docs.docker.com/get-docker/) is installed
 - [Java 17 JDK](https://www.oracle.com/java/technologies/downloads/#java17) is installed
 - An STT Service running in a Docker container, as described [here](https://github.com/ibm-build-lab/Watson-Speech/tree/main/single-container-stt)
 
-### Get the sample code
+## Get the sample code
 
 Clone the following GitHub repository.
 

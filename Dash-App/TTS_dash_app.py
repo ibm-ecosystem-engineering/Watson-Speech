@@ -35,8 +35,8 @@ navbar_main = dbc.Navbar(
                     dbc.Col([]),
                     dbc.Col([]),
                     dbc.Col(
-                        dbc.NavbarBrand("IBM Build Lab", className="ml-auto"),
-                        align="center",
+                       # dbc.NavbarBrand("IBM Build Lab", className="ml-auto"),
+                        #align="center",
                     ),
                     # dbc.Col(html.H2("Watson NLP"), className="me-auto", justify='center')
                 ],

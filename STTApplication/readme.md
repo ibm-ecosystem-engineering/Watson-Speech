@@ -81,7 +81,7 @@ http://localhost:8080
 
 ## Understanding the Application Code
 
-The Java [Spring Boot](https://spring.io/projects/spring-boot](https://spring.io/projects/spring-boot) application demonstrates use of both the STT batch (REST) API, as well as the streaming (WebSocket) API. It uses the REST API to send audio files to the SST service, and recieves in return transcripts of the audio. It uses the streaming API to perform live transcription of a user's voice.
+The Java [Spring Boot](https://spring.io/projects/spring-boot) application demonstrates use of both the STT batch (REST) API, as well as the streaming (WebSocket) API. It uses the REST API to send audio files to the SST service, and recieves in return transcripts of the audio. It uses the streaming API to perform live transcription of a user's voice.
 
 [Feign](https://github.com/OpenFeign/feign) is used to wrap the REST calls. The relevant code appears in:
 

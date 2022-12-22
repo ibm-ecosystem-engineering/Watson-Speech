@@ -51,10 +51,44 @@ docker run --rm -it --env ACCEPT_LICENSE=true --publish 1080:1080 stt-standalone
 
 ## Step 5: Query the STT service
 
-Open up another terminal to query the service. You can list the language models available.
+Open up another terminal to query the service. To start, get a of the language models available from the service.
 
 ```sh
 curl "http://localhost:1080/speech-to-text/api/v1/models"
+```
+
+You will see output similar to the following.
+
+```sh
+{
+   "models": [
+      {
+         "name": "en-US_Multimedia",
+         "rate": 16000,
+         "language": "en-US",
+         "description": "US English multimedia model for broadband audio (16kHz or more)",
+         "supported_features": {
+            "custom_acoustic_model": false,
+            "custom_language_model": true,
+            "low_latency": true,
+            "speaker_labels": true
+         },
+         "url": "http://localhost:1080/speech-to-text/api/v1/models/en-US_Multimedia"
+      },
+      {
+         "name": "fr-FR_Multimedia",
+         "rate": 16000,
+         "language": "fr-FR",
+         "description": "French multimedia model for broadband audio (16kHz or more)",
+         "supported_features": {
+            "custom_acoustic_model": false,
+            "custom_language_model": true,
+            "low_latency": true,
+            "speaker_labels": true
+         },
+         "url": "http://localhost:1080/speech-to-text/api/v1/models/fr-FR_Multimedia"
+      }
+   ]
 ```
 
 Next, try getting transcriptions from speech samples in the `sample_dataset` directory.

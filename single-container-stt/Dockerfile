@@ -7,6 +7,9 @@ FROM cp.icr.io/cp/ai/watson-stt-fr-fr-multimedia:1.0.0 as fr-fr-multimedia
 # Base image for the runtime
 FROM cp.icr.io/cp/ai/watson-stt-runtime:1.0.0 AS runtime
 
+# Configuration file directory
+ENV LOCAL_DIR=chuck_var
+
 # Environment variable used for directory where configurations are mounted
 ENV CONFIG_DIR=/opt/ibm/chuck.x86_64/var
 

@@ -6,6 +6,7 @@ This recipe shows how you can run a single-container Speech-to-Text (STT) servic
 
 - Ensure you have your [entitlement key](https://myibm.ibm.com/products-services/containerlibrary) to access the IBM Entitled Registry. [Get a Watson Speech to Text trial license](https://www.ibm.com/account/reg/us-en/subscribe?formid=urx-51754).
 - [Docker](https://docs.docker.com/get-docker/) is installed.
+- Note that these libraries are only supported on x86 architectures.
 
 **Tip**:
 

@@ -43,27 +43,21 @@ docker build . -t stt-standalone
 
 You can run the container on Docker, using the container image created in the previous step. The environment variable ACCEPT_LICENSE must be set to true in order for the container to run. To view the set of licenses, run the container without the enviroment variable set.
 
-Run in the foreground:
+Run the service in the foreground with the following command.
 
 ```sh
 docker run --rm -it --env ACCEPT_LICENSE=true --publish 1080:1080 stt-standalone
 ```
 
-You can also save the licenses to a file:
+## Step 5: Query the STT service
 
-```sh
-docker run --rm -it --publish 1080:1080 stt-standalone > stt-licenses.txt
-```
-
-List the language models available:
+Open up another terminal to query the service. You can list the language models available.
 
 ```sh
 curl "http://localhost:1080/speech-to-text/api/v1/models"
 ```
 
-## Step 5: Query the STT service
-
-Open up another terminal, and query the service with the commands below, which transcribe the audio samples in the `sample_dataset` directory.
+Next, try getting transcriptions from speech samples in the `sample_dataset` directory.
 
 For English audio samples, use the default STT model which is configured as `en-US_Multimedia` in `env_config.json`:
 

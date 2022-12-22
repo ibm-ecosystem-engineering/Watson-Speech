@@ -33,11 +33,15 @@ cd Watson-Speech/single-container-stt
 
 ## Step 3: Build the container image
 
-Build a container image with the provided `Dockerfile` with two pretrained models ( `en-us-multimedia` and `fr-fr-multimedia` ) included to support two different languages: English (en_US) and French (fr_FR). More [models](https://www.ibm.com/docs/en/watson-libraries?topic=home-models-catalog) can be added to support other languages by updating the provided `Dockerfile`, as well as `env_config.json` and `sessionPools.yaml` in the `chuck_var` directory.
+Build a container image with the provided `Dockerfile`.
 
 ```sh
 docker build . -t stt-standalone
 ```
+
+The build process uses configuration files from the `chuck_var` directory. The resulting image will serve two pretrained models ( `en-us-multimedia` and `fr-fr-multimedia` ) supporting two different languages: English (en_US) and French (fr_FR). 
+
+Other [models](https://www.ibm.com/docs/en/watson-libraries?topic=home-models-catalog) can be added to support other languages by updating the provided `Dockerfile`, as well as `env_config.json` and `sessionPools.yaml` in the `chuck_var` directory.
 
 ## Step 4: Run the container to start the STT service
 
@@ -91,9 +95,7 @@ You will see output similar to the following.
    ]
 ```
 
-Next, try getting transcriptions from speech samples in the `sample_dataset` directory.
-
-For English audio samples, use the default STT model which is configured as `en-US_Multimedia` in `env_config.json`:
+Next, try getting transcriptions from speech samples in the `sample_dataset` directory. For English audio samples, use the default STT model which is configured as `en-US_Multimedia` in `env_config.json`:
 
 ```sh
 curl "http://localhost:1080/speech-to-text/api/v1/recognize" \
@@ -108,3 +110,5 @@ curl "http://localhost:1080/speech-to-text/api/v1/recognize?model=fr-FR_Multimed
   --header "Content-Type: audio/wav" \
   --data-binary @sample_dataset/fr-quote-1.wav
 ```
+
+In both cases, transcriptions (in JSON format) are returned as standard output of the ```curl``` commands.

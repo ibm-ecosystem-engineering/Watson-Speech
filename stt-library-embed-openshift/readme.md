@@ -15,7 +15,7 @@ In this tutorial I am going to show, how to install IBM Watson Speech to Text Em
 - For customization
   - S3 Compatible Storage 
   - PostgreSQL Database
-- Kubernetes Cluster - the Speech to Text service is assumed to be running in a Kubernetes cluster.
+- OpenShift Cluster - the Speech to Text service is assumed to be running in an OpenShift cluster.
 
 ## S3 Compatible Storage
 
@@ -25,10 +25,10 @@ Here are the steps to obtain IBM Cloud S3 bucket HMAC credentials and endpoint. 
 
 1. Log in to [IBM Cloud](https://cloud.ibm.com/login).
 2. From the IBM Cloud Dashboard, click the Cloud Object Storage service instance that you want to work with.
-3. To view the endpoint URLs, click Endpoint in the left pane and select your preferred location or region.
-4. To view the endpoint URLs, click Endpoint in the left pane and select your preferred location or region.
-   1. Copy your preferred public `endpoint` (for example, s3.us.cloud-object-storage.appdomain.cloud) and use it as the value for the `Endpoint URL` field (or `endpointUrl` parameter).
-   2. Copy your preferred location or `region` (for example, ap-geo) and use it as the value for the Region field (or region parameter).
+3. To get the Bucket name, click `Buckets` in the left pane and select your preferred bucket name and make a note.
+4. To get the endpoint URLs, click `Endpoint` in the left pane and select your preferred location or region.
+   1. Copy your preferred public `endpoint` (for example, s3.us-east.cloud-object-storage.appdomain.cloud) and use it as the value for the `Endpoint URL` field (or `endpointUrl` parameter).
+   2. Copy your preferred location or `region` (for example, us-east) and use it as the value for the Region field (or region parameter).
 5. To view the service credentials, click Service credentials in the left pane, and then click View credentials. (If you want to define new credentials, click New credential, click Advanced options, then select Include HMAC Credential.)
 6. Copy the `cos_hmac_keys/secret_access_key` value and use it as the value for the `Secret access key` field (or `secretAccessKey parameter`).
 7. Copy the `cos_hmac_keys/access_key_id` value and use it as the value for the `Access key ID` field (or `accessKeyId parameter`).
@@ -36,14 +36,24 @@ Here are the steps to obtain IBM Cloud S3 bucket HMAC credentials and endpoint. 
 Set all S3 crededentials and information in environment variable so that we can make use them during stt library installation. Please modify the below script based on the information you collected from the previous steps.
 
 ```sh
-export S3_BUCKET_NAME=<Endpoint URL>
-export S3_ACCESS_KEY=<accessKeyId>
-export S3_SECRET_KEY=<secretAccessKey>
-export S3_REGION=<Region>
-export S3_ENPOINT_URL=<Endpoint URL>
+export S3_BUCKET_NAME=<Bucket name you found in step 2 >
+export S3_REGION=<Region can be found in step 2 when you select your bucket>
+export S3_ENPOINT_URL=<Endpoint URL you found in step 3>
+export S3_SECRET_KEY=<secretAccessKey you found in step 6>
+export S3_ACCESS_KEY=<accessKeyId you found in step 7>
 ```
 
-example Connecting by using HMAC authentication 
+example Connecting by using HMAC authentication and example S3 bucket values. Please don't use the value provided. They will not work.
+
+`export S3_BUCKET_NAME=speech-embed`
+
+`export S3_REGION=us-east`
+
+`export S3_ENPOINT_URL=https://s3.us-east.cloud-object-storage.appdomain.cloud`
+
+`export S3_SECRET_KEY=12a3bcd4567890ef123g4567890hij12k1m3n4567o8901p2`
+
+`export S3_ACCESS_KEY=1a2dfbc3d45678901ef2g3h45678i90jkl`
 
 ```yaml
   ibmcoss3:
@@ -51,14 +61,14 @@ example Connecting by using HMAC authentication
       credentials:
         secretAccessKey: 12a3bcd4567890ef123g4567890hij12k1m3n4567o8901p2
         accessKeyId: 1a2dfbc3d45678901ef2g3h45678i90jkl
-        region: ap-geo
+        region: us-east
       endpoint:
         endpointUrl: s3.us.cloud-object-storage.appdomain.cloud
 ```
 
 ## Install Postgresql
 
-PostgreSQL Database is required to manage metadata related to customization. The customization container uses TLS to Postgres, but always sets up the connection with a "NonValidatingFactory" which does not do cert validation. Here I am going to use a self signed certificate to enable TLS in postgresql database.
+PostgreSQL Database is required to manage metadata related to customization. The customization container uses TLS to Postgres, but always sets up the connection with a "NonValidatingFactory" which does not do cert validation. Here I am going to use a self signed certificate to enable TLS in Postgresql database.
 
 Create Certificate authority certificate and key
 

@@ -4,6 +4,10 @@ IBM Watson® Speech to Text Library (STT) for Embed enables fast and accurate sp
 
 In this tutorial I am going to show, how to install IBM Watson Speech to Text Embed with runtime and customization in OpenShift. We are going to use the helm chart provided in [here](https://github.com/IBM/ibm-watson-embed-charts/tree/main/charts/ibm-watson-stt-embed) 
 
+## Architecture diagram
+
+![Diagram](architecture-stt.png)
+
 ## Prerequisites
 
 - [helm 3](https://helm.sh/docs/intro/install/)

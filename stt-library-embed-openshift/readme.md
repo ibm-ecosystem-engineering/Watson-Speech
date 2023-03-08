@@ -228,7 +228,7 @@ curl --url https://github.com/watson-developer-cloud/doc-tutorial-downloads/raw/
 Send a /recognize request using the downloaded file:
 
 ```sh
-curl --url "http://localhost:8001/api/v1/namespaces/{{ .Release.Namespace }}/services/https:{{ include "ibm-watson-stt-embed.runtime.fullname" . }}:https/proxy/speech-to-text/api/v1/recognize?model={{ .Values.defaultModel }}" \
+curl --url "http://localhost:8001/api/v1/namespaces/stt-demo/services/https:stt-release-runtime:https/proxy/speech-to-text/api/v1/recognize?model=en-US_Multimedia" \
       --header "Content-Type: audio/flac" \
       --data-binary @example.flac
 ```

@@ -71,15 +71,15 @@ PostgreSQL Database is required to manage metadata related to customization. The
 Create Certificate authority certificate `ca.crt` and key `ca.key`
 
 ```sh
-openssl req \                                                
+openssl req \                                         
   -x509 \
-  -nodes \   
+  -nodes \
   -newkey ec \
   -pkeyopt ec_paramgen_curve:prime256v1 \
   -pkeyopt ec_param_enc:named_curve \
   -sha384 \
-  -keyout ca.key \    
-  -out ca.crt \    
+  -keyout ca.key \
+  -out ca.crt \ 
   -days 3650 \
   -subj "/CN=*"
 ```
@@ -87,8 +87,8 @@ openssl req \
 Create certificate signing requrest `server.csr`
 
 ```sh
-  openssl req \                                                
-  -new \ 
+  openssl req \
+  -new \
   -newkey ec \
   -nodes \
   -pkeyopt ec_paramgen_curve:prime256v1 \
@@ -96,21 +96,21 @@ Create certificate signing requrest `server.csr`
   -sha384 \
   -keyout server.key \
   -out server.csr \
-  -days 365 \ 
+  -days 365 \
   -subj "/CN=postgresql-release-hl"
 ```
 
 create `server.crt` certificate using `ca.crt` and `ca.key` from `server.csr`
 
 ```sh
-  openssl x509 \                                               
-  -req \ 
+  openssl x509 \
+  -req \
   -in server.csr \
   -days 365 \
-  -CA ca.crt \                           
-  -CAkey ca.key \                    
+  -CA ca.crt \                       
+  -CAkey ca.key \
   -CAcreateserial \
-  -sha384 \           
+  -sha384 \
   -out server.crt
 ```
 

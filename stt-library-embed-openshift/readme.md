@@ -183,19 +183,18 @@ An example command to create the pull secret:
 Helm charts have configurable values that can be set at install time. Refer to the base values.yaml for documentation and defaults for the values. Values can be changed using `--set` or using YAML files specified with `-f/--values`. Here we are setting values using `--set` parameter
 
 ```sh
-helm install 
+helm install stt-release ./ibm-watson-stt-embed \
 --set license=true \
 --set nameOverride=stt \
 --set models.enUSTelephony.enabled=false \
 --set postgres.host="postgresql-release-hl" \
 --set postgres.user="postgres" \
---set postgres.password=$POSTGRES_PASSWORD \
---set objectStorage.endpoint=$S3_ENPOINT_URL \
---set objectStorage.region=$S3_REGION \
---set objectStorage.bucket=$S3_BUCKET_NAME \
---set objectStorage.accessKey=$S3_ACCESS_KEY \
---set objectStoragesecretKey=$S3_SECRET_KEY \
-stt-release ./ibm-watson-stt-embed
+--set postgres.password=${POSTGRES_PASSWORD} \
+--set objectStorage.endpoint=${S3_ENPOINT_URL} \
+--set objectStorage.region=${S3_REGION} \
+--set objectStorage.bucket=${S3_BUCKET_NAME} \
+--set objectStorage.accessKey=${S3_ACCESS_KEY} \
+--set objectStorage.secretKey=${S3_SECRET_KEY}
 ```
 
 ## Verifying the chart

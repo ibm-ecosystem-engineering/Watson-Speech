@@ -107,7 +107,7 @@ create `server.crt` certificate using `ca.crt` and `ca.key` from `server.csr`
   -req \
   -in server.csr \
   -days 365 \
-  -CA ca.crt \                       
+  -CA ca.crt \
   -CAkey ca.key \
   -CAcreateserial \
   -sha384 \

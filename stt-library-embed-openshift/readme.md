@@ -71,7 +71,7 @@ PostgreSQL Database is required to manage metadata related to customization. The
 Create Certificate authority certificate `ca.crt` and key `ca.key`
 
 ```sh
-openssl req \                                         
+openssl req \
   -x509 \
   -nodes \
   -newkey ec \

@@ -79,7 +79,7 @@ openssl req \
   -pkeyopt ec_param_enc:named_curve \
   -sha384 \
   -keyout ca.key \
-  -out ca.crt \ 
+  -out ca.crt \
   -days 3650 \
   -subj "/CN=*"
 ```

@@ -117,8 +117,8 @@ create `server.crt` certificate using `ca.crt` and `ca.key` from `server.csr`
 Create a tls secret for the certifiate you created
 
 ```sh
-oc create secret tls pg-tls-secret \                      
---cert=server.crt \       
+oc create secret tls pg-tls-secret \
+--cert=server.crt \
 --key=server.key
 ```
 

@@ -123,7 +123,8 @@ oc create secret tls pg-tls-secret \
 --cert=server.crt \       
 --key=server.key
 ```
-We are using bitnami postgresql packaged in helm charts.
+
+We are using bitnami Postgresql packaged in helm charts.
 
 Add bitnami helm chart repo
 
@@ -131,7 +132,7 @@ Add bitnami helm chart repo
 helm repo add bitnami https://charts.bitnami.com/bitnami
 ```
 
-Install postgresql helm chart
+Install Postgresql helm chart
 
 ```sh
 helm install postgresql-release bitnami/postgresql \
@@ -198,4 +199,40 @@ helm install
 --set objectStorage.accessKey=$S3_ACCESS_KEY \
 --set objectStoragesecretKey=$S3_SECRET_KEY \
 stt-release ./ibm-watson-stt-embed
+```
+
+## Verifying the chart
+
+See the instruction (from NOTES.txt within chart) after the helm installation completes for chart verification. The instruction can also be viewed by running:
+
+```sh
+helm status stt-release
+```
+
+For basic usage of customization, see the customizing Watson Speech Library for Embed [documentation](https://www.ibm.com/docs/en/watson-libraries?topic=containers-customization-example).
+
+The complete API reference for Watson Speech-to-Text can be found [here](https://cloud.ibm.com/apidocs/speech-to-text).
+
+
+## Use the service
+
+In one terminal, create a proxy through the service:
+
+```sh
+oc proxy
+```
+
+Download an example audio file as example.flac:
+
+```sh
+curl --url https://github.com/watson-developer-cloud/doc-tutorial-downloads/raw/master/speech-to-text/0001.flac \
+      -sLo example.flac
+```
+
+Send a /recognize request using the downloaded file:
+
+```sh
+curl --url "http://localhost:8001/api/v1/namespaces/{{ .Release.Namespace }}/services/https:{{ include "ibm-watson-stt-embed.runtime.fullname" . }}:https/proxy/speech-to-text/api/v1/recognize?model={{ .Values.defaultModel }}" \
+      --header "Content-Type: audio/flac" \
+      --data-binary @example.flac
 ```

@@ -45,15 +45,13 @@ export S3_ACCESS_KEY=<accessKeyId you found in step 7>
 
 example Connecting by using HMAC authentication and example S3 bucket values. Please don't use the value provided. They will not work.
 
-`export S3_BUCKET_NAME=speech-embed`
-
-`export S3_REGION=us-east`
-
-`export S3_ENPOINT_URL=https://s3.us-east.cloud-object-storage.appdomain.cloud`
-
-`export S3_SECRET_KEY=12a3bcd4567890ef123g4567890hij12k1m3n4567o8901p2`
-
-`export S3_ACCESS_KEY=1a2dfbc3d45678901ef2g3h45678i90jkl`
+```sh
+export S3_BUCKET_NAME=speech-embed
+export S3_REGION=us-east
+export S3_ENPOINT_URL=https://s3.us-east.cloud-object-storage.appdomain.cloud
+export S3_SECRET_KEY=12a3bcd4567890ef123g4567890hij12k1m3n4567o8901p2
+export S3_ACCESS_KEY=1a2dfbc3d45678901ef2g3h45678i90jkl
+```
 
 ```yaml
   ibmcoss3:
@@ -68,9 +66,9 @@ example Connecting by using HMAC authentication and example S3 bucket values. Pl
 
 ## Install Postgresql
 
-PostgreSQL Database is required to manage metadata related to customization. The customization container uses TLS to Postgres, but always sets up the connection with a "NonValidatingFactory" which does not do cert validation. Here I am going to use a self signed certificate to enable TLS in Postgresql database.
+PostgreSQL Database is required to manage metadata related to customization. The customization container uses TLS to Postgres, but always sets up the connection with a "NonValidatingFactory" which does not do cert validation. Here I am going to use a self signed certificate to enable TLS in Postgresql database. In this tutorial We are using bitnami Postgresql packaged in helm charts.
 
-Create Certificate authority certificate and key
+Create Certificate authority certificate `ca.crt` and key `ca.key`
 
 ```sh
 openssl req \                                                
@@ -86,7 +84,7 @@ openssl req \
   -subj "/CN=*"
 ```
 
-Create certificate signing requrest
+Create certificate signing requrest `server.csr`
 
 ```sh
   openssl req \                                                
@@ -102,7 +100,7 @@ Create certificate signing requrest
   -subj "/CN=postgresql-release-hl"
 ```
 
-create `server.crt` certificate and key using server key and 
+create `server.crt` certificate using `ca.crt` and `ca.key` from `server.csr`
 
 ```sh
   openssl x509 \                                               
@@ -116,15 +114,13 @@ create `server.crt` certificate and key using server key and
   -out server.crt
 ```
 
-Create secret for the certifiate you created
+Create a tls secret for the certifiate you created
 
 ```sh
 oc create secret tls pg-tls-secret \                      
 --cert=server.crt \       
 --key=server.key
 ```
-
-We are using bitnami Postgresql packaged in helm charts.
 
 Add bitnami helm chart repo
 
@@ -151,13 +147,13 @@ oc create serviceaccount db-sa
 oc adm policy add-scc-to-user anyuid -z db-sa
 ```
 
-Set the service account
+Set the service account to statefulset `postgresql-release`
 
 ```sh
 oc set serviceaccount statefulset postgresql-release db-sa
 ```
 
-Set the Postgresql password in an environment variable for future use
+Set the Postgresql password in an environment variable for next step to use.
 
 ```sh
 export POSTGRES_PASSWORD=$(oc get secret --namespace stt-test postgresql-release -o jsonpath="{.data.postgres-password}" | base64 -d)

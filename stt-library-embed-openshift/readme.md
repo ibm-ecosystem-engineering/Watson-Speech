@@ -138,7 +138,8 @@ helm install postgresql-release bitnami/postgresql \
 --set tls.certKeyFilename="tls.key"
 ```
 
-In OpenShift cluster Statefulset pod might not spin up because, it needs a extra previllege to run the container.
+In OpenShift cluster Statefulset pod might not spin up because, it needs a extra previllege to run the container. You may see events like below
+` create Pod postgresql-release-0 in StatefulSet postgresql-release failed error: pods "postgresql-release-0" is forbidden: unable to validate against any security context constraint: [provider "anyuid": Forbidden: not usable by user or serviceaccount, provider restricted:` To solve this issue please follow the below instruction.
 
 create service account and assign `anyuid` SCC
 
@@ -156,7 +157,7 @@ oc set serviceaccount statefulset postgresql-release db-sa
 Set the Postgresql password in an environment variable for next step to use.
 
 ```sh
-export POSTGRES_PASSWORD=$(oc get secret --namespace stt-test postgresql-release -o jsonpath="{.data.postgres-password}" | base64 -d)
+export POSTGRES_PASSWORD=$(oc get secret postgresql-release -o jsonpath="{.data.postgres-password}" | base64 -d)
 ```
 ## Install Speech to Text Library embed helm chart
 
@@ -174,7 +175,7 @@ An example command to create the pull secret:
 ```sh
  oc create secret docker-registry ibm-entitlement-key \
   --docker-server=cp.icr.io \
-  --docker-username=cp> \
+  --docker-username=cp \
   --docker-password=$IBM_ENTITLEMENT_KEY \
   --docker-email=<your-email>
 ```

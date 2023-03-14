@@ -6,7 +6,7 @@ In this tutorial I am going to show, how to install IBM Watson Text to Speech Em
 
 ## Architecture diagram
 
-![Diagram](architecture-stt.png)
+![Diagram](architecture-tts.png)
 
 ## Prerequisites
 

@@ -19,7 +19,7 @@ In this tutorial I am going to show, how to install IBM Watson Text to Speech Em
 - For customization
   - S3 Compatible Storage 
   - PostgreSQL Database
-- OpenShift Cluster - the Speech to Text service is assumed to be running in an OpenShift cluster.
+- OpenShift Cluster - the Text to Speech service is assumed to be running in an OpenShift cluster.
 
 ## S3 Compatible Storage
 

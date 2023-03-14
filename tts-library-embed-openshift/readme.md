@@ -184,12 +184,14 @@ An example command to create the pull secret:
   --docker-email=<your-email>
 ```
 
-Helm charts have configurable values that can be set at install time. Refer to the base values.yaml for documentation and defaults for the values. Values can be changed using `--set` or using YAML files specified with `-f/--values`. Here we are setting values using `--set` parameter
+> By default, the models that are enabled are en-US_MichaelV3Voice and en-US_AllisonV3Voice with defaultModel set to en-US_AllisonV3Voice.
+
+Helm charts have configurable values that can be set at install time. To configure the install further, such as enabling additional models, Refer to the base values.yaml for documentation and defaults for the values. Values can be changed using `--set` or using YAML files specified with `-f/--values`. Here we are setting values using `--set` parameter
 
 ```sh
-helm install stt-release ./ibm-watson-stt-embed \
+helm install tts-release ./ibm-watson-tts-embed \
 --set license=true \
---set nameOverride=stt \
+--set nameOverride=tts \
 --set models.enUSTelephony.enabled=false \
 --set postgres.host="postgresql-release-hl" \
 --set postgres.user="postgres" \
@@ -206,12 +208,12 @@ helm install stt-release ./ibm-watson-stt-embed \
 See the instruction (from NOTES.txt within chart) after the helm installation completes for chart verification. The instruction can also be viewed by running:
 
 ```sh
-helm status stt-release
+helm status tts-release
 ```
 
 For basic usage of customization, see the customizing Watson Speech Library for Embed [documentation](https://www.ibm.com/docs/en/watson-libraries?topic=containers-customization-example).
 
-The complete API reference for Watson Speech-to-Text can be found [here](https://cloud.ibm.com/apidocs/speech-to-text).
+The complete API reference for Watson Text-to-Speech can be found [here](https://cloud.ibm.com/apidocs/text-to-speech).
 
 
 ## Use the service
@@ -222,17 +224,28 @@ In one terminal, create a proxy through the service:
 oc proxy
 ```
 
-Download an example audio file as example.flac:
+In another terminal, view the list of voices:
 
 ```sh
-curl --url https://github.com/watson-developer-cloud/doc-tutorial-downloads/raw/master/speech-to-text/0001.flac \
-      -sLo example.flac
+
+curl --url "http://localhost:8001/api/v1/namespaces/stt-demo/services/https:tts-release-runtime:https/proxy/text-to-speech/api/v1/voices"
 ```
 
-Send a /recognize request using the downloaded file:
+Send a /synthesize request to generate speech and write out output.wav:
 
 ```sh
-curl --url "http://localhost:8001/api/v1/namespaces/stt-demo/services/https:stt-release-runtime:https/proxy/speech-to-text/api/v1/recognize?model=en-US_Multimedia" \
-      --header "Content-Type: audio/flac" \
-      --data-binary @example.flac
+curl --url "http://localhost:8001/api/v1/namespaces/stt-demo/services/https:tts-release-runtime:https/proxy/text-to-speech/api/v1/recognize?model=en-US_AllisonV3Voice" \
+      --header "Content-Type: application/json" \
+      --data '{"text":"Hello world"}' \
+      --header "Accept: audio/wav" \
+      --output output.wav
+```
+
+## Uninstalling the Chart
+
+To uninstall and delete the Text to Speech deployment, run the following command:
+
+```sh
+
+helm delete tts-release
 ```

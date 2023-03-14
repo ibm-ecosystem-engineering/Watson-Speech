@@ -184,7 +184,9 @@ An example command to create the pull secret:
   --docker-email=<your-email>
 ```
 
-Helm charts have configurable values that can be set at install time. Refer to the base values.yaml for documentation and defaults for the values. Values can be changed using `--set` or using YAML files specified with `-f/--values`. Here we are setting values using `--set` parameter
+By default, the models that are enabled are `en-US_Multimedia` and `en-US_Telephony` with defaultModel set to `en-US_Multimedia`.
+
+Helm charts have configurable values that can be set at install time. To configure the install further, such as enabling additional models, Refer to the base `values.yaml` for documentation and defaults for the values. Values can be changed using `--set` or using YAML files specified with `-f/--values`. Here we are setting values using `--set` parameter
 
 ```sh
 helm install stt-release ./ibm-watson-stt-embed \

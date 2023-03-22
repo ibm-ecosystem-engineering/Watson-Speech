@@ -40,9 +40,9 @@ Here are the steps to obtain IBM Cloud S3 bucket HMAC credentials and endpoint. 
 Set all S3 crededentials and information in environment variable so that we can make use them during stt library installation. Please modify the below script based on the information you collected from the previous steps.
 
 ```sh
-export S3_BUCKET_NAME=<Bucket name you found in step 2 >
-export S3_REGION=<Region can be found in step 2 when you select your bucket>
-export S3_ENPOINT_URL=<Endpoint URL you found in step 3>
+export S3_BUCKET_NAME=<Bucket name you found in step 3 >
+export S3_REGION=<Region can be found in step 4.1 when you select your bucket>
+export S3_ENPOINT_URL=<Endpoint URL you found in step 4>
 export S3_SECRET_KEY=<secretAccessKey you found in step 6>
 export S3_ACCESS_KEY=<accessKeyId you found in step 7>
 ```

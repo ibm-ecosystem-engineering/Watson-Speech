@@ -12,10 +12,12 @@ Note that the STT service can be deployed either with or without customization. 
 
 - Install [Helm 3](https://helm.sh/docs/intro/install/).
 - Ensure you have an [entitlement key](https://myibm.ibm.com/products-services/containerlibrary). You may need to create one. This key is required to access [images](https://www.ibm.com/docs/en/watson-libraries?topic=i-accessing-files) used in this tutorial.
-- Set an environment variable:
+- Set an environment variable.
+
   ```sh
   export IBM_ENTITLEMENT_KEY=<Set the entitlement key>
   ``` 
+  
 - For customization:
   - S3 compatible storage 
   - PostgreSQL Database
@@ -23,9 +25,9 @@ Note that the STT service can be deployed either with or without customization. 
 
 ## S3 Compatible Storage
 
-For customization, an S3 compatible storage service must exist that supports HMAC (access key and secret key) credentials. Watson Speech requires one bucket that it can read and write objects to. The bucket will be populated with stock models at install time and will also store customization artifacts, including training data and trained models.
+For customization, you will need an S3 compatible storage service that supports HMAC (access key and secret key) credentials. Watson Speech requires a bucket that it can read and write to. The bucket will be populated with stock models at install time and will also store customization artifacts, including training data and trained models.
 
-Here are the steps to obtain IBM Cloud S3 bucket HMAC credentials and endpoint. You may choose bucket based on the cloud providers. 
+Here are the steps to obtain IBM Cloud S3 bucket HMAC credentials and endpoint. You may choose bucket based on the cloud provider. 
 
 1. Log in to [IBM Cloud](https://cloud.ibm.com/login).
 2. From the IBM Cloud Dashboard, click the Cloud Object Storage service instance that you want to work with.

@@ -10,14 +10,14 @@ Note that the STT service can be deployed either with or without customization. 
 
 ## Prerequisites
 
-- Install [helm 3](https://helm.sh/docs/intro/install/).
+- Install [Helm 3](https://helm.sh/docs/intro/install/).
 - Ensure you have an [entitlement key](https://myibm.ibm.com/products-services/containerlibrary). You may need to create one. This key is required to access [images](https://www.ibm.com/docs/en/watson-libraries?topic=i-accessing-files) used in this tutorial.
 - Set an environment variable:
   ```sh
   export IBM_ENTITLEMENT_KEY=<Set the entitlement key>
   ``` 
 - For customization:
-  - S3 Compatible Storage 
+  - S3 compatible storage 
   - PostgreSQL Database
 - OpenShift Cluster on which you will deploy the service.
 

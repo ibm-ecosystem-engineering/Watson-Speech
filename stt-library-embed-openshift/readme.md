@@ -39,7 +39,7 @@ Here are the steps to obtain IBM Cloud S3 bucket HMAC credentials and endpoint. 
 6. Copy the `cos_hmac_keys/secret_access_key` value and use it as the value for the `Secret access key` field (or `secretAccessKey parameter`).
 7. Copy the `cos_hmac_keys/access_key_id` value and use it as the value for the `Access key ID` field (or `accessKeyId parameter`).
 
-Set all S3 crededentials and information in environment variable so that we can make use them during stt library installation. Please modify the below script based on the information you collected from the previous steps.
+Set the S3 crededentials and information into the following environment variables. 
 
 ```sh
 export S3_BUCKET_NAME=<Bucket name you found in step 3 >
@@ -49,7 +49,7 @@ export S3_SECRET_KEY=<secretAccessKey you found in step 6>
 export S3_ACCESS_KEY=<accessKeyId you found in step 7>
 ```
 
-example Connecting by using HMAC authentication and example S3 bucket values. Please don't use the value provided. They will not work.
+For example, your environment variables may look similar to the following.
 
 ```sh
 export S3_BUCKET_NAME=speech-embed
@@ -70,11 +70,11 @@ export S3_ACCESS_KEY=1a2dfbc3d45678901ef2g3h45678i90jkl
         endpointUrl: s3.us.cloud-object-storage.appdomain.cloud
 ```
 
-## Install Postgresql
+## Install PostgreSQL
 
-PostgreSQL Database is required to manage metadata related to customization. The customization container uses TLS to Postgres, but always sets up the connection with a "NonValidatingFactory" which does not do cert validation. Here I am going to use a self signed certificate to enable TLS in Postgresql database. In this tutorial We are using bitnami Postgresql packaged in helm charts.
+A PostgreSQL database is required to manage metadata related to customization. The customization container uses TLS to Postgres, but always sets up the connection with a *NonValidatingFactory* which does not do certificate validation. Below, we will use a self signed certificate to enable TLS in PostgreSQL. We use Bitnami Postgresql packaged in Helm charts for this tutorial.
 
-Create Certificate authority certificate `ca.crt` and key `ca.key`
+Create Certificate Authority certificate `ca.crt` and key `ca.key`.
 
 ```sh
 openssl req \
@@ -90,7 +90,7 @@ openssl req \
   -subj "/CN=*"
 ```
 
-Create certificate signing requrest `server.csr`
+Create certificate signing request `server.csr`.
 
 ```sh
   openssl req \
@@ -106,7 +106,7 @@ Create certificate signing requrest `server.csr`
   -subj "/CN=postgresql-release-hl"
 ```
 
-create `server.crt` certificate using `ca.crt` and `ca.key` from `server.csr`
+Create `server.crt` certificate using `ca.crt`, and `ca.key` from `server.csr`.
 
 ```sh
   openssl x509 \
@@ -120,7 +120,7 @@ create `server.crt` certificate using `ca.crt` and `ca.key` from `server.csr`
   -out server.crt
 ```
 
-Create a tls secret for the certifiate you created
+Create a TLS secret for the certifiate you have created.
 
 ```sh
 oc create secret tls pg-tls-secret \
@@ -128,13 +128,13 @@ oc create secret tls pg-tls-secret \
 --key=server.key
 ```
 
-Add bitnami helm chart repo
+Add Bitnami Helm chart repo.
 
 ```sh
 helm repo add bitnami https://charts.bitnami.com/bitnami
 ```
 
-Install Postgresql helm chart
+Install Postgresql helm chart.
 
 ```sh
 helm install postgresql-release bitnami/postgresql \

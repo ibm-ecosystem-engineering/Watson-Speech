@@ -1,8 +1,8 @@
 # Install IBM Watson Speech to Text Library in OpenShift
 
-IBM Watson® Speech to Text Library (STT) for Embed enables fast and accurate speech transcription to text from spoken audio in multiple languages for a variety of use cases. The service leverages machine learning to combine knowledge of grammar, language structure, and the composition of audio and voice signals to accurately transcribe the human voice.
+IBM Watson Speech to Text (STT) Library for Embed transcribes written text from spoken audio in a number of languages. The service leverages machine learning to combine knowledge of grammar, language structure, and the composition of audio and voice signals to accurately transcribe the human voice.
 
-In this tutorial I am going to show, how to install IBM Watson Speech to Text Embed with runtime and customization in OpenShift. We are going to use the helm chart provided in [here](https://github.com/IBM/ibm-watson-embed-charts/tree/main/charts/ibm-watson-stt-embed) 
+Note that the STT service can be deployed either with or without customization. A customizable deployment allows users to update the service to understand how to transcribe words. This tutorial walks you through the steps install a customizable STT service in OpenShift. We will use [this](https://github.com/IBM/ibm-watson-embed-charts/tree/main/charts/ibm-watson-stt-embed) helm chart to deploy the service.
 
 ## Architecture diagram
 

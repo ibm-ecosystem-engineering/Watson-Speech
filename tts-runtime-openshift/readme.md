@@ -2,7 +2,7 @@
 
 IBM Watson® Text to Speech (TTS) enables you to convert written text into natural-sounding audio in a variety of languages and voices within an existing application or within Watson Assistant.
 
-This tutorial walks you through the steps install a TTS Runtime service in OpenShift. We will use [this](https://github.com/IBM/ibm-watson-embed-charts/tree/main/charts/ibm-watson-tts-embed) helm chart to deploy the service. You may use classic Kubernetes cluster to complete this tutorial as well.
+This tutorial walks you through the steps to install a TTS Runtime service in OpenShift. We will use [this](https://github.com/IBM/ibm-watson-embed-charts/tree/main/charts/ibm-watson-tts-embed-runtime) helm chart to deploy the service. You may use classic Kubernetes cluster to complete this tutorial as well.
 
 ## Reference Architecture
 

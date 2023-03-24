@@ -1,8 +1,8 @@
-# Deploy Customizable Watson Speech to Text Library in OpenShift
+# Deploy Customizable STT on OpenShift
 
 IBM Watson Speech to Text (STT) Library for Embed transcribes written text from spoken audio in a number of languages. The service leverages machine learning to combine knowledge of grammar, language structure, and the composition of audio and voice signals to accurately transcribe the human voice.
 
-The STT service can be deployed either with or without customization. A customizable deployment allows users to update the service to understand how to transcribe words. While a non-customizable deployment requires only a single container image and can easily be deployed with a container runtime like Docker or Podman, a customizable deployment requires multiple images and a PostgreSQL database. It is recommended to use the Helm chart to install on a Kubernetes or OpenShift cluster.
+The STT service can be deployed either with or without customization. A customizable deployment allows users to update the service to understand how to transcribe words. While a non-customizable deployment requires only a single container image and can easily be deployed with a container runtime like Docker or Podman, a customizable deployment requires multiple images and a PostgreSQL database. It is recommended to use the Helm chart to install on an OpenShift cluster.
 
 This tutorial walks you through the steps install a customizable STT service in OpenShift. We will use [this](https://github.com/IBM/ibm-watson-embed-charts/tree/main/charts/ibm-watson-stt-embed) helm chart to deploy the service.
 

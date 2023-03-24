@@ -137,6 +137,8 @@ helm install postgresql-release bitnami/postgresql \
 --set tls.certKeyFilename="tls.key"
 ```
 
+### Dealing with a Pod startup issue
+
 In a OpenShift cluster a Statefulset pod might fail to start spin up because of privileges. You may see events like:
 ```
 create Pod postgresql-release-0 in StatefulSet postgresql-release failed error: pods "postgresql-release-0" is forbidden: unable to validate against any security context constraint: [provider "anyuid": Forbidden: not usable by user or serviceaccount, provider restricted:

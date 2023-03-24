@@ -68,6 +68,8 @@ export S3_ACCESS_KEY=1a2dfbc3d45678901ef2g3h45678i90jkl
 
 A PostgreSQL database is required to manage metadata related to customization. The customization container uses TLS to Postgres, but always sets up the connection with a NonValidatingFactory which does not do certificate validation. 
 
+Set the Database connection information into the following environment variables. These variables will be used when deploying the STT Helm chart.
+
 ```sh
 export POSTGRES_HOST=<Postgresql hostname>
 export POSTGRES_USER=<Postgresql username>

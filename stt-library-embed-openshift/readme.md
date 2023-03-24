@@ -64,106 +64,14 @@ export S3_SECRET_KEY=12a3bcd4567890ef123g4567890hij12k1m3n4567o8901p2
 export S3_ACCESS_KEY=1a2dfbc3d45678901ef2g3h45678i90jkl
 ```
 
-## Install PostgreSQL
+## Set PostgreSQL information in Environment Variables
 
-A PostgreSQL database is required to manage metadata related to customization. The customization container uses TLS to Postgres, but always sets up the connection with a *NonValidatingFactory* which does not do certificate validation. Below, we will use a self signed certificate to enable TLS in PostgreSQL. We use Bitnami Postgresql packaged in Helm charts for this tutorial.
-
-Create Certificate Authority certificate `ca.crt` and key `ca.key`.
+A PostgreSQL database is required to manage metadata related to customization. The customization container uses TLS to Postgres, but always sets up the connection with a NonValidatingFactory which does not do certificate validation. 
 
 ```sh
-openssl req \
-  -x509 \
-  -nodes \
-  -newkey ec \
-  -pkeyopt ec_paramgen_curve:prime256v1 \
-  -pkeyopt ec_param_enc:named_curve \
-  -sha384 \
-  -keyout ca.key \
-  -out ca.crt \
-  -days 3650 \
-  -subj "/CN=*"
-```
-
-Create certificate signing request `server.csr`.
-
-```sh
-  openssl req \
-  -new \
-  -newkey ec \
-  -nodes \
-  -pkeyopt ec_paramgen_curve:prime256v1 \
-  -pkeyopt ec_param_enc:named_curve \
-  -sha384 \
-  -keyout server.key \
-  -out server.csr \
-  -days 365 \
-  -subj "/CN=postgresql-release-hl"
-```
-
-Create `server.crt` certificate using `ca.crt`, and `ca.key` from `server.csr`.
-
-```sh
-  openssl x509 \
-  -req \
-  -in server.csr \
-  -days 365 \
-  -CA ca.crt \
-  -CAkey ca.key \
-  -CAcreateserial \
-  -sha384 \
-  -out server.crt
-```
-
-Create a TLS secret for the certifiate you have created.
-
-```sh
-oc create secret tls pg-tls-secret \
---cert=server.crt \
---key=server.key
-```
-
-Add Bitnami Helm chart repo.
-
-```sh
-helm repo add bitnami https://charts.bitnami.com/bitnami
-```
-
-Install the PostgreSQL Helm chart.
-
-```sh
-helm install postgresql-release bitnami/postgresql \
---set tls.enabled="true" \
---set tls.certificatesSecret="pg-tls-secret" \
---set tls.certFilename="tls.crt" \
---set tls.certKeyFilename="tls.key"
-```
-
-### Dealing with a Pod startup issue
-
-In a OpenShift cluster a Statefulset pod might fail to start spin up because of privileges. You may see events like:
-```
-create Pod postgresql-release-0 in StatefulSet postgresql-release failed error: pods "postgresql-release-0" is forbidden: unable to validate against any security context constraint: [provider "anyuid": Forbidden: not usable by user or serviceaccount, provider restricted:
-```
-
-If you see this issue do the following to resolve it.
-
-Create a service account and assign `anyuid` SCC.
-
-```sh
-oc create serviceaccount db-sa
-oc adm policy add-scc-to-user anyuid -z db-sa
-```
-
-Set the service account to Statefulset `postgresql-release`.
-
-```sh
-oc set serviceaccount statefulset postgresql-release db-sa
-```
-
-Set the PostgreSQL password in an environment variable. This will be used in subsequent steps.
-
-```sh
-export POSTGRES_PASSWORD=$(oc get secret postgresql-release -o jsonpath="{.data.postgres-password}" | base64 -d)
+export POSTGRES_HOST=<Postgresql hostname>
+export POSTGRES_USER=<Postgresql username>
+export POSTGRES_PASSWORD=<Postgresql password>
 ```
 
 ## Install Speech to Text Helm Chart
@@ -196,8 +104,8 @@ helm install stt-release ./ibm-watson-stt-embed \
 --set license=true \
 --set nameOverride=stt \
 --set models.enUSTelephony.enabled=false \
---set postgres.host="postgresql-release-hl" \
---set postgres.user="postgres" \
+--set postgres.host=${POSTGRES_HOST} \
+--set postgres.user=${POSTGRES_PASSWORD} \
 --set postgres.password=${POSTGRES_PASSWORD} \
 --set objectStorage.endpoint=${S3_ENPOINT_URL} \
 --set objectStorage.region=${S3_REGION} \

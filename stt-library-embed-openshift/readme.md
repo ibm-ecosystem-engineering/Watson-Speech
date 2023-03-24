@@ -21,6 +21,7 @@ This tutorial walks you through the steps install a customizable STT service in 
   ``` 
   
 - S3 compatible storage. Below we give instructions on setting this up in IBM Cloud. For other clouds, use the instructions from the cloud provider.
+- PostgreSQL Database is required to manage metadata related to customization
 - An OpenShift Cluster on which you will deploy the service.
 
 ## S3 Compatible Storage

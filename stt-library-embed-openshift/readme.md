@@ -29,7 +29,7 @@ This tutorial walks you through the steps install a customizable STT service in 
 
 For customization, you will need an S3 compatible storage service that supports HMAC (access key and secret key) credentials. Watson Speech requires a bucket that it can read and write to. The bucket will be populated with stock models at install time and will also store customization artifacts, including training data and trained models.
 
-### S3 Bucket on IBM Cloud
+### Create an S3 Bucket on IBM Cloud
 
 Here are the steps to obtain IBM Cloud S3 bucket HMAC credentials and endpoint. You may choose bucket based on the cloud provider. 
 

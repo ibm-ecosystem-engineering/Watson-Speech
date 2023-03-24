@@ -20,10 +20,8 @@ This tutorial walks you through the steps install a customizable STT service in 
   export IBM_ENTITLEMENT_KEY=<Set the entitlement key>
   ``` 
   
-- For customization you will need to set up:
-  - S3 compatible storage. Below we give instructions on setting this up in IBM Cloud. 
-  - PostgreSQL Database
-- OpenShift Cluster on which you will deploy the service.
+- S3 compatible storage. Below we give instructions on setting this up in IBM Cloud. For other clouds, use the instructions from the cloud provider.
+- An OpenShift Cluster on which you will deploy the service.
 
 ## S3 Compatible Storage
 
@@ -31,7 +29,7 @@ For customization, you will need an S3 compatible storage service that supports 
 
 ### Create an S3 Bucket on IBM Cloud
 
-Here are the steps to obtain IBM Cloud S3 bucket HMAC credentials and endpoint. You may choose bucket based on the cloud provider. 
+Here are the steps to obtain IBM Cloud S3 bucket HMAC credentials and endpoint. If you are using a different cloud, then use the instructions given by the cloud provider to set it up.
 
 1. Log in to [IBM Cloud](https://cloud.ibm.com/login).
 2. From the IBM Cloud Dashboard, click the Cloud Object Storage service instance that you want to work with.
@@ -43,7 +41,7 @@ Here are the steps to obtain IBM Cloud S3 bucket HMAC credentials and endpoint. 
 6. Copy the `cos_hmac_keys/secret_access_key` value and use it as the value for the `Secret access key` field (or `secretAccessKey parameter`).
 7. Copy the `cos_hmac_keys/access_key_id` value and use it as the value for the `Access key ID` field (or `accessKeyId parameter`).
 
-### Configure S3 Information
+### Set S3 Information in Environment Variables
 
 Set the S3 crededentials and information into the following environment variables. These variables will be used when deploying the STT Helm chart.
 
@@ -55,7 +53,7 @@ export S3_SECRET_KEY=<secretAccessKey you found in step 6>
 export S3_ACCESS_KEY=<accessKeyId you found in step 7>
 ```
 
-For example, your environment variables may look similar to the following.
+The commands you use to set the variables should look similar to the following.
 
 ```sh
 export S3_BUCKET_NAME=speech-embed
@@ -239,3 +237,4 @@ curl --url "http://localhost:8001/api/v1/namespaces/stt-demo/services/https:stt-
       --header "Content-Type: audio/flac" \
       --data-binary @example.flac
 ```
+

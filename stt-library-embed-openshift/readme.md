@@ -20,14 +20,16 @@ This tutorial walks you through the steps install a customizable STT service in 
   export IBM_ENTITLEMENT_KEY=<Set the entitlement key>
   ``` 
   
-- For customization:
-  - S3 compatible storage 
+- For customization you will need to set up:
+  - S3 compatible storage. Below we give instructions on setting this up in IBM Cloud. 
   - PostgreSQL Database
 - OpenShift Cluster on which you will deploy the service.
 
 ## S3 Compatible Storage
 
 For customization, you will need an S3 compatible storage service that supports HMAC (access key and secret key) credentials. Watson Speech requires a bucket that it can read and write to. The bucket will be populated with stock models at install time and will also store customization artifacts, including training data and trained models.
+
+### S3 Bucket on IBM Cloud
 
 Here are the steps to obtain IBM Cloud S3 bucket HMAC credentials and endpoint. You may choose bucket based on the cloud provider. 
 
@@ -41,7 +43,9 @@ Here are the steps to obtain IBM Cloud S3 bucket HMAC credentials and endpoint. 
 6. Copy the `cos_hmac_keys/secret_access_key` value and use it as the value for the `Secret access key` field (or `secretAccessKey parameter`).
 7. Copy the `cos_hmac_keys/access_key_id` value and use it as the value for the `Access key ID` field (or `accessKeyId parameter`).
 
-Set the S3 crededentials and information into the following environment variables. 
+### Configure S3 Information
+
+Set the S3 crededentials and information into the following environment variables. These variables will be used when deploying the STT Helm chart.
 
 ```sh
 export S3_BUCKET_NAME=<Bucket name you found in step 3 >
@@ -171,6 +175,7 @@ Set the PostgreSQL password in an environment variable. This will be used in sub
 ```sh
 export POSTGRES_PASSWORD=$(oc get secret postgresql-release -o jsonpath="{.data.postgres-password}" | base64 -d)
 ```
+
 ## Install Speech to Text Helm Chart
 
 Clone the Helm chart Github repository.

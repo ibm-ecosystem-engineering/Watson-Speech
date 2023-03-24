@@ -2,28 +2,31 @@
 
 IBM Watson® Text to Speech (TTS) enables you to convert written text into natural-sounding audio in a variety of languages and voices within an existing application or within Watson Assistant.
 
-In this tutorial I am going to show, how to install IBM Watson Text to Speech Embed with runtime and customization in OpenShift. We are going to use the helm chart provided in [here](https://github.com/IBM/ibm-watson-embed-charts/tree/main/charts/ibm-watson-tts-embed) 
+This tutorial walks you through the steps install a customizable TTS service in OpenShift. We will use [this](https://github.com/IBM/ibm-watson-embed-charts/tree/main/charts/ibm-watson-tts-embed) helm chart to deploy the service.
 
-## Architecture diagram
+## Reference Architecture
 
 ![Diagram](architecture-tts.png)
 
 ## Prerequisites
 
-- [helm 3](https://helm.sh/docs/intro/install/)
-- Ensure you have your [entitlement key](https://myibm.ibm.com/products-services/containerlibrary) to access to [the images with an IBM entitlement key](https://www.ibm.com/docs/en/watson-libraries?topic=i-accessing-files)
-  - Set entitlemet key in an environment variable
-    ```sh
-    export IBM_ENTITLEMENT_KEY=<Set the entitlement key>
-    ``` 
-- For customization
-  - S3 Compatible Storage 
-  - PostgreSQL Database
-- OpenShift Cluster - the Text to Speech service is assumed to be running in an OpenShift cluster.
+- Install [Helm 3](https://helm.sh/docs/intro/install/).
+- Ensure you have an [entitlement key](https://myibm.ibm.com/products-services/containerlibrary). You may need to create one. This key is required to access [images](https://www.ibm.com/docs/en/watson-libraries?topic=i-accessing-files) used in this tutorial.
+- Set an environment variable.
+
+  ```sh
+  export IBM_ENTITLEMENT_KEY=<Set the entitlement key>
+  ``` 
+  
+- S3 compatible storage. Below we give instructions on setting this up in IBM Cloud. For other clouds, use the instructions from the cloud provider.
+- PostgreSQL Database is required to manage metadata related to customization
+- An OpenShift Cluster on which you will deploy the service.
 
 ## S3 Compatible Storage
 
 For customization, an S3 compatible storage service must exist that supports HMAC (access key and secret key) credentials. Watson Speech requires one bucket that it can read and write objects to. The bucket will be populated with stock models at install time and will also store customization artifacts, including training data and trained models.
+
+### Create an S3 Bucket on IBM Cloud
 
 Here are the steps to obtain IBM Cloud S3 bucket HMAC credentials and endpoint. You may choose bucket based on the cloud providers. 
 
@@ -37,7 +40,7 @@ Here are the steps to obtain IBM Cloud S3 bucket HMAC credentials and endpoint. 
 6. Copy the `cos_hmac_keys/secret_access_key` value and use it as the value for the `Secret access key` field (or `secretAccessKey parameter`).
 7. Copy the `cos_hmac_keys/access_key_id` value and use it as the value for the `Access key ID` field (or `accessKeyId parameter`).
 
-Set all S3 crededentials and information in environment variable so that we can make use them during stt library installation. Please modify the below script based on the information you collected from the previous steps.
+Set the S3 crededentials and information into the following environment variables. These variables will be used when deploying the TTS Helm chart.
 
 ```sh
 export S3_BUCKET_NAME=<Bucket name you found in step 3 >
@@ -47,7 +50,7 @@ export S3_SECRET_KEY=<secretAccessKey you found in step 6>
 export S3_ACCESS_KEY=<accessKeyId you found in step 7>
 ```
 
-example Connecting by using HMAC authentication and example S3 bucket values. Please don't use the value provided. They will not work.
+The commands you use to set the variables should look similar to the following.
 
 ```sh
 export S3_BUCKET_NAME=speech-embed
@@ -57,122 +60,28 @@ export S3_SECRET_KEY=12a3bcd4567890ef123g4567890hij12k1m3n4567o8901p2
 export S3_ACCESS_KEY=1a2dfbc3d45678901ef2g3h45678i90jkl
 ```
 
-```yaml
-  ibmcoss3:
-    - name: Account 1
-      credentials:
-        secretAccessKey: 12a3bcd4567890ef123g4567890hij12k1m3n4567o8901p2
-        accessKeyId: 1a2dfbc3d45678901ef2g3h45678i90jkl
-        region: us-east
-      endpoint:
-        endpointUrl: s3.us.cloud-object-storage.appdomain.cloud
-```
+## Set PostgreSQL information in Environment Variables
 
-## Install Postgresql
+A PostgreSQL database is required to manage metadata related to customization. The customization container uses TLS to Postgres, but always sets up the connection with a NonValidatingFactory which does not do certificate validation. 
 
-PostgreSQL Database is required to manage metadata related to customization. The customization container uses TLS to Postgres, but always sets up the connection with a "NonValidatingFactory" which does not do cert validation. Here I am going to use a self signed certificate to enable TLS in Postgresql database. In this tutorial We are using bitnami Postgresql packaged in helm charts.
-
-Create Certificate authority certificate `ca.crt` and key `ca.key`
+Set the Database connection information into the following environment variables. These variables will be used when deploying the STT Helm chart.
 
 ```sh
-openssl req \
-  -x509 \
-  -nodes \
-  -newkey ec \
-  -pkeyopt ec_paramgen_curve:prime256v1 \
-  -pkeyopt ec_param_enc:named_curve \
-  -sha384 \
-  -keyout ca.key \
-  -out ca.crt \
-  -days 3650 \
-  -subj "/CN=*"
+export POSTGRES_HOST=<Postgresql hostname>
+export POSTGRES_USER=<Postgresql username>
+export POSTGRES_PASSWORD=<Postgresql password>
 ```
 
-Create certificate signing requrest `server.csr`
+## Install Text to Speetch helm chart
 
-```sh
-  openssl req \
-  -new \
-  -newkey ec \
-  -nodes \
-  -pkeyopt ec_paramgen_curve:prime256v1 \
-  -pkeyopt ec_param_enc:named_curve \
-  -sha384 \
-  -keyout server.key \
-  -out server.csr \
-  -days 365 \
-  -subj "/CN=postgresql-release-hl"
-```
-
-create `server.crt` certificate using `ca.crt` and `ca.key` from `server.csr`
-
-```sh
-  openssl x509 \
-  -req \
-  -in server.csr \
-  -days 365 \
-  -CA ca.crt \
-  -CAkey ca.key \
-  -CAcreateserial \
-  -sha384 \
-  -out server.crt
-```
-
-Create a tls secret for the certifiate you created
-
-```sh
-oc create secret tls pg-tls-secret \
---cert=server.crt \
---key=server.key
-```
-
-Add bitnami helm chart repo
-
-```sh
-helm repo add bitnami https://charts.bitnami.com/bitnami
-```
-
-Install Postgresql helm chart
-
-```sh
-helm install postgresql-release bitnami/postgresql \
---set tls.enabled="true" \
---set tls.certificatesSecret="pg-tls-secret" \
---set tls.certFilename="tls.crt" \
---set tls.certKeyFilename="tls.key"
-```
-
-In OpenShift cluster Statefulset pod might not spin up because, it needs a extra previllege to run the container. You may see events like below
-` create Pod postgresql-release-0 in StatefulSet postgresql-release failed error: pods "postgresql-release-0" is forbidden: unable to validate against any security context constraint: [provider "anyuid": Forbidden: not usable by user or serviceaccount, provider restricted:` To solve this issue please follow the below instruction.
-
-create service account and assign `anyuid` SCC
-
-```sh
-oc create serviceaccount db-sa
-oc adm policy add-scc-to-user anyuid -z db-sa
-```
-
-Set the service account to statefulset `postgresql-release`
-
-```sh
-oc set serviceaccount statefulset postgresql-release db-sa
-```
-
-Set the Postgresql password in an environment variable for next step to use.
-
-```sh
-export POSTGRES_PASSWORD=$(oc get secret postgresql-release -o jsonpath="{.data.postgres-password}" | base64 -d)
-```
-## Install Speech to Text Library embed helm chart
-
-Let start with cloning the helm chart github repo
+Clone the Helm chart Github repository.
 
 ```sh
 git clone https://github.com/IBM/ibm-watson-embed-charts.git
 cd ibm-watson-embed-charts/charts
 ```
 
-The containers deployed in this chart come from the IBM entitled registry. You must create a Secret with credentials to pull from the IBM entitled registry. ibm-entitlement-key is the default name, but this can be changed by updating the imagePullSecrets value.
+The containers deployed by this chart come from the IBM Entitled Registry. You must create a Secret with credentials to pull from this registry. The default name is `ibm-entitlement-key`, but this can be changed by updating the value of `imagePullSecrets`.
 
 An example command to create the pull secret:
 
@@ -193,8 +102,8 @@ helm install tts-release ./ibm-watson-tts-embed \
 --set license=true \
 --set nameOverride=tts \
 --set models.enUSTelephony.enabled=false \
---set postgres.host="postgresql-release-hl" \
---set postgres.user="postgres" \
+--set postgres.host=${POSTGRES_HOST} \
+--set postgres.user=${POSTGRES_USER} \
 --set postgres.password=${POSTGRES_PASSWORD} \
 --set objectStorage.endpoint=${S3_ENPOINT_URL} \
 --set objectStorage.region=${S3_REGION} \
@@ -205,7 +114,7 @@ helm install tts-release ./ibm-watson-tts-embed \
 
 ## Verifying the chart
 
-See the instruction (from NOTES.txt within chart) after the helm installation completes for chart verification. The instruction can also be viewed by running:
+See the instruction (from NOTES.txt within chart) after the Helm installation completes for chart verification. The instruction can also be viewed by running the following command.
 
 ```sh
 helm status tts-release

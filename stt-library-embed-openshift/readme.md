@@ -134,7 +134,7 @@ Add Bitnami Helm chart repo.
 helm repo add bitnami https://charts.bitnami.com/bitnami
 ```
 
-Install Postgresql helm chart.
+Install the PostgreSQL Helm chart.
 
 ```sh
 helm install postgresql-release bitnami/postgresql \
@@ -144,37 +144,41 @@ helm install postgresql-release bitnami/postgresql \
 --set tls.certKeyFilename="tls.key"
 ```
 
-In OpenShift cluster Statefulset pod might not spin up because, it needs a extra previllege to run the container. You may see events like below
-` create Pod postgresql-release-0 in StatefulSet postgresql-release failed error: pods "postgresql-release-0" is forbidden: unable to validate against any security context constraint: [provider "anyuid": Forbidden: not usable by user or serviceaccount, provider restricted:` To solve this issue please follow the below instruction.
+In a OpenShift cluster a Statefulset pod might fail to start spin up because of privileges. You may see events like:
+```
+create Pod postgresql-release-0 in StatefulSet postgresql-release failed error: pods "postgresql-release-0" is forbidden: unable to validate against any security context constraint: [provider "anyuid": Forbidden: not usable by user or serviceaccount, provider restricted:
+```
 
-create service account and assign `anyuid` SCC
+If you see this issue do the following to resolve it.
+
+Create a service account and assign `anyuid` SCC.
 
 ```sh
 oc create serviceaccount db-sa
 oc adm policy add-scc-to-user anyuid -z db-sa
 ```
 
-Set the service account to statefulset `postgresql-release`
+Set the service account to Statefulset `postgresql-release`.
 
 ```sh
 oc set serviceaccount statefulset postgresql-release db-sa
 ```
 
-Set the Postgresql password in an environment variable for next step to use.
+Set the PostgreSQL password in an environment variable. This will be used in subsequent steps.
 
 ```sh
 export POSTGRES_PASSWORD=$(oc get secret postgresql-release -o jsonpath="{.data.postgres-password}" | base64 -d)
 ```
 ## Install Speech to Text Library embed helm chart
 
-Let start with cloning the helm chart github repo
+Clone the Helm chart Github repository.
 
 ```sh
 git clone https://github.com/IBM/ibm-watson-embed-charts.git
 cd ibm-watson-embed-charts/charts
 ```
 
-The containers deployed in this chart come from the IBM entitled registry. You must create a Secret with credentials to pull from the IBM entitled registry. ibm-entitlement-key is the default name, but this can be changed by updating the imagePullSecrets value.
+The containers deployed by this chart come from the IBM Entitled Registry. You must create a Secret with credentials to pull from this registry. The default name is `ibm-entitlement-key`, but this can be changed by updating the value of `imagePullSecrets`.
 
 An example command to create the pull secret:
 

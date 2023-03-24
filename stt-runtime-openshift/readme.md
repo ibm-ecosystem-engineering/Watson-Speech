@@ -1,8 +1,8 @@
-# Deploy STT Runtime on OpenShift
+# Deploy STT Runtime on OpenShift/Kubernetes
 
 IBM Watson Speech to Text (STT) Library for Embed transcribes written text from spoken audio in a number of languages. The service leverages machine learning to combine knowledge of grammar, language structure, and the composition of audio and voice signals to accurately transcribe the human voice.
 
-This tutorial walks you through the steps install a **STT runtime** in OpenShift. We will use [this](https://github.com/IBM/ibm-watson-embed-charts/tree/main/charts/ibm-watson-stt-embed-runtime) helm chart to deploy the runtime service.
+This tutorial walks you through the steps install a **STT runtime** in OpenShift/Kubernetes. We will use [this](https://github.com/IBM/ibm-watson-embed-charts/tree/main/charts/ibm-watson-stt-embed-runtime) helm chart to deploy the runtime service.
 
 ## Reference Architecture
 

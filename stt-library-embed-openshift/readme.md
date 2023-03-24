@@ -65,17 +65,6 @@ export S3_SECRET_KEY=12a3bcd4567890ef123g4567890hij12k1m3n4567o8901p2
 export S3_ACCESS_KEY=1a2dfbc3d45678901ef2g3h45678i90jkl
 ```
 
-```yaml
-  ibmcoss3:
-    - name: Account 1
-      credentials:
-        secretAccessKey: 12a3bcd4567890ef123g4567890hij12k1m3n4567o8901p2
-        accessKeyId: 1a2dfbc3d45678901ef2g3h45678i90jkl
-        region: us-east
-      endpoint:
-        endpointUrl: s3.us.cloud-object-storage.appdomain.cloud
-```
-
 ## Install PostgreSQL
 
 A PostgreSQL database is required to manage metadata related to customization. The customization container uses TLS to Postgres, but always sets up the connection with a *NonValidatingFactory* which does not do certificate validation. Below, we will use a self signed certificate to enable TLS in PostgreSQL. We use Bitnami Postgresql packaged in Helm charts for this tutorial.

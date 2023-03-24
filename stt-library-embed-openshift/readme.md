@@ -107,7 +107,7 @@ helm install stt-release ./ibm-watson-stt-embed \
 --set nameOverride=stt \
 --set models.enUSTelephony.enabled=false \
 --set postgres.host=${POSTGRES_HOST} \
---set postgres.user=${POSTGRES_PASSWORD} \
+--set postgres.user=${POSTGRES_USER} \
 --set postgres.password=${POSTGRES_PASSWORD} \
 --set objectStorage.endpoint=${S3_ENPOINT_URL} \
 --set objectStorage.region=${S3_REGION} \

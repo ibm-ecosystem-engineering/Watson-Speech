@@ -1,14 +1,12 @@
-# Deploy Customizable STT on OpenShift
+# Install IBM Watson Text to Speech Library in OpenShift
 
-IBM Watson Speech to Text (STT) Library for Embed transcribes written text from spoken audio in a number of languages. The service leverages machine learning to combine knowledge of grammar, language structure, and the composition of audio and voice signals to accurately transcribe the human voice.
+IBM Watson® Text to Speech (TTS) enables you to convert written text into natural-sounding audio in a variety of languages and voices within an existing application or within Watson Assistant.
 
-The STT service can be deployed either with or without customization. A customizable deployment allows users to update the service to understand how to transcribe words. While a non-customizable deployment requires only a single container image and can easily be deployed with a container runtime like Docker or Podman, a customizable deployment requires multiple images and a PostgreSQL database. It is recommended to use the Helm chart to install on an OpenShift cluster.
-
-This tutorial walks you through the steps install a customizable STT service in OpenShift. We will use [this](https://github.com/IBM/ibm-watson-embed-charts/tree/main/charts/ibm-watson-stt-embed) helm chart to deploy the service.
+This tutorial walks you through the steps install a customizable TTS service in OpenShift. We will use [this](https://github.com/IBM/ibm-watson-embed-charts/tree/main/charts/ibm-watson-tts-embed) helm chart to deploy the service.
 
 ## Reference Architecture
 
-![Diagram](architecture-stt.png)
+![Diagram](architecture-tts.png)
 
 ## Prerequisites
 
@@ -19,18 +17,18 @@ This tutorial walks you through the steps install a customizable STT service in 
   ```sh
   export IBM_ENTITLEMENT_KEY=<Set the entitlement key>
   ``` 
-
+  
 - S3 compatible storage. Below we give instructions on setting this up in IBM Cloud. For other clouds, use the instructions from the cloud provider.
 - PostgreSQL Database is required to manage metadata related to customization
 - An OpenShift Cluster on which you will deploy the service.
 
 ## S3 Compatible Storage
 
-For customization, you will need an S3 compatible storage service that supports HMAC (access key and secret key) credentials. Watson Speech requires a bucket that it can read and write to. The bucket will be populated with stock models at install time and will also store customization artifacts, including training data and trained models.
+For customization, an S3 compatible storage service must exist that supports HMAC (access key and secret key) credentials. Watson Speech requires one bucket that it can read and write objects to. The bucket will be populated with stock models at install time and will also store customization artifacts, including training data and trained models.
 
 ### Create an S3 Bucket on IBM Cloud
 
-Here are the steps to obtain IBM Cloud S3 bucket HMAC credentials and endpoint. If you are using a different cloud, then use the instructions given by the cloud provider to set it up.
+Here are the steps to obtain IBM Cloud S3 bucket HMAC credentials and endpoint. You may choose bucket based on the cloud providers. 
 
 1. Log in to [IBM Cloud](https://cloud.ibm.com/login).
 2. From the IBM Cloud Dashboard, click the Cloud Object Storage service instance that you want to work with.
@@ -42,14 +40,12 @@ Here are the steps to obtain IBM Cloud S3 bucket HMAC credentials and endpoint. 
 6. Copy the `cos_hmac_keys/secret_access_key` value and use it as the value for the `Secret access key` field (or `secretAccessKey parameter`).
 7. Copy the `cos_hmac_keys/access_key_id` value and use it as the value for the `Access key ID` field (or `accessKeyId parameter`).
 
-### Set S3 Information in Environment Variables
-
-Set the S3 crededentials and information into the following environment variables. These variables will be used when deploying the STT Helm chart.
+Set the S3 crededentials and information into the following environment variables. These variables will be used when deploying the TTS Helm chart.
 
 ```sh
 export S3_BUCKET_NAME=<Bucket name you found in step 3 >
-export S3_REGION=<Region can be found in step 4.1 when you select your bucket>
-export S3_ENPOINT_URL=<Endpoint URL you found in step 4>
+export S3_ENPOINT_URL=<Endpoint URL you found in step 4.1>
+export S3_REGION=<Region can be found in step 4.2 when you select your bucket>
 export S3_SECRET_KEY=<secretAccessKey you found in step 6>
 export S3_ACCESS_KEY=<accessKeyId you found in step 7>
 ```
@@ -76,7 +72,7 @@ export POSTGRES_USER=<Postgresql username>
 export POSTGRES_PASSWORD=<Postgresql password>
 ```
 
-## Install Speech to Text Helm Chart
+## Install Text to Speetch helm chart
 
 Clone the Helm chart Github repository.
 
@@ -97,14 +93,14 @@ An example command to create the pull secret:
   --docker-email=<your-email>
 ```
 
-By default, the models that are enabled are `en-US_Multimedia` and `en-US_Telephony` with defaultModel set to `en-US_Multimedia`.
+> By default, the models that are enabled are en-US_MichaelV3Voice and en-US_AllisonV3Voice with defaultModel set to en-US_AllisonV3Voice.
 
-Helm charts have configurable values that can be set at install time. To configure, e.g. enable additional models, refer to the base `values.yaml`. Values can be changed using `--set` or using YAML files specified with `-f/--values`. Below we set values using `--set` parameter.
+Helm charts have configurable values that can be set at install time. To configure the install further, such as enabling additional models, Refer to the base values.yaml for documentation and defaults for the values. Values can be changed using `--set` or using YAML files specified with `-f/--values`. Here we are setting values using `--set` parameter
 
 ```sh
-helm install stt-release ./ibm-watson-stt-embed \
+helm install tts-release ./ibm-watson-tts-embed \
 --set license=true \
---set nameOverride=stt \
+--set nameOverride=tts \
 --set models.enUSTelephony.enabled=false \
 --set postgres.host=${POSTGRES_HOST} \
 --set postgres.user=${POSTGRES_USER} \
@@ -116,37 +112,49 @@ helm install stt-release ./ibm-watson-stt-embed \
 --set objectStorage.secretKey=${S3_SECRET_KEY}
 ```
 
-## Verify the Chart
+## Verifying the chart
 
 See the instruction (from NOTES.txt within chart) after the Helm installation completes for chart verification. The instruction can also be viewed by running the following command.
 
 ```sh
-helm status stt-release
+helm status tts-release
 ```
 
-For basic usage of customization, see the [documentation](https://www.ibm.com/docs/en/watson-libraries?topic=containers-customization-example).
+For basic usage of customization, see the customizing Watson Speech Library for Embed [documentation](https://www.ibm.com/docs/en/watson-libraries?topic=containers-customization-example).
 
-The complete API reference for Watson Speech to Text can be found [here](https://cloud.ibm.com/apidocs/speech-to-text).
+The complete API reference for Watson Text-to-Speech can be found [here](https://cloud.ibm.com/apidocs/text-to-speech).
 
-## Test the Service
 
-In one terminal, create a proxy through the service.
+## Use the service
+
+In one terminal, create a proxy through the service:
 
 ```sh
 oc proxy
 ```
 
-Download an example audio file as `example.flac`:
+In another terminal, view the list of voices:
 
 ```sh
-curl --url https://github.com/watson-developer-cloud/doc-tutorial-downloads/raw/master/speech-to-text/0001.flac \
-      -sLo example.flac
+
+curl --url "http://localhost:8001/api/v1/namespaces/stt-demo/services/https:tts-release-runtime:https/proxy/text-to-speech/api/v1/voices"
 ```
 
-Send a `recognize` request using the downloaded file:
+Send a /synthesize request to generate speech and write out output.wav:
 
 ```sh
-curl --url "http://localhost:8001/api/v1/namespaces/stt-demo/services/https:stt-release-runtime:https/proxy/speech-to-text/api/v1/recognize?model=en-US_Multimedia" \
-      --header "Content-Type: audio/flac" \
-      --data-binary @example.flac
+curl --url "http://localhost:8001/api/v1/namespaces/stt-demo/services/https:tts-release-runtime:https/proxy/text-to-speech/api/v1/recognize?model=en-US_AllisonV3Voice" \
+      --header "Content-Type: application/json" \
+      --data '{"text":"Hello world"}' \
+      --header "Accept: audio/wav" \
+      --output output.wav
+```
+
+## Uninstalling the Chart
+
+To uninstall and delete the Text to Speech deployment, run the following command:
+
+```sh
+
+helm delete tts-release
 ```

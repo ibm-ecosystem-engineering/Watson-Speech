@@ -4,7 +4,7 @@ IBM Watson Speech to Text (STT) Library for Embed transcribes written text from 
 
 Note that the STT service can be deployed either with or without customization. A customizable deployment allows users to update the service to understand how to transcribe words. This tutorial walks you through the steps install a customizable STT service in OpenShift. We will use [this](https://github.com/IBM/ibm-watson-embed-charts/tree/main/charts/ibm-watson-stt-embed) helm chart to deploy the service.
 
-## Architecture diagram
+## Reference Architecture
 
 ![Diagram](architecture-stt.png)
 
@@ -169,7 +169,7 @@ Set the PostgreSQL password in an environment variable. This will be used in sub
 ```sh
 export POSTGRES_PASSWORD=$(oc get secret postgresql-release -o jsonpath="{.data.postgres-password}" | base64 -d)
 ```
-## Install Speech to Text Library embed helm chart
+## Install Speech to Text Helm Chart
 
 Clone the Helm chart Github repository.
 
@@ -190,9 +190,9 @@ An example command to create the pull secret:
   --docker-email=<your-email>
 ```
 
-> By default, the models that are enabled are `en-US_Multimedia` and `en-US_Telephony` with defaultModel set to `en-US_Multimedia`.
+By default, the models that are enabled are `en-US_Multimedia` and `en-US_Telephony` with defaultModel set to `en-US_Multimedia`.
 
-Helm charts have configurable values that can be set at install time. To configure the install further, such as enabling additional models, Refer to the base `values.yaml` for documentation and defaults for the values. Values can be changed using `--set` or using YAML files specified with `-f/--values`. Here we are setting values using `--set` parameter
+Helm charts have configurable values that can be set at install time. To configure, e.g. enable additional models, refer to the base `values.yaml`. Values can be changed using `--set` or using YAML files specified with `-f/--values`. Below we set values using `--set` parameter.
 
 ```sh
 helm install stt-release ./ibm-watson-stt-embed \
@@ -209,35 +209,34 @@ helm install stt-release ./ibm-watson-stt-embed \
 --set objectStorage.secretKey=${S3_SECRET_KEY}
 ```
 
-## Verifying the chart
+## Verify the Chart
 
-See the instruction (from NOTES.txt within chart) after the helm installation completes for chart verification. The instruction can also be viewed by running:
+See the instruction (from NOTES.txt within chart) after the Helm installation completes for chart verification. The instruction can also be viewed by running the following command.
 
 ```sh
 helm status stt-release
 ```
 
-For basic usage of customization, see the customizing Watson Speech Library for Embed [documentation](https://www.ibm.com/docs/en/watson-libraries?topic=containers-customization-example).
+For basic usage of customization, see the [documentation](https://www.ibm.com/docs/en/watson-libraries?topic=containers-customization-example).
 
-The complete API reference for Watson Speech-to-Text can be found [here](https://cloud.ibm.com/apidocs/speech-to-text).
+The complete API reference for Watson Speech to Text can be found [here](https://cloud.ibm.com/apidocs/speech-to-text).
 
+## Test the Service
 
-## Use the service
-
-In one terminal, create a proxy through the service:
+In one terminal, create a proxy through the service.
 
 ```sh
 oc proxy
 ```
 
-Download an example audio file as example.flac:
+Download an example audio file as `example.flac`:
 
 ```sh
 curl --url https://github.com/watson-developer-cloud/doc-tutorial-downloads/raw/master/speech-to-text/0001.flac \
       -sLo example.flac
 ```
 
-Send a /recognize request using the downloaded file:
+Send a `recognize` request using the downloaded file:
 
 ```sh
 curl --url "http://localhost:8001/api/v1/namespaces/stt-demo/services/https:stt-release-runtime:https/proxy/speech-to-text/api/v1/recognize?model=en-US_Multimedia" \

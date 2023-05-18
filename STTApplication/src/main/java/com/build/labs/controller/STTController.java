@@ -107,6 +107,7 @@ public class STTController {
 
 		List<Output> outputList = formatOutput(transcript);
 		model.addAttribute("result", outputList);
+		model.addAttribute("tabValue", "panel-4");
 		return "index";
 
 	}

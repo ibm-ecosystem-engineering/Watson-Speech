@@ -75,7 +75,7 @@
 		<div class="bx--row">
 			<div class="bx--col-sm-4 bx--col-lg-12" style="margin: 6rem 0;">
 
-				<bx-tabs trigger-content="Select an item" value="panel-1">
+				<bx-tabs trigger-content="Select an item" th:value="${tabValue ne null ? tabValue : 'panel-1'}">
 					<bx-tab id="sample-audio" target="panel-1" value="panel-1">Sample Audio</bx-tab>
 					<bx-tab id="sample-audio-param" target="panel-4" value="panel-4">Audio with Parameter</bx-tab>
 					<bx-tab id="upload-your-audio" target="panel-2" value="panel-2">Upload Your Audio</bx-tab>

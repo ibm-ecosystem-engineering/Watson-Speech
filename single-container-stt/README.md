@@ -23,7 +23,7 @@ echo $IBM_ENTITLEMENT_KEY | docker login -u cp --password-stdin cp.icr.io
 ## Step 2: Clone the sample code repository
 
 ```sh
-git clone https://github.com/ibm-build-lab/Watson-Speech.git
+git clone https://github.com/ibm-ecosystem-engineering/Watson-Speech.git
 ```
 
 Go to the directory containing the sample code for this tutorial.

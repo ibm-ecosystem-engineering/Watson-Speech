@@ -1,6 +1,6 @@
 # Self-Serve Assets for Embeddable AI using Watson Speech
 
-[Assets/Accelerators for Watson Speech](https://github.com/ibm-build-lab/Watson-Speech) (this repo) contains self-serve notebooks and documentation on how to create Speech models using Watson Speech library, how to serve Watson Speech models, and how to make inference requests from custom applications. With an IBM Cloud account a full production sample can be deployed in roughly one hour.
+[Assets/Accelerators for Watson Speech](https://github.com/ibm-ecosystem-engineering/Watson-Speech) (this repo) contains self-serve notebooks and documentation on how to create Speech models using Watson Speech library, how to serve Watson Speech models, and how to make inference requests from custom applications. With an IBM Cloud account a full production sample can be deployed in roughly one hour.
 
 Key Technologies:
 
@@ -11,12 +11,12 @@ Key Technologies:
 ## Outline
 
 - Speech to Text
-  - [Watson Speech to Text Analysis Notebook](https://github.com/ibm-build-lab/Watson-Speech/blob/main/Speech%20To%20%20Text/Speech%20To%20Text%20Analysis.ipynb)
-  - [Deploy a Speech to Text Service on Docker Tutorial](https://github.com/ibm-build-lab/Watson-Speech/tree/main/single-container-stt)
+  - [Watson Speech to Text Analysis Notebook](https://github.com/ibm-ecosystem-engineering/Watson-Speech/blob/main/Speech%20To%20%20Text/Speech%20To%20Text%20Analysis.ipynb)
+  - [Deploy a Speech to Text Service on Docker Tutorial](https://github.com/ibm-ecosystem-engineering/Watson-Speech/tree/main/single-container-stt)
 - Text to Speech
-  - [Watson Text to Speech Tutorial](https://github.com/ibm-build-lab/Watson-Speech/blob/main/Text%20To%20Speech/Text-to-Speech-Tutorial.md)
-  - [Watson Text to Speech Analysis Notebook](https://github.com/ibm-build-lab/Watson-Speech/blob/main/Text%20To%20Speech/Text%20To%20Speech%20Analysis.ipynb)
-  - [Deploy a Text to Speech Service with Docker Tutorial](https://github.com/ibm-build-lab/Watson-Speech/tree/main/single-container-tts)
+  - [Watson Text to Speech Tutorial](https://github.com/ibm-ecosystem-engineering/Watson-Speech/blob/main/Text%20To%20Speech/Text-to-Speech-Tutorial.md)
+  - [Watson Text to Speech Analysis Notebook](https://github.com/ibm-ecosystem-engineering/Watson-Speech/blob/main/Text%20To%20Speech/Text%20To%20Speech%20Analysis.ipynb)
+  - [Deploy a Text to Speech Service with Docker Tutorial](https://github.com/ibm-ecosystem-engineering/Watson-Speech/tree/main/single-container-tts)
 
 ## Resources
 

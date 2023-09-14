@@ -7,7 +7,7 @@ The application demonstrates two interfaces that a client program can use to lev
 - **REST interface.** This is used for batch processing, where the client sends audio files to the Watson STT and receives transcriptions synchronously.
 - **WebSocket interface.** This can be used for streaming use cases, where the communication happens asynchronously.
 
-In order to use this tutorial, you need to Run a Single-Container Speech-to-Text Service on Docker in your workstation. Please follow this [tutorial](https://github.com/ibm-build-lab/Watson-Speech/tree/main/single-container-stt) to run the STT service.
+In order to use this tutorial, you need to Run a Single-Container Speech-to-Text Service on Docker in your workstation. Please follow this [tutorial](https://github.com/ibm-ecosystem-engineering/Watson-Speech/tree/main/single-container-stt) to run the STT service.
 
 ## Architecture diagram
 
@@ -17,14 +17,14 @@ In order to use this tutorial, you need to Run a Single-Container Speech-to-Text
 
 - [Docker](https://docs.docker.com/get-docker/) is installed
 - [Java 17 JDK](https://www.oracle.com/java/technologies/downloads/#java17) is installed
-- An STT Service running in a Docker container, as described [here](https://github.com/ibm-build-lab/Watson-Speech/tree/main/single-container-stt)
+- An STT Service running in a Docker container, as described [here](https://github.com/ibm-ecosystem-engineering/Watson-Speech/tree/main/single-container-stt)
 
 ## Get the sample code
 
 Clone the following GitHub repository.
 
 ```sh
-git clone https://github.com/ibm-build-labs/Watson-Speech
+git clone https://github.com/ibm-ecosystem-engineerings/Watson-Speech
 ```
 
 This repository contains code that is used in this tutorial.

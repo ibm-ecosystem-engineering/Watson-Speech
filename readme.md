@@ -28,3 +28,23 @@ Key Technologies:
   - [Embeddable AI](https://techzone.ibm.com/collection/embedded-ai)
   - [Watson Speech to Text](https://techzone.ibm.com/collection/watson-stt)
   - [Watson Text to Speech](https://techzone.ibm.com/collection/watson-tts)
+
+
+### Contrbutons By 
+Created & Architected By
+
+  Kunal Sawarkar, Chief Data Scientist
+
+Builders
+
+    Michael Spriggs, Principal Architect
+    Shivam Solanki, Senior Advisory Data Scientist
+    Kevin Huang, Sr. ML-Ops Engineer
+    Abhilasha Mangal, Senior Data Scientist
+    Himadri Talukder - Senior Software Engineer
+
+Disclaimer
+
+This framework is developed by Build Lab, IBM Ecosystem. Please note that this content is made available to foster Embeddable AI technology adoption and serve ecosystem partners. The content may include systems & methods pending patent with the USPTO and protected under US Patent Laws. SuperKnowa is not a product but a framework built on the top of IBM watsonx along with other products like LLAMA models from Meta & ML Flow from Databricks. Using SuperKnowa implicitly requires agreeing to the Terms and conditions of those products. This framework is made available on an as-is basis to accelerate Enterprise GenAI applications development. In case of any questions, please reach out to kunal@ibm.com.
+
+Copyright @ 2023 IBM Corporation.
